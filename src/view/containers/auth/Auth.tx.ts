@@ -16,6 +16,7 @@ export const Auth = Auth$({
     const loginAction = useAction(authActions.loginRequest);
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
       loginAction();
     };
     return handleSubmit;

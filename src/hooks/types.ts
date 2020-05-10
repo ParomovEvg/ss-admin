@@ -5,3 +5,4 @@ export type CallBackHook<
     T extends any[] = [],
     R = void
 > = (...args: T) => (...args: B) => R;
+ 

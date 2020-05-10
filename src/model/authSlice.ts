@@ -41,4 +41,21 @@ export const authSlice = createSlice({
 const asyncAuthActions = {
   loginRequest: createAction('auth/login_request'),
 };
-export const authActions = { ...asyncAuthActions, ...authSlice.actions };
+
+// const authCheck = <T extends any[], R>(
+//   F: (...args: T) => R,
+//   ...args: T
+// ): T => ({
+//   type: 'auth/authCheck',
+//   payload: {
+//     F,
+//     args,
+//   },
+// });
+
+// authCheck((num: number): string => '123', 3);
+
+export const authActions = {
+  ...asyncAuthActions,
+  ...authSlice.actions,
+};

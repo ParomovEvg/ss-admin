@@ -1,6 +1,5 @@
 import { LoginDto, LoginResDto } from './typings';
 import { api } from './api';
-
 export const loginService = {
   auth: (loginDto: LoginDto): Promise<string> =>
     api
@@ -9,4 +8,12 @@ export const loginService = {
       })
       .json<LoginResDto>()
       .then((r) => r.payload.access_token),
+};
+
+export const getProfile = {
+  test: () =>
+    api
+      .get('auth/profile')
+      .json()
+      .then((r) => r),
 };
