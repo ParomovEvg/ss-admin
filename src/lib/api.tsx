@@ -1,8 +1,6 @@
 import ky from 'ky';
-import { useSelector } from 'react-redux';
-import { RootSelector, RootState, store } from '../model/createStore';
-import { Auth, authActions } from '../model/authSlice';
-import { useAction } from '../view/hooks/use-action';
+import { store } from '../model/createStore';
+import { authActions } from '../model/authSlice';
 import { LoginResDto } from './typings';
 export const api = ky.extend({
   prefixUrl: 'http://localhost:3000',
@@ -10,7 +8,7 @@ export const api = ky.extend({
     beforeRequest: [
       async (request) => {
         const { token } = store.getState().auth;
-        request.headers.set('Authorization', `Bearer `);
+        request.headers.set('Authorization', `Bearer ${token}`);
       },
     ],
     afterResponse: [
@@ -29,7 +27,6 @@ export const api = ky.extend({
               .then((r) => r.payload.access_token);
             store.dispatch(authActions.login({ token }));
             request.headers.set('Authorization', `Bearer ${token}`);
-
             return ky(request);
           } catch (e) {
             store.dispatch(authActions.logout({}));

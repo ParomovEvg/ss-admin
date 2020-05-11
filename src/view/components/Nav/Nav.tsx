@@ -7,11 +7,9 @@ import { RootState } from '../../../model/createStore';
 import { useAction } from '../../hooks/use-action';
 import { viewActions } from '../../../model/viewSlice';
 import { NavItem } from './NavItem';
-// import { authActions } from '../../../model/authSlice';
-// import { useAction } from '../../hooks/use-action';
-import { useSelector, useDispatch } from 'react-redux';
-import { getProfile } from '../../../lib/loginService';
-import { authActions } from '../../../model/authSlice';
+import { useSelector } from 'react-redux';
+import { authService } from '../../../lib/authService';
+
 export interface NavHooks {
   useCloseHandler: CallBackHook;
   useIsOpenMenu: Hook<boolean>;
@@ -35,7 +33,7 @@ export const Nav: React.FC<NavProps> = ({
   screenLinks,
 }) => {
   const onClickTestHandler = useCallback(() => {
-    getProfile.test();
+    authService.getProfile();
   }, []);
 
   const isOpen = useIsOpenMenu();
