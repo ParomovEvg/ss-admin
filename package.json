@@ -1,71 +1,71 @@
 {
-    "name": "admin",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "@codegena/ng-api-service": "^2.1.13-alpha.2",
-        "@codegena/oapi3ts": "^2.1.9-alpha.3",
-        "@codegena/oapi3ts-cli": "^2.1.10-alpha.4",
-        "@material-ui/core": "^4.9.12",
-        "@material-ui/icons": "^4.9.1",
-        "@reduxjs/toolkit": "~1.3.0",
-        "@sweet-monads/either": "^2.0.0",
-        "@sweet-monads/maybe": "^2.0.0",
-        "@testing-library/jest-dom": "^4.2.4",
-        "@testing-library/react": "^9.5.0",
-        "@testing-library/user-event": "^7.2.1",
-        "@types/classnames": "^2.2.10",
-        "@types/jest": "^24.9.1",
-        "@types/lodash": "^4.14.150",
-        "@types/node": "^12.12.31",
-        "@types/react": "^16.9.25",
-        "@types/react-dom": "^16.9.5",
-        "@types/react-redux": "~7.1.7",
-        "@types/react-router-dom": "^5.1.5",
-        "autorest": "^3.0.6187",
-        "classnames": "^2.2.6",
-        "ky": "^0.19.1",
-        "lodash": "^4.17.15",
-        "node-sass": "^4.14.0",
-        "prettier": "^2.0.2",
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1",
-        "react-fipc": "^0.3.0",
-        "react-multiple-image-input": "^1.0.0",
-        "react-notifications": "^1.6.0",
-        "react-redux": "~7.2.0",
-        "react-router-dom": "^5.1.2",
-        "react-scripts": "3.4.1",
-        "redux": "~4.0.5",
-        "redux-saga": "~1.1.3",
-        "typescript": "^3.7.5"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "generate-api-types": "curl -X GET http://localhost:3000/api-json > api.json && node ./update-typings.js --srcPath ./api.json --destPath ./src/lib --separatedFiles false"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "prettier": {
-        "trailingComma": "es5",
-        "tabWidth": 2,
-        "semi": true,
-        "singleQuote": true
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+  "name": "admin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@codegena/ng-api-service": "^2.1.13-alpha.2",
+    "@codegena/oapi3ts": "^2.1.9-alpha.3",
+    "@codegena/oapi3ts-cli": "^2.1.10-alpha.4",
+    "@material-ui/core": "^4.9.12",
+    "@material-ui/icons": "^4.9.1",
+    "@reduxjs/toolkit": "~1.3.0",
+    "@sweet-monads/either": "^2.0.0",
+    "@sweet-monads/maybe": "^2.0.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/classnames": "^2.2.10",
+    "@types/jest": "^24.9.1",
+    "@types/lodash": "^4.14.150",
+    "@types/node": "^12.12.31",
+    "@types/react": "^16.9.25",
+    "@types/react-dom": "^16.9.5",
+    "@types/react-redux": "~7.1.7",
+    "@types/react-router-dom": "^5.1.5",
+    "autorest": "^3.0.6187",
+    "classnames": "^2.2.6",
+    "ky": "^0.19.1",
+    "lodash": "^4.17.15",
+    "node-sass": "^4.14.0",
+    "prettier": "^2.0.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-fipc": "^0.3.0",
+    "react-multiple-image-input": "^1.0.0",
+    "react-notifications": "^1.6.0",
+    "react-redux": "~7.2.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "redux": "~4.0.5",
+    "redux-saga": "~1.1.3",
+    "typescript": "^3.7.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "generate-api-types": "curl -X GET http://localhost:3000/api-json > api.json && node ./update-typings.js --srcPath ./api.json --destPath ./src/lib --separatedFiles false"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
