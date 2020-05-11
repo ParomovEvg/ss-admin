@@ -41,4 +41,8 @@ export const authSlice = createSlice({
 const asyncAuthActions = {
   loginRequest: createAction('auth/login_request'),
 };
-export const authActions = { ...asyncAuthActions, ...authSlice.actions };
+
+export const authActions = {
+  ...asyncAuthActions,
+  ...authSlice.actions,
+};
