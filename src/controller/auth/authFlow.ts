@@ -1,3 +1,4 @@
+import { appActions } from './../../model/appSlice';
 import { take, select, call, put } from 'redux-saga/effects';
 import { Auth, authActions } from '../../model/authSlice';
 import { RootSelector } from '../../model/createStore';
@@ -9,7 +10,8 @@ export function* authFlow() {
     const auth = yield select<RootSelector<Auth>>((state) => state.auth);
     try {
       const token = yield call(authService.auth, auth);
-      yield put(authActions.login({ token }));
+			yield put(authActions.login({ token }));
+			yield put(appActions.lounch())
     } catch (e) {
       if (e.code === 403) {
         NotificationManager.error('Неверные Логин или пароль');

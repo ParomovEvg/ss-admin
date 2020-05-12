@@ -1,14 +1,30 @@
-import React, { ComponentType, ReactNode } from 'react';
-import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
+import React, { ComponentType, ReactNode, useEffect } from 'react';
+import { Route, BrowserRouter, Switch, Redirect, useParams } from 'react-router-dom';
 import { Nav$ } from '../../components/Nav/Nav';
 import { Hook } from '../../../hooks/types';
 import { Auth } from '../auth/Auth.tx';
 import { createFipc } from 'react-fipc';
+import { Home$ } from '../Home/Home';
+import { screenServer } from '../../../lib/screenService';
+// import { Home } from '@material-ui/icons';
+
+const Home = Home$({ useFields: () => {
+	const { id }= useParams<{ id: string }>()
+	useEffect(() => {
+		const fields = screenServer.getScreen(parseInt(id))
+		console.log(fields);
+		
+	})
+	return [{
+		name: 'dfg',
+		id: 1
+	}]
+}})
 
 export type PathList = {
   path: string;
   name: string;
-  component: ComponentType;
+	component?: ComponentType;
   icon?: ReactNode;
 }[];
 
@@ -35,9 +51,7 @@ export const NavigationComponent: React.FC<NavigationProps> = ({
         <>
           <Nav$ $render mainLinks={mainRouts} screenLinks={screensRouts} />
           <Switch>
-            {screensRouts.map(({ path, component }) => (
-              <Route path={path} exact key={path} component={component} />
-            ))}
+						<Route path={`/screen/:id`} component={Home} />
             {mainRouts.map(({ path, component }) => (
               <Route path={path} key={path} component={component} />
             ))}

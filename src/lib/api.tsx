@@ -1,5 +1,5 @@
 import ky from 'ky';
-import { store } from '../model/createStore';
+import { getState, store } from '../model/createStore';
 import { authActions } from '../model/authSlice';
 import { LoginResDto } from './typings';
 export const api = ky.extend({
@@ -7,7 +7,7 @@ export const api = ky.extend({
   hooks: {
     beforeRequest: [
       async (request) => {
-        const { token } = store.getState().auth;
+        const { token } = getState().auth;
         request.headers.set('Authorization', `Bearer ${token}`);
       },
     ],
@@ -15,7 +15,7 @@ export const api = ky.extend({
       async (request, options, response) => {
         if (response.status === 401) {
           try {
-            const { phone, password } = store.getState().auth;
+            const { phone, password } = getState().auth;
             const token = await ky
               .post('http://localhost:3000/auth', {
                 json: {

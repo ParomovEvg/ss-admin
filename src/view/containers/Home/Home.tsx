@@ -5,37 +5,25 @@ import { Card, CardContent, Grid, CardHeader } from '@material-ui/core';
 import { TextCard$ } from '../../components/TextCard/TextCard';
 import { createUseTextFiled } from '../../components/TextCard/createUseText';
 import { uniqueId } from 'lodash';
+import { useParams } from 'react-router-dom';
+import { createFipc } from 'react-fipc';
 
-export interface HomeProps {
+export interface ScreenProps extends ScreenHooks{
   className?: string;
 }
 
-const TitleTextCard = TextCard$({
-  multiline: true,
-  useTextField: createUseTextFiled(
-    () =>
-      new Promise((resolve) =>
-        setTimeout(() => resolve({ id: uniqueId(), value: 'adafsfd' }), 3000)
-      ),
-    (baseText) =>
-      new Promise((resolve) =>
-        setTimeout(
-          () => resolve({ id: uniqueId(), value: baseText.value + 'last' }),
-          3000
-        )
-      ),
-    (newText) =>
-      new Promise((resolve) =>
-        setTimeout(
-          () =>
-            resolve({ id: uniqueId(), value: 'Сканируй qr код и выигрывай' }),
-          3000
-        )
-      )
-  ),
-});
+export interface ScreenHooks {
+	useFields: () => {
+		name: string,
+		id: number
+	}[]
+}
 
-export const Home: React.FC<HomeProps> = ({ children, className }) => {
+
+const Home: React.FC<ScreenProps> = ({ children, className, useFields }) => {
+	
+	const fields = useFields()
+
   const [state, useState] = React.useState<object[]>([]);
   return (
     <Layout title="Home">
@@ -44,6 +32,9 @@ export const Home: React.FC<HomeProps> = ({ children, className }) => {
           <Card>
             <CardHeader title={'Загруизть изображения'} />
             <CardContent>
+							{fields.map(({name}) => {
+								return <div>{name}</div>
+							})}
               <MultiImageInput
                 max={1}
                 allowCrop={false}
@@ -58,3 +49,6 @@ export const Home: React.FC<HomeProps> = ({ children, className }) => {
     </Layout>
   );
 };
+
+
+export const Home$ = createFipc(Home)

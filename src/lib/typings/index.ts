@@ -455,7 +455,7 @@ export interface TextFieldContentDto {
 export interface ScreenContentDto {
   id: number;
   name: string;
-  textFields?: Array<TextFieldContentDto>;
+  textFields: Array<TextFieldContentDto>;
 }
 export interface GetContentResDto {
   payload: Array<ScreenContentDto>;
@@ -469,20 +469,15 @@ export type ContentControllerGetContentResponse<
     : any
   : TCode extends 400
   ? TContentType extends 'application/json'
-    ? /**
-       * Empty response
-       */
-      null
+    /**
+     * Empty response
+     */
+    ? null
     : any
   : any;
-export interface FlatScreenDto {
-  id: number;
-  name: string;
-}
 export interface FlatTextFieldDto {
   id: number;
   name: string;
-  screen: FlatScreenDto;
 }
 export interface ScreenNotFoundById {
   name: 'ScreenNotFoundById';
@@ -519,14 +514,13 @@ export interface CreateTextFieldDto {
 export type TextControllerCreateFieldRequest<
   TCode extends 'application/json' = 'application/json'
 > = TCode extends 'application/json' ? CreateTextFieldDto : any;
-export interface FlatTextDto {
+export interface TextDto {
   id: number;
-  value: string;
   createDate: string;
-  field: FlatTextFieldDto;
+  value: string;
 }
 export interface CreateTextResDto {
-  payload?: FlatTextDto;
+  payload?: TextDto;
 }
 export type TextControllerCreateTextResponse<
   TCode extends 201 = 201,
@@ -546,7 +540,7 @@ export type TextControllerCreateTextRequest<
 /**
  * Model of parameters for API `/text/field/{fieldId}`
  */
-export interface TextControllerFindTextOfFiledParameters {
+export interface TextControllerDeleteTextFieldParameters {
   fieldId: number;
 }
 export interface TextFieldNotFoundById {
@@ -556,8 +550,33 @@ export interface TextFieldNotFoundById {
     id?: number;
   };
 }
+export interface DeleteTextFieldResDto {
+  payload: {
+    id?: number;
+  };
+  TextFieldNotFoundById?: TextFieldNotFoundById;
+}
+export type TextControllerDeleteTextFieldResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? DeleteTextFieldResDto
+    : any
+  : any;
+/**
+ * Model of parameters for API `/text/field/{fieldId}`
+ */
+export interface TextControllerFindTextOfFiledParameters {
+  fieldId: number;
+}
+export interface TextFieldDto {
+  id: number;
+  name: string;
+  values: Array<TextDto>;
+}
 export interface FindTextOfFieldResDto {
-  payload?: Array<FlatTextDto>;
+  payload?: TextFieldDto;
   TextFiledNotFoundById?: TextFieldNotFoundById;
 }
 export type TextControllerFindTextOfFiledResponse<
@@ -566,6 +585,21 @@ export type TextControllerFindTextOfFiledResponse<
 > = TCode extends 200
   ? TContentType extends 'application/json'
     ? FindTextOfFieldResDto
+    : any
+  : any;
+export interface FlatScreenDto {
+  id: number;
+  name: string;
+}
+export interface FindAllScreensResDto {
+  payload: Array<FlatScreenDto>;
+}
+export type ScreenControllerFindAllScreensResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? FindAllScreensResDto
     : any
   : any;
 export interface ScreenAlreadyExists {
@@ -593,3 +627,26 @@ export interface CreateScreenDto {
 export type ScreenControllerCreateScreenRequest<
   TCode extends 'application/json' = 'application/json'
 > = TCode extends 'application/json' ? CreateScreenDto : any;
+/**
+ * Model of parameters for API `/screen/{screenId}`
+ */
+export interface ScreenControllerFindScreenByIdParameters {
+  screenId: number;
+}
+export interface ScreenDto {
+  id: number;
+  name: string;
+  textFields: Array<FlatTextFieldDto>;
+}
+export interface FindScreenByIdResDto {
+  payload?: ScreenDto;
+  ScreenNotFoundById?: ScreenNotFoundById;
+}
+export type ScreenControllerFindScreenByIdResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? FindScreenByIdResDto
+    : any
+  : any;

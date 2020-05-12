@@ -8,7 +8,7 @@ import { useAction } from '../../hooks/use-action';
 import { viewActions } from '../../../model/viewSlice';
 import { NavItem } from './NavItem';
 import { useSelector } from 'react-redux';
-import { authService } from '../../../lib/authService';
+import { screensActions } from '../../../model/screensSlice';
 
 export interface NavHooks {
   useCloseHandler: CallBackHook;
@@ -21,7 +21,7 @@ export interface NavProps extends NavHooks {
 }
 export type LinksList = {
   path: string;
-  name: string;
+	name: string;
   icon?: ReactNode;
 }[];
 
@@ -29,11 +29,12 @@ export const Nav: React.FC<NavProps> = ({
   className,
   useCloseHandler,
   useIsOpenMenu,
-  mainLinks,
+  mainLinks,	
   screenLinks,
 }) => {
+	const addScreenRequest = useAction(screensActions.addScreenRequest)
   const onClickTestHandler = useCallback(() => {
-    authService.getProfile();
+		addScreenRequest()
   }, []);
 
   const isOpen = useIsOpenMenu();

@@ -1,19 +1,22 @@
 import { Navigation$, PathList } from './NavigationComponent';
-import { Home } from '../Home/Home';
+import { Home$ } from '../Home/Home';
 import { Draws } from '../Draws/Draws';
 import { Redirect } from 'react-router-dom';
 import React from 'react';
 import { Assignment } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../model/createStore';
+import { FlatScreenDto } from '../../../lib/typings';
 
-const screens: PathList = [
-  {
-    path: '/screen/home',
-    name: 'Home',
-    component: Home,
-  },
-];
+
+
+const useScreens = () => {
+	const screens = useSelector<RootState, FlatScreenDto[]>(state => state.screens.screensList)
+	return screens.map(({ id, name}) => ({
+		path: `/screen/${id}`,
+		name,
+	}))
+}
 
 const mainRouts: PathList = [
   {
@@ -33,7 +36,7 @@ const additionalRouts: PathList = [
 export const Navigation = Navigation$({
   useMainRouts: () => mainRouts,
   useAdditionalRouts: () => additionalRouts,
-  useScreenRouts: () => screens,
+  useScreenRouts: useScreens,
   useIsAuth: () =>
     useSelector<RootState, boolean>((state) => Boolean(state.auth.token)),
 });
