@@ -1,5 +1,5 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { state } from '../redux/state';
+import { state } from './state';
 import { mainSaga } from '../sagas/mainSaga';
 import createSagaMiddleware from 'redux-saga';
 import { Selector } from '@reduxjs/toolkit';

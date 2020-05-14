@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import { store } from './model/createStore';
+import { store } from './redux/createStore';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { Navigation } from './view/containers/navigation/Navigation';
+import { Navigation } from './components/navigation/Navigation.fipc';
+import 'react-notifications/dist/react-notifications.css';
 export const colors = {
   dark: '#001941',
   secondary: '#f6b90a',
