@@ -1,6 +1,6 @@
 import { store } from './../../redux/createStore';
 import { fieldsActions, fieldType } from '../../redux/slices/fieldsSlice';
-import { valuesActions, valueType } from '../../redux/slices/fieldValuesSlice';
+// import { valuesActions, valueType } from '../../redux/slices/fieldValuesSlice';
 import { NotificationManager } from 'react-notifications';
 import { Either } from '@sweet-monads/either';
 import { ScreenDto, ScreenNotFoundById } from '../../apiWorker/typings/index';
@@ -18,7 +18,6 @@ export function* getScreen(
   yield put(asyncScreenActions.getScreenRequest(action.payload));
 
   let fields: fieldType[] = [];
-  let values: valueType[] = [];
   let id: number = 0;
 
   const screen: Either<ScreenNotFoundById, ScreenDto> = yield call(
@@ -32,28 +31,17 @@ export function* getScreen(
 
       fields = r.textFields.map((field) => {
         return {
-          id: field.id,
-          name: field.name,
+          ...field,
           status: 'none',
         };
       });
-      values = r.textFields
-        .map((field) => {
-          return field.values.map((value) => {
-            return {
-              ...value,
-              fieldId: field.id,
-            };
-          });
-        })
-        .flat();
     })
     .mapLeft((e) => {
       NotificationManager.error(e.message);
     });
 
   yield put(screensActions.getActiveScreen(id));
-  yield put(valuesActions.getValues(values));
+  // yield put(valuesActions.getValues(values));
   yield put(fieldsActions.getFields(fields));
 }
 

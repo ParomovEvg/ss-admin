@@ -10,15 +10,17 @@ import {
   IconButton,
   CircularProgress,
 } from '@material-ui/core';
-import Modal from '@material-ui/core/Modal';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { LastPage } from '@material-ui/icons';
 import { createFipc } from 'react-fipc';
 import { textField } from './textCard.fipc';
 import './TextCard.scss';
+import { DeleteModalField } from '../Template/deleteModal/deleteModalField';
+import { viewActions } from '../../redux/slices/viewSlice';
+import { useAction } from '../../hooks/use-action';
 
 export interface TextCardHooks {
-  textField: textField;
+  useTextField: textField;
 }
 export interface TextCardProps extends TextCardHooks {
   className?: string;
@@ -28,7 +30,7 @@ export interface TextCardProps extends TextCardHooks {
 }
 
 export const TextCardComponent: React.FC<TextCardProps> = ({
-  textField,
+  useTextField,
   children,
   className,
   name,
@@ -44,17 +46,17 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
     isReset,
     onBack,
     isLoading,
-    deleteFieldModal,
-    deleteFieldHandler,
-    isModalDeleteFieldOpen,
-    closeModalDeleteField,
-  } = textField(id, name);
+  } = useTextField(id, name);
+
   const handleChange = useCallback(
     (e: { target: { value: string } }) => {
       onChange(e.target.value);
     },
     [onChange]
   );
+
+  const openDeleteModal = useAction(viewActions.openDeleteModal);
+
   return (
     <Grid item sm={multiline ? 6 : 4}>
       <Card className="TextCard">
@@ -66,28 +68,15 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
         <CardHeader
           title={name}
           action={
-            <IconButton onClick={deleteFieldModal} aria-label="settings">
+            <IconButton
+              onClick={() => openDeleteModal(id)}
+              aria-label="settings"
+            >
               <DeleteIcon />
             </IconButton>
           }
         />
-        <Modal
-          open={isModalDeleteFieldOpen}
-          onClose={closeModalDeleteField}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <div className="modal-wrapper">
-            <p>Вы точно хотите удалить это поле?</p>
-            <Button
-              onClick={deleteFieldHandler}
-              variant={'contained'}
-              color={'primary'}
-            >
-              Удалить
-            </Button>
-          </div>
-        </Modal>
+
         <CardContent>
           <Grid container spacing={4}>
             <Grid item sm={12}>

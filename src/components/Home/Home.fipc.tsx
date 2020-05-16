@@ -1,5 +1,5 @@
 import { Home$ } from './Home';
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAction } from '../../hooks/use-action';
 import { asyncScreenActions } from '../../redux/slices/screensSlice';
@@ -26,5 +26,14 @@ export const Home = Home$({
       useSelector<RootState, fieldsType>((state) => state.fields),
       status,
     ];
+  },
+  useAddField: () => {
+    const [addFieldModalState, setAddFieldModalState] = useState<boolean>(
+      false
+    );
+    const toggleAddFieldModal = useCallback(() => {
+      setAddFieldModalState((addModalState) => !addModalState);
+    }, []);
+    return [toggleAddFieldModal, addFieldModalState];
   },
 });
