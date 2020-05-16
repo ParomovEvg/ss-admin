@@ -4,6 +4,7 @@ import { authFlow } from './auth/authFlow';
 import { addScreen } from './screens/addScreen';
 import { getScreenWatcher } from './screens/getScreen';
 import { setValueWatcher } from './fieldValues/setValue';
+import { deleteFieldWatcher } from './fields/deleteField';
 export function* mainSaga() {
   yield all([
     counterListener(),
@@ -11,5 +12,6 @@ export function* mainSaga() {
     addScreen(),
     getScreenWatcher(),
     setValueWatcher(),
+    deleteFieldWatcher(),
   ]);
 }

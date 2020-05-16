@@ -10,9 +10,9 @@ export const stateActions = {
 };
 export const state = combineReducers({
   counter: counter.reducer,
+  fields: fieldsSlice.reducer,
   auth: authSlice.reducer,
   view: viewSlice.reducer,
   screens: screensSlice.reducer,
   values: valuesSlise.reducer,
-  fields: fieldsSlice.reducer,
 });

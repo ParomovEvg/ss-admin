@@ -1,3 +1,4 @@
+import { asyncFieldActions } from './../../redux/slices/fieldsSlice';
 import { valuesActions } from '../../redux/slices/fieldValuesSlice';
 import { RootState } from '../../redux/createStore';
 import { useSelector } from 'react-redux';
@@ -19,6 +20,10 @@ export type textField = (
   isReset: boolean;
   onBack: () => void;
   isLoading: boolean;
+  deleteFieldModal: () => void;
+  deleteFieldHandler: () => void;
+  isModalDeleteFieldOpen: boolean;
+  closeModalDeleteField: () => void;
 };
 
 export const useCreateTextFiled: textField = (fieldId) => {
@@ -38,15 +43,11 @@ export const useCreateTextFiled: textField = (fieldId) => {
 
   const [lastValue, setLastValue] = useState(last(values));
   const [text, setText] = useState<string>(last(values)?.value ?? '');
+
   const isSave = useIsSave(text, values, isLoading);
-
-  useEffect(() => {}, []);
-
   const onSave = useCallback(() => {
-    setLastValue(last(values));
-
     setFieldValueRequest({ text, fieldId });
-  }, [setFieldValueRequest, text, fieldId, values]);
+  }, [setFieldValueRequest, text, fieldId]);
 
   const isReset = useIsReset(text, values, lastValue, isLoading);
   const onReset = useCallback(() => {
@@ -60,9 +61,24 @@ export const useCreateTextFiled: textField = (fieldId) => {
     if (lastValue !== undefined) {
       const prevIndex = values.indexOf(lastValue) - 1;
       setLastValue(values[prevIndex]);
+
       setText(values[prevIndex]?.value ?? 'все хватит, АСТАНАВИСЬ');
     }
   }, [lastValue, values]);
+
+  const [isModalDeleteFieldOpen, setIsModalDeleteFieldOpen] = useState(false);
+  const deleteFieldModal = useCallback(() => {
+    setIsModalDeleteFieldOpen(true);
+  }, [setIsModalDeleteFieldOpen]);
+  const closeModalDeleteField = useCallback(() => {
+    setIsModalDeleteFieldOpen(false);
+  }, [setIsModalDeleteFieldOpen]);
+
+  const deleteField = useAction(asyncFieldActions.deleteFieldAsync);
+  const deleteFieldHandler = useCallback(() => {
+    setIsModalDeleteFieldOpen(false);
+    deleteField(fieldId);
+  }, [fieldId, deleteField]);
 
   return {
     value: text,
@@ -73,6 +89,10 @@ export const useCreateTextFiled: textField = (fieldId) => {
     isReset,
     onBack,
     isLoading,
+    deleteFieldModal,
+    deleteFieldHandler,
+    isModalDeleteFieldOpen,
+    closeModalDeleteField,
   };
 };
 

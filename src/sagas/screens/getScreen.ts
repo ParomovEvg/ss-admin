@@ -1,14 +1,22 @@
+import { store } from './../../redux/createStore';
 import { fieldsActions, fieldType } from '../../redux/slices/fieldsSlice';
 import { valuesActions, valueType } from '../../redux/slices/fieldValuesSlice';
 import { NotificationManager } from 'react-notifications';
 import { Either } from '@sweet-monads/either';
 import { ScreenDto, ScreenNotFoundById } from '../../apiWorker/typings/index';
 import { screenServer } from '../../apiWorker/servers/screenService';
-import { call, put, takeEvery } from 'redux-saga/effects';
-import { screensActions } from '../../redux/slices/screensSlice';
+import { call, put, takeEvery, take, all, fork } from 'redux-saga/effects';
+import {
+  asyncScreenActions,
+  screensActions,
+} from '../../redux/slices/screensSlice';
 export function* getScreen(
-  action: ReturnType<typeof screensActions.getScreenRequest>
+  action: ReturnType<typeof asyncScreenActions.getScreen>
 ) {
+  const screenList = store.getState().screens.screensList;
+  if (!screenList.length) yield take(screensActions.getAllScreens);
+  yield put(asyncScreenActions.getScreenRequest(action.payload));
+
   let fields: fieldType[] = [];
   let values: valueType[] = [];
   let id: number = 0;
@@ -17,6 +25,7 @@ export function* getScreen(
     screenServer.getScreen,
     action.payload
   );
+
   screen
     .map((r) => {
       id = r.id;
@@ -28,7 +37,6 @@ export function* getScreen(
           status: 'none',
         };
       });
-
       values = r.textFields
         .map((field) => {
           return field.values.map((value) => {
@@ -50,5 +58,5 @@ export function* getScreen(
 }
 
 export function* getScreenWatcher() {
-  yield takeEvery(screensActions.getScreenRequest, getScreen);
+  yield takeEvery(asyncScreenActions.getScreen, getScreen);
 }

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
 import { TextDto } from '../../apiWorker/typings/index';
+import { fieldsActions } from './fieldsSlice';
 
 export interface valueType extends TextDto {
   fieldId: number;
@@ -31,6 +32,11 @@ export const valuesSlise = createSlice({
       return [...state, action.payload];
     },
   },
+  // extraReducers: (builder) => {
+  //   builder.addCase(fieldsActions.deleteField, (state, action) => {
+  //     state.filter((value) => value.fieldId !== action.payload);
+  //   });
+  // },
 });
 
 export const valuesActions = {

@@ -1,24 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface View {
-    isMenuOpen: boolean;
+  isMenuOpen: boolean;
 }
 
 const initialState: View = {
-    isMenuOpen: false,
+  isMenuOpen: false,
 };
 
 export const viewSlice = createSlice({
-    name: 'view',
-    initialState,
-    reducers: {
-        openMenu: (state) => {
-            state.isMenuOpen = true;
-        },
-        closeMenu: (state) => {
-            state.isMenuOpen = false;
-        },
+  name: 'view',
+  initialState,
+  reducers: {
+    openMenu: (state) => {
+      state.isMenuOpen = true;
     },
+    closeMenu: (state) => {
+      state.isMenuOpen = false;
+    },
+  },
 });
 
 export const asyncViewActions = {};
