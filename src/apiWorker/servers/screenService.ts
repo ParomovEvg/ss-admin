@@ -1,4 +1,4 @@
-import { Either } from '@sweet-monads/either';
+import { Either } from 'useful-monads';
 import { dtoToEither } from '../dtoToEither';
 import {
   FindAllScreensResDto,
@@ -15,13 +15,16 @@ export const screenServer = {
       .get('screen')
       .json<FindAllScreensResDto>()
       .then((r) => r.payload),
-  addScreen: (): Promise<FlatScreenDto | undefined> =>
-    api
-      .post('screen', {
-        json: { name: 'Hone234' },
-      })
-      .json<CreateScreenResDto>()
-      .then((r) => r.payload),
+  // addScreen: () =>
+  //   api
+  //     .post('screen', {
+  //       json: { name: 'Hone234' },
+  //     })
+  //     .json<CreateScreenResDto>()
+  //     .then((r) => ({
+  //       ...r.payload,
+  //       status: 'done',
+  //     })),
   getScreen: (id: number): Promise<Either<ScreenNotFoundById, ScreenDto>> =>
     api.get(`screen/${id}`).json<FindScreenByIdResDto>().then(dtoToEither),
 };

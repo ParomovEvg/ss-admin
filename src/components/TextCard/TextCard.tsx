@@ -10,13 +10,17 @@ import {
   IconButton,
   CircularProgress,
 } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { LastPage } from '@material-ui/icons';
 import { createFipc } from 'react-fipc';
 import { textField } from './textCard.fipc';
 import './TextCard.scss';
+import { viewActions } from '../../redux/slices/viewSlice';
+import { useAction } from '../../hooks/use-action';
+import { Loader } from '../Loader/Loader';
 
 export interface TextCardHooks {
-  textField: textField;
+  useTextField: textField;
 }
 export interface TextCardProps extends TextCardHooks {
   className?: string;
@@ -26,7 +30,7 @@ export interface TextCardProps extends TextCardHooks {
 }
 
 export const TextCardComponent: React.FC<TextCardProps> = ({
-  textField,
+  useTextField,
   children,
   className,
   name,
@@ -42,22 +46,32 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
     isReset,
     onBack,
     isLoading,
-  } = textField(id, name);
+  } = useTextField(id, name);
+
   const handleChange = useCallback(
     (e: { target: { value: string } }) => {
       onChange(e.target.value);
     },
     [onChange]
   );
+  const openDeleteFieldModal = useAction(viewActions.openDeleteFieldModal);
+
   return (
     <Grid item sm={multiline ? 6 : 4}>
       <Card className="TextCard">
-        {isLoading && (
-          <div className="TextCard__loader-wrapper">
-            <CircularProgress />
-          </div>
-        )}
-        <CardHeader title={name} />
+        <Loader isLoading={isLoading} />
+        <CardHeader
+          title={name}
+          action={
+            <IconButton
+              onClick={() => openDeleteFieldModal(id)}
+              aria-label="settings"
+            >
+              <DeleteIcon />
+            </IconButton>
+          }
+        />
+
         <CardContent>
           <Grid container spacing={4}>
             <Grid item sm={12}>

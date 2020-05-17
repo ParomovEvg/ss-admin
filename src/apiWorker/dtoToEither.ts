@@ -1,4 +1,4 @@
-import { Either, left, right } from '@sweet-monads/either';
+import { Either, left, right } from 'useful-monads';
 
 export type Dto = {
   payload?: any;
@@ -14,8 +14,8 @@ export const dtoToEither = <T extends Dto>(
     return right(dto.payload);
   } else {
     const { payload, ...errors } = dto;
-		const [error] = Object.values(errors);
-		
+    const [error] = Object.values(errors);
+
     return left(error as any);
   }
 };
