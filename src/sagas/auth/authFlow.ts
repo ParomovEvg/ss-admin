@@ -5,6 +5,7 @@ import { RootSelector } from '../../redux/createStore';
 import { NotificationManager } from 'react-notifications';
 import { authService } from '../../apiWorker/servers/authService';
 import { screensActions } from '../../redux/slices/screensSlice';
+import { FlatScreenDto } from '../../apiWorker/typings';
 export function* authFlow() {
   while (true) {
     yield take(authActions.loginRequest);
@@ -12,8 +13,15 @@ export function* authFlow() {
     try {
       const token = yield call(authService.auth, auth);
       yield put(authActions.login({ token }));
-      const screens = yield call(screenServer.getScreens);
-      yield put(screensActions.getAllScreens({ screens }));
+      const screens: FlatScreenDto[] = yield call(screenServer.getScreens);
+      yield put(
+        screensActions.getAllScreens({
+          screens: screens.map((screen) => ({
+            ...screen,
+            status: 'done',
+          })),
+        })
+      );
     } catch (e) {
       if (e.code === 403) {
         NotificationManager.error('Неверные Логин или пароль');

@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fieldsActions } from './fieldsSlice';
 
 export interface View {
   isMenuOpen: boolean;
+  AddFieldModal: boolean;
   deteleModal: {
     isDeteleModal: boolean;
     id: number;
@@ -10,6 +12,7 @@ export interface View {
 
 const initialState: View = {
   isMenuOpen: false,
+  AddFieldModal: false,
   deteleModal: { isDeteleModal: false, id: 0 },
 };
 
@@ -23,11 +26,28 @@ export const viewSlice = createSlice({
     closeMenu: (state) => {
       state.isMenuOpen = false;
     },
-    deleteModalToggle: (state) => {
-      state.deteleModal.isDeteleModal = !state.deteleModal.isDeteleModal;
+    closeDeleteFieldModal: (state) => {
+      state.deteleModal = {
+        id: 0,
+        isDeteleModal: !state.deteleModal.isDeteleModal,
+      };
     },
-    openDeleteModal: (state, action) => {
-      state.deteleModal.id = action.payload;
+    openDeleteFieldModal: (state, action) => {
+      state.deteleModal = {
+        id: action.payload,
+        isDeteleModal: true,
+      };
+    },
+    openAddFieldModal: (state) => {
+      state.AddFieldModal = true;
+    },
+    closeAddFieldModal: (state) => {
+      state.AddFieldModal = false;
+    },
+  },
+  extraReducers: {
+    [fieldsActions.addField.type]: (state) => {
+      state.AddFieldModal = false;
     },
   },
 });

@@ -15,9 +15,9 @@ import { LastPage } from '@material-ui/icons';
 import { createFipc } from 'react-fipc';
 import { textField } from './textCard.fipc';
 import './TextCard.scss';
-import { DeleteModalField } from '../Template/deleteModal/deleteModalField';
 import { viewActions } from '../../redux/slices/viewSlice';
 import { useAction } from '../../hooks/use-action';
+import { Loader } from '../Loader/Loader';
 
 export interface TextCardHooks {
   useTextField: textField;
@@ -54,22 +54,17 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
     },
     [onChange]
   );
-
-  const openDeleteModal = useAction(viewActions.openDeleteModal);
+  const openDeleteFieldModal = useAction(viewActions.openDeleteFieldModal);
 
   return (
     <Grid item sm={multiline ? 6 : 4}>
       <Card className="TextCard">
-        {isLoading && (
-          <div className="TextCard__loader-wrapper">
-            <CircularProgress />
-          </div>
-        )}
+        <Loader isLoading={isLoading} />
         <CardHeader
           title={name}
           action={
             <IconButton
-              onClick={() => openDeleteModal(id)}
+              onClick={() => openDeleteFieldModal(id)}
               aria-label="settings"
             >
               <DeleteIcon />

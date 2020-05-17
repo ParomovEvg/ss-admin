@@ -4,7 +4,7 @@ import { Nav$ } from '../Nav/Nav.fipc';
 import { Hook } from '../../hooks/types';
 import { Auth } from '../auth/Auth.fipc';
 import { createFipc } from 'react-fipc';
-import { Home } from '../Home/Home.fipc';
+import { Screen } from '../Screen/Screen.fipc';
 import { NotificationContainer } from 'react-notifications';
 
 export type PathList = {
@@ -38,7 +38,7 @@ export const NavigationComponent: React.FC<NavigationProps> = ({
         <>
           <Nav$ $render mainLinks={mainRouts} screenLinks={screensRouts} />
           <Switch>
-            <Route path={`/screen/:id`} component={Home} />
+            <Route path={`/screen/:id`} component={Screen} />
 
             {mainRouts.map(({ path, component }) => (
               <Route path={path} key={path} component={component} />

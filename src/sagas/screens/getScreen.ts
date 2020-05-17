@@ -1,11 +1,10 @@
 import { store } from './../../redux/createStore';
-import { fieldsActions, fieldType } from '../../redux/slices/fieldsSlice';
-// import { valuesActions, valueType } from '../../redux/slices/fieldValuesSlice';
+import { fieldsActions, FieldType } from '../../redux/slices/fieldsSlice';
 import { NotificationManager } from 'react-notifications';
-import { Either } from '@sweet-monads/either';
+import { Either } from 'useful-monads';
 import { ScreenDto, ScreenNotFoundById } from '../../apiWorker/typings/index';
 import { screenServer } from '../../apiWorker/servers/screenService';
-import { call, put, takeEvery, take, all, fork } from 'redux-saga/effects';
+import { call, put, takeEvery, take } from 'redux-saga/effects';
 import {
   asyncScreenActions,
   screensActions,
@@ -15,34 +14,27 @@ export function* getScreen(
 ) {
   const screenList = store.getState().screens.screensList;
   if (!screenList.length) yield take(screensActions.getAllScreens);
+
   yield put(asyncScreenActions.getScreenRequest(action.payload));
-
-  let fields: fieldType[] = [];
-  let id: number = 0;
-
-  const screen: Either<ScreenNotFoundById, ScreenDto> = yield call(
+  const screenEither: Either<ScreenNotFoundById, ScreenDto> = yield call(
     screenServer.getScreen,
     action.payload
   );
 
-  screen
-    .map((r) => {
-      id = r.id;
-
-      fields = r.textFields.map((field) => {
-        return {
+  const screen = screenEither.extract();
+  if (screen.right) {
+    yield put(screensActions.getActiveScreen(screen.right.id));
+    yield put(
+      fieldsActions.getFields(
+        screen.right.textFields.map((field) => ({
           ...field,
           status: 'none',
-        };
-      });
-    })
-    .mapLeft((e) => {
-      NotificationManager.error(e.message);
-    });
-
-  yield put(screensActions.getActiveScreen(id));
-  // yield put(valuesActions.getValues(values));
-  yield put(fieldsActions.getFields(fields));
+        }))
+      )
+    );
+  } else {
+    NotificationManager.error(screen.left.message);
+  }
 }
 
 export function* getScreenWatcher() {

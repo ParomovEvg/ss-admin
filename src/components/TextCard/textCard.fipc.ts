@@ -1,10 +1,8 @@
 import { asyncFieldActions } from './../../redux/slices/fieldsSlice';
-// import { valuesActions } from '../../redux/slices/fieldValuesSlice';
 import { RootState } from '../../redux/createStore';
 import { useSelector } from 'react-redux';
 import { useCallback, useState, useEffect } from 'react';
 import { TextCard$ } from './TextCard';
-// import { valueType } from '../../redux/slices/fieldValuesSlice';
 import { useAction } from '../../hooks/use-action';
 import { last } from 'lodash';
 import { TextDto } from '../../apiWorker/typings';
@@ -29,8 +27,9 @@ const useIsReset = (
   lastValue: TextDto | undefined,
   isLoading: boolean
 ) => {
+  const isLastValueChange = lastValue !== last(values);
   const isTextChange = text !== last(values)?.value ?? text;
-  return isTextChange && !isLoading;
+  return (isTextChange || isLastValueChange) && !isLoading;
 };
 
 const useIsSave = (text: string, values: TextDto[], isLoading: boolean) => {
@@ -40,30 +39,30 @@ const useIsSave = (text: string, values: TextDto[], isLoading: boolean) => {
 
 export const TextCard = TextCard$({
   useTextField: <textField>(fieldId: number) => {
-    const setFieldValueRequest = useAction(
-      asyncFieldActions.setFieldValueRequest
-    );
+    const addFieldValueAsync = useAction(asyncFieldActions.addFieldValueAsync);
     const values: TextDto[] = useSelector<RootState, TextDto[]>((state) => {
-      return state.fields.find((field) => field.id === fieldId)?.values ?? [];
+      return (
+        state.fields.items.find((field) => field.id === fieldId)?.values ?? []
+      );
     });
-
-    const [lastValue, setLastValue] = useState(last(values));
     const [text, setText] = useState<string>(last(values)?.value ?? '');
+    const [lastValue, setLastValue] = useState(last(values));
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const setValueStatus: string = useSelector<RootState, string>(
       (state) =>
-        state.fields.find((field) => field.id === fieldId)?.status ?? ''
+        state.fields.items.find((field) => field.id === fieldId)?.status ?? ''
     );
 
     useEffect(() => {
       setIsLoading(setValueStatus === 'loading');
+      setLastValue(last(values));
     }, [setValueStatus]);
 
     const isSave = useIsSave(text, values, isLoading);
     const onSave = useCallback(() => {
-      setFieldValueRequest({ text, fieldId });
-    }, [setFieldValueRequest, text, fieldId]);
+      addFieldValueAsync({ text, fieldId });
+    }, [addFieldValueAsync, text, fieldId]);
 
     const isReset = useIsReset(text, values, lastValue, isLoading);
     const onReset = useCallback(() => {

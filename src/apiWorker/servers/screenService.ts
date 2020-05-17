@@ -1,5 +1,4 @@
-import { screenType } from './../../redux/slices/screensSlice';
-import { Either } from '@sweet-monads/either';
+import { Either } from 'useful-monads';
 import { dtoToEither } from '../dtoToEither';
 import {
   FindAllScreensResDto,
@@ -11,16 +10,11 @@ import {
 } from '../typings/index';
 import { api } from '../api';
 export const screenServer = {
-  getScreens: (): Promise<screenType[]> =>
+  getScreens: (): Promise<FlatScreenDto[]> =>
     api
       .get('screen')
       .json<FindAllScreensResDto>()
-      .then((r) =>
-        r.payload.map((screen) => ({
-          ...screen,
-          status: 'done',
-        }))
-      ),
+      .then((r) => r.payload),
   // addScreen: () =>
   //   api
   //     .post('screen', {
