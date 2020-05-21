@@ -1,4 +1,5 @@
-import { fieldsSlice } from './slices/fieldsSlice';
+import { imgFieldsSlice } from './slices/imgFieldsSlice';
+import { TextFieldsSlice } from './slices/textFieldsSlice';
 import { combineReducers } from 'redux';
 import { counter } from './counter';
 import { viewSlice } from './slices/viewSlice';
@@ -9,7 +10,8 @@ export const stateActions = {
 };
 export const state = combineReducers({
   counter: counter.reducer,
-  fields: fieldsSlice.reducer,
+  TextFields: TextFieldsSlice.reducer,
+  imgFields: imgFieldsSlice.reducer,
   auth: authSlice.reducer,
   view: viewSlice.reducer,
   screens: screensSlice.reducer,

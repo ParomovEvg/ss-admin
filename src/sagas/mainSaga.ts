@@ -3,9 +3,11 @@ import { counterListener } from './counter/counter-listener';
 import { authFlow } from './auth/authFlow';
 import { addScreen } from './screens/addScreen';
 import { getScreenWatcher } from './screens/getScreen';
-import { addValueWatcher } from './fields/addValue';
-import { deleteFieldWatcher } from './fields/deleteField';
-import { addFieldWatcher } from './fields/addField';
+import { addValueWatcher } from './textFields/addTextValue';
+import { deleteTextFieldWatcher } from './textFields/deleteTextField';
+import { addTextFieldWatcher } from './textFields/addTextField';
+import { deleteImgFieldWatcher } from './imgFields/deleteImgField';
+import { addImgFieldWatcher } from './imgFields/addImgField';
 export function* mainSaga() {
   yield all([
     counterListener(),
@@ -13,7 +15,9 @@ export function* mainSaga() {
     addScreen(),
     getScreenWatcher(),
     addValueWatcher(),
-    deleteFieldWatcher(),
-    addFieldWatcher(),
+    deleteTextFieldWatcher(),
+    deleteImgFieldWatcher(),
+    addImgFieldWatcher(),
+    addTextFieldWatcher(),
   ]);
 }

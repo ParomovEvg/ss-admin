@@ -6,6 +6,7 @@ import { Assignment } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/createStore';
 import { FlatScreenDto } from '../../apiWorker/typings';
+import { asyncScreenActions } from '../../redux/slices/screensSlice';
 
 const useScreenRouts = () => {
   const screens = useSelector<RootState, FlatScreenDto[]>(
@@ -26,6 +27,13 @@ const mainRouts: PathList = [
   },
 ];
 
+const useIsLoadingApp = () => {
+  const isLoading = useSelector<RootState, boolean>(
+    (state) => state.screens.isLoading
+  );
+  return isLoading;
+};
+
 const additionalRouts: PathList = [
   {
     name: 'Главная страница',
@@ -40,4 +48,5 @@ export const Navigation = Navigation$({
   useScreenRouts,
   useIsAuth: () =>
     useSelector<RootState, boolean>((state) => Boolean(state.auth.token)),
+  useIsLoadingApp,
 });

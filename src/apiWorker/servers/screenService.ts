@@ -4,7 +4,6 @@ import {
   FindAllScreensResDto,
   ScreenNotFoundById,
   FlatScreenDto,
-  CreateScreenResDto,
   ScreenDto,
   FindScreenByIdResDto,
 } from '../typings/index';

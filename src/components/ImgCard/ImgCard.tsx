@@ -12,59 +12,46 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 import { LastPage } from '@material-ui/icons';
 import { createFipc } from 'react-fipc';
-import { TextFieldType } from './textCard.fipc';
-import './TextCard.scss';
 import { viewActions } from '../../redux/slices/viewSlice';
 import { useAction } from '../../hooks/use-action';
 import { Loader } from '../Loader/Loader';
 
-export interface TextCardHooks {
-  useTextField: TextFieldType;
+export interface ImgCardHooks {
+  useImgField: (
+    id: number
+  ) => {
+    isLoading: boolean;
+  };
 }
-export interface TextCardProps extends TextCardHooks {
+
+export interface ImgCardProps extends ImgCardHooks {
   className?: string;
   multiline?: boolean;
   id: number;
   name: string;
 }
 
-export const TextCardComponent: React.FC<TextCardProps> = ({
-  useTextField,
+export const ImgCardComponent: React.FC<ImgCardProps> = ({
   children,
   className,
   name,
   id,
+  useImgField,
+  multiline = false,
 }) => {
-  const {
-    value,
-    onChange,
-    onSave,
-    isSave,
-    onReset,
-    isReset,
-    onBack,
-    isLoading,
-  } = useTextField(id, name);
-
-  const handleChange = useCallback(
-    (e: { target: { value: string } }) => {
-      onChange(e.target.value);
-    },
-    [onChange]
+  const openDeleteImgFieldModal = useAction(
+    viewActions.openDeleteImgFieldModal
   );
-  const openDeleteTextFieldModal = useAction(
-    viewActions.openDeleteTextFieldModal
-  );
-
+  const { isLoading } = useImgField(id);
   return (
-    <Grid item sm={4}>
+    <Grid item sm={multiline ? 6 : 4}>
       <Card className="TextCard">
         <Loader isLoading={isLoading} />
         <CardHeader
           title={name}
           action={
             <IconButton
-              onClick={() => openDeleteTextFieldModal(id)}
+              onClick={() => openDeleteImgFieldModal(id)}
               aria-label="settings"
             >
               <DeleteIcon />
@@ -75,9 +62,9 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
           <Grid container spacing={4}>
             <Grid item sm={12}>
               <form>
-                <TextField
+                {/* <TextField
                   fullWidth
-                  multiline={true}
+                  multiline={multiline}
                   name="title"
                   label="Текст заголовка"
                   variant="outlined"
@@ -92,10 +79,10 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
                       </InputAdornment>
                     ),
                   }}
-                />
+                /> */}
               </form>
             </Grid>
-            <Grid container item spacing={2} sm={12}>
+            {/* <Grid container item spacing={2} sm={12}>
               <Grid item>
                 <Button
                   disabled={!isSave}
@@ -116,7 +103,7 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
                   Сбросить
                 </Button>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Grid>
         </CardContent>
       </Card>
@@ -124,4 +111,4 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
   );
 };
 
-export const TextCard$ = createFipc(TextCardComponent);
+export const ImgCard$ = createFipc(ImgCardComponent);

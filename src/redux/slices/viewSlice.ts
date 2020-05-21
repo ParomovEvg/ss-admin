@@ -1,19 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fieldsActions } from './fieldsSlice';
+import { TextFieldsActions } from './textFieldsSlice';
+import { imgFieldsActions } from './imgFieldsSlice';
 
 export interface View {
   isMenuOpen: boolean;
-  AddFieldModal: boolean;
-  deteleModal: {
-    isDeteleModal: boolean;
-    id: number;
+  AddTextFieldModal: boolean;
+  AddImgFieldModal: boolean;
+  textFieldDeteleModal: {
+    isTextFieldDeteleModal: boolean;
+    idTextField: number;
+  };
+  imgFieldDeteleModal: {
+    isImgFieldDeteleModal: boolean;
+    idImgField: number;
   };
 }
 
 const initialState: View = {
   isMenuOpen: false,
-  AddFieldModal: false,
-  deteleModal: { isDeteleModal: false, id: 0 },
+  AddTextFieldModal: false,
+  AddImgFieldModal: false,
+  textFieldDeteleModal: { isTextFieldDeteleModal: false, idTextField: 0 },
+  imgFieldDeteleModal: { isImgFieldDeteleModal: false, idImgField: 0 },
 };
 
 export const viewSlice = createSlice({
@@ -26,31 +34,52 @@ export const viewSlice = createSlice({
     closeMenu: (state) => {
       state.isMenuOpen = false;
     },
-    closeDeleteFieldModal: (state) => {
-      state.deteleModal = {
-        id: 0,
-        isDeteleModal: !state.deteleModal.isDeteleModal,
+    closeDeleteTextFieldModal: (state) => {
+      state.textFieldDeteleModal = {
+        idTextField: 0,
+        isTextFieldDeteleModal: !state.textFieldDeteleModal
+          .isTextFieldDeteleModal,
       };
     },
-    openDeleteFieldModal: (state, action) => {
-      state.deteleModal = {
-        id: action.payload,
-        isDeteleModal: true,
+    openDeleteTextFieldModal: (state, action) => {
+      state.textFieldDeteleModal = {
+        idTextField: action.payload,
+        isTextFieldDeteleModal: true,
       };
     },
-    openAddFieldModal: (state) => {
-      state.AddFieldModal = true;
+    closeDeleteImgFieldModal: (state) => {
+      state.imgFieldDeteleModal = {
+        idImgField: 0,
+        isImgFieldDeteleModal: !state.imgFieldDeteleModal.isImgFieldDeteleModal,
+      };
     },
-    closeAddFieldModal: (state) => {
-      state.AddFieldModal = false;
+    openDeleteImgFieldModal: (state, action) => {
+      state.imgFieldDeteleModal = {
+        idImgField: action.payload,
+        isImgFieldDeteleModal: true,
+      };
+    },
+    openAddTextFieldModal: (state) => {
+      state.AddTextFieldModal = true;
+    },
+    closeAddTextFieldModal: (state) => {
+      state.AddTextFieldModal = false;
+    },
+    openAddImgFieldModal: (state) => {
+      state.AddImgFieldModal = true;
+    },
+    closeAddImgFieldModal: (state) => {
+      state.AddImgFieldModal = false;
     },
   },
   extraReducers: {
-    [fieldsActions.addField.type]: (state) => {
-      state.AddFieldModal = false;
+    [TextFieldsActions.addTextField.type]: (state) => {
+      state.AddTextFieldModal = false;
+    },
+    [imgFieldsActions.addImgField.type]: (state) => {
+      state.AddImgFieldModal = false;
     },
   },
 });
 
-export const asyncViewActions = {};
-export const viewActions = { ...viewSlice.actions, ...asyncViewActions };
+export const viewActions = { ...viewSlice.actions };

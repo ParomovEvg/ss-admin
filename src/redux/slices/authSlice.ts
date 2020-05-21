@@ -5,6 +5,11 @@ export type Auth = {
   password: string;
   token: string;
   isTokenValid: boolean;
+  isLoading: boolean;
+};
+
+const asyncAuthActions = {
+  loginRequest: createAction('auth/login_request'),
 };
 
 const initialState: Auth = {
@@ -12,6 +17,7 @@ const initialState: Auth = {
   password: '',
   token: '',
   isTokenValid: false,
+  isLoading: false,
 };
 
 export const authSlice = createSlice({
@@ -24,6 +30,7 @@ export const authSlice = createSlice({
     },
     logout: (state, action: PayloadAction<{}>) => {
       state.token = '';
+      state.isLoading = false;
       state.isTokenValid = false;
     },
     tokenExpired: (state) => {
@@ -36,11 +43,12 @@ export const authSlice = createSlice({
       state.password = action.payload;
     },
   },
+  extraReducers: {
+    [asyncAuthActions.loginRequest.type]: (state, action) => {
+      state.isLoading = true;
+    },
+  },
 });
-
-const asyncAuthActions = {
-  loginRequest: createAction('auth/login_request'),
-};
 
 export const authActions = {
   ...asyncAuthActions,

@@ -39,4 +39,7 @@ export const Auth = Auth$({
     );
     return [password, handleChange];
   },
+  useIsLoading: () => {
+    return useSelector<RootState, boolean>((state) => state.auth.isLoading);
+  },
 });
