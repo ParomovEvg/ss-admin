@@ -1,7 +1,6 @@
-import { SetValueType } from './../../redux/slices/fieldsSlice';
+import { SetTextValueType } from '../../redux/slices/textFieldsSlice';
 // import { Either } from '@sweet-monads/either';
 import { Either } from 'useful-monads';
-import { EitherAsync } from 'useful-monads/EitherAsync.d';
 import { dtoToEither } from '../dtoToEither';
 import {
   DeleteTextFieldResDto,
@@ -15,9 +14,9 @@ import {
   FlatTextFieldDto,
 } from '../typings/index';
 import { api } from '../api';
-import { DeleteFieldType } from '../../redux/slices/fieldsSlice';
-export const fieldServer = {
-  deleteField: (
+import { DeleteFieldType } from '../../redux/slices/textFieldsSlice';
+export const TextFieldServer = {
+  deleteTextField: (
     id: number
   ): Promise<Either<TextFieldNotFoundById, DeleteFieldType>> =>
     api
@@ -25,7 +24,7 @@ export const fieldServer = {
       .json<DeleteTextFieldResDto>()
       .then(dtoToEither),
 
-  addValue: (payload: SetValueType): Promise<TextDto | undefined> =>
+  addTextValue: (payload: SetTextValueType): Promise<TextDto | undefined> =>
     api
       .post('text/value', {
         json: {
@@ -35,7 +34,7 @@ export const fieldServer = {
       })
       .json<CreateTextResDto>()
       .then((r) => r.payload),
-  addField: (
+  addTextField: (
     payload: CreateTextFieldDto
   ): Promise<
     Either<ScreenNotFoundById | TextFieldAlreadyExists, FlatTextFieldDto>

@@ -11,11 +11,13 @@ import {
 import './Auth.scss';
 import { CallBackHook, Hook } from '../../hooks/types';
 import { createFipc } from 'react-fipc';
+import { Loader } from '../Loader/Loader';
 
 export type AuthHooks = {
-  usePhoneInput: Hook<[string, (e: ChangeEvent<HTMLInputElement>) => void]>;
   usePasswordInput: Hook<[string, (e: ChangeEvent<HTMLInputElement>) => void]>;
+  usePhoneInput: Hook<[string, (e: ChangeEvent<HTMLInputElement>) => void]>;
   useSubmitHandler: CallBackHook<[FormEvent<HTMLFormElement>]>;
+  useIsLoading: Hook<boolean>;
 };
 export interface AuthProps extends AuthHooks {
   className?: string;
@@ -25,6 +27,7 @@ export const AuthComponent: React.FC<AuthProps> = ({
   usePasswordInput,
   usePhoneInput,
   useSubmitHandler,
+  useIsLoading,
   children,
   className,
 }) => {
@@ -32,6 +35,7 @@ export const AuthComponent: React.FC<AuthProps> = ({
   const [password, handlePasswordChange] = usePasswordInput();
   const submitHandler = useSubmitHandler();
   const blockClassName = cn(className, 'Auth');
+  const isLoading = useIsLoading();
   return (
     <div className={blockClassName}>
       <Grid
@@ -40,6 +44,7 @@ export const AuthComponent: React.FC<AuthProps> = ({
         justify="center"
         alignItems="center"
       >
+        <Loader isLoading={isLoading} />
         <Card className="Auth__card">
           <CardHeader title={'Войти'} />
           <CardContent>

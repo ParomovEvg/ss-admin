@@ -450,12 +450,24 @@ export interface TextContentDto {
 export interface TextFieldContentDto {
   id: number;
   name: string;
-  value: TextContentDto;
+  value?: TextContentDto;
+}
+export interface ImgDto {
+  id: number;
+  path: string;
+  url: string;
+  host: string;
+}
+export interface ImgFieldContentDto {
+  id: number;
+  name: string;
+  img?: ImgDto;
 }
 export interface ScreenContentDto {
   id: number;
   name: string;
   textFields: Array<TextFieldContentDto>;
+  imgFields: Array<ImgFieldContentDto>;
 }
 export interface GetContentResDto {
   payload: Array<ScreenContentDto>;
@@ -469,10 +481,10 @@ export type ContentControllerGetContentResponse<
     : any
   : TCode extends 400
   ? TContentType extends 'application/json'
-    ? /**
-       * Empty response
-       */
-      null
+    /**
+     * Empty response
+     */
+    ? null
     : any
   : any;
 export interface FlatTextFieldDto {
@@ -519,8 +531,16 @@ export interface TextDto {
   createDate: string;
   value: string;
 }
+export interface TextFieldNotFoundById {
+  name: 'TextFieldNotFoundById';
+  message: string;
+  param: {
+    id?: number;
+  };
+}
 export interface CreateTextResDto {
   payload?: TextDto;
+  TextFiledNotFoundById?: TextFieldNotFoundById;
 }
 export type TextControllerCreateTextResponse<
   TCode extends 201 = 201,
@@ -542,13 +562,6 @@ export type TextControllerCreateTextRequest<
  */
 export interface TextControllerDeleteTextFieldParameters {
   fieldId: number;
-}
-export interface TextFieldNotFoundById {
-  name: 'TextFieldNotFoundById';
-  message: string;
-  param: {
-    id?: number;
-  };
 }
 export interface DeleteTextFieldResDto {
   payload: {
@@ -633,10 +646,16 @@ export type ScreenControllerCreateScreenRequest<
 export interface ScreenControllerFindScreenByIdParameters {
   screenId: number;
 }
+export interface ImgFieldDto {
+  id: number;
+  name: string;
+  img: Array<ImgDto>;
+}
 export interface ScreenDto {
   id: number;
   name: string;
   textFields: Array<TextFieldDto>;
+  imgFields: Array<ImgFieldDto>;
 }
 export interface FindScreenByIdResDto {
   payload?: ScreenDto;
@@ -648,5 +667,138 @@ export type ScreenControllerFindScreenByIdResponse<
 > = TCode extends 200
   ? TContentType extends 'application/json'
     ? FindScreenByIdResDto
+    : any
+  : any;
+export interface FlatImgFieldDto {
+  id: number;
+  name: string;
+}
+export interface ImgFieldAlreadyExistsInScreen {
+  name: 'ImgFieldAlreadyExistsInScreen';
+  message: string;
+  param: {
+    name?: string;
+    screenId?: number;
+  };
+}
+export interface CreateImgFieldResDto {
+  payload?: FlatImgFieldDto;
+  ScreenNotFoundById?: ScreenNotFoundById;
+  ImgFieldAlreadyExistsInScreen?: ImgFieldAlreadyExistsInScreen;
+}
+export type ImgControllerCreateImgFieldResponse<
+  TCode extends 201 = 201,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 201
+  ? TContentType extends 'application/json'
+    ? CreateImgFieldResDto
+    : any
+  : any;
+export interface CreateImgFieldDto {
+  screenId: number;
+  name: string;
+}
+export type ImgControllerCreateImgFieldRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? CreateImgFieldDto : any;
+/**
+ * Model of parameters for API `/img/field/{fieldId}`
+ */
+export interface ImgControllerDeleteImgFieldParameters {
+  fieldId: number;
+}
+export interface ImgFieldNotFoundById {
+  name: 'ImgFieldNotFoundById';
+  message: string;
+  param: {
+    id?: number;
+  };
+}
+export interface DeleteImgFieldResDto {
+  payload: {
+    id?: number;
+  };
+  ImgFieldNotFoundById?: ImgFieldNotFoundById;
+}
+export type ImgControllerDeleteImgFieldResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? DeleteImgFieldResDto
+    : any
+  : any;
+/**
+ * Model of parameters for API `/img/field/{fieldId}`
+ */
+export interface ImgControllerFindFieldByIdParameters {
+  fieldId: number;
+}
+export interface FindImgFieldByIdResDto {
+  payload?: ImgFieldDto;
+  ImgFieldNotFoundById?: ImgFieldNotFoundById;
+}
+export type ImgControllerFindFieldByIdResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? FindImgFieldByIdResDto
+    : any
+  : any;
+/**
+ * Model of parameters for API `/img/field/{fieldId}/value`
+ */
+export interface ImgControllerUploadFileParameters {
+  fieldId: number;
+  file: any;
+}
+export interface CreateImgResDto {
+  payload?: ImgDto;
+  ImgFieldNotFoundById?: ImgFieldNotFoundById;
+}
+export type ImgControllerUploadFileResponse<
+  TCode extends 201 = 201,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 201
+  ? TContentType extends 'application/json'
+    ? CreateImgResDto
+    : any
+  : any;
+/**
+ * Model of parameters for API `/img/field/{fieldId}/value/{imgId}/before`
+ */
+export interface ImgControllerGetImgBeforeParameters {
+  fieldId: number;
+  imgId: number;
+}
+export interface ImgVersionBeforeNotFound {
+  name: 'ImgVersionBeforeNotFound';
+  message: string;
+  param: {
+    fieldId?: number;
+    imgId?: number;
+  };
+}
+export interface ImgNotFoundByIdInField {
+  name: 'ImgNotFoundByIdInField';
+  message: string;
+  param: {
+    imgId?: number;
+    fieldId?: number;
+  };
+}
+export interface GetImgBeforeResDto {
+  payload?: ImgDto;
+  ImgVersionBeforeNotFound?: ImgVersionBeforeNotFound;
+  ImgFieldNotFoundById?: ImgFieldNotFoundById;
+  ImgNotFoundByIdInField?: ImgNotFoundByIdInField;
+}
+export type ImgControllerGetImgBeforeResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? GetImgBeforeResDto
     : any
   : any;

@@ -1,25 +1,31 @@
+import { imgFieldsActionsAsync, imgFieldsActions } from './imgFieldsSlice';
 import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
 import { FlatScreenDto } from '../../apiWorker/typings';
-import { asyncFieldActions, fieldsActions } from './fieldsSlice';
+import { asyncTextFieldActions, TextFieldsActions } from './textFieldsSlice';
 
 export interface ScreenType extends FlatScreenDto {
-  status: string;
+  isLoading: boolean;
 }
 
 export type ScreensType = {
   screensList: ScreenType[];
   activeScreen: number;
+  isLoading: boolean;
 };
 
 const initialState: ScreensType = {
   screensList: [],
   activeScreen: 0,
+  isLoading: false,
 };
 
 export const asyncScreenActions = {
-  addScreenRequest: createAction('screens/addScreens_request'),
+  addScreenRequest: createAction('screens/addScreen_request'),
   getScreen: createAction<number>('screens/getScreen' as const),
   getScreenRequest: createAction<number>('screens/getScreen_request' as const),
+  getScreensRequest: createAction('screens/getAllScreens_request' as const),
+  getScreenError: createAction<number>('screens/getScreen_error' as const),
+  getScreensError: createAction('screens/getScreens_error' as const),
 };
 
 export const screensSlice = createSlice({
@@ -31,13 +37,14 @@ export const screensSlice = createSlice({
       action: PayloadAction<{ screens: ScreenType[] }>
     ) => {
       state.screensList = action.payload.screens;
+      state.isLoading = false;
     },
     // addScreen: (state, action: PayloadAction<{ screen: ScreenType }>) => {
     //   state.screensList = [...state.screensList, action.payload.screen];
     // },
     getActiveScreen: (state, action: PayloadAction<number>) => {
       state.screensList.forEach((screen) => {
-        if (screen.id === action.payload) screen.status = 'done';
+        if (screen.id === action.payload) screen.isLoading = false;
       });
       state.activeScreen = action.payload;
     },
@@ -48,22 +55,48 @@ export const screensSlice = createSlice({
       action: ReturnType<typeof asyncScreenActions.getScreenRequest>
     ) => {
       state.screensList.forEach((screen) => {
-        if (screen.id === action.payload) screen.status = 'loading';
+        if (screen.id === action.payload) screen.isLoading = true;
       });
     },
-    [asyncFieldActions.addFieldRequest.type]: (state) => {
+    [asyncTextFieldActions.addTextFieldRequest.type]: (state, action) => {
       state.screensList.forEach((screen) => {
-        if (screen.id === state.activeScreen) screen.status = 'loading';
+        if (screen.id === action.payload) screen.isLoading = true;
       });
     },
-    [fieldsActions.addField.type]: (state) => {
+    [TextFieldsActions.addTextField.type]: (state, action) => {
       state.screensList.forEach((screen) => {
-        if (screen.id === state.activeScreen) screen.status = 'done';
+        if (screen.id === action.payload.id) screen.isLoading = false;
       });
     },
-    [asyncFieldActions.addFieldError.type]: (state, action) => {
+    [asyncTextFieldActions.addTextFieldError.type]: (state, action) => {
       state.screensList.forEach((screen) => {
-        if (screen.id === action.payload) screen.status = 'done';
+        if (screen.id === action.payload) screen.isLoading = false;
+      });
+    },
+    [asyncScreenActions.getScreensRequest.type]: (state, action) => {
+      state.isLoading = true;
+    },
+    [asyncScreenActions.getScreenError.type]: (state, action) => {
+      state.screensList.forEach((screen) => {
+        if (screen.id === action.payload) screen.isLoading = false;
+      });
+    },
+    [asyncScreenActions.getScreensError.type]: (state, action) => {
+      state.isLoading = false;
+    },
+    [imgFieldsActionsAsync.addImgFieldRequest.type]: (state, action) => {
+      state.screensList.forEach((screen) => {
+        if (screen.id === action.payload) screen.isLoading = true;
+      });
+    },
+    [imgFieldsActionsAsync.deleteImgfieldError.type]: (state, action) => {
+      state.screensList.forEach((screen) => {
+        if (screen.id === action.payload) screen.isLoading = false;
+      });
+    },
+    [imgFieldsActions.addImgField.type]: (state, action) => {
+      state.screensList.forEach((screen) => {
+        if (screen.id === action.payload.id) screen.isLoading = false;
       });
     },
   },

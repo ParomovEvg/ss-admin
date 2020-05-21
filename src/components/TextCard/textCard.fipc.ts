@@ -1,4 +1,4 @@
-import { asyncFieldActions } from './../../redux/slices/fieldsSlice';
+import { asyncTextFieldActions } from '../../redux/slices/textFieldsSlice';
 import { RootState } from '../../redux/createStore';
 import { useSelector } from 'react-redux';
 import { useCallback, useState, useEffect } from 'react';
@@ -7,7 +7,7 @@ import { useAction } from '../../hooks/use-action';
 import { last } from 'lodash';
 import { TextDto } from '../../apiWorker/typings';
 
-export type textField = (
+export type TextFieldType = (
   fieldId: number,
   name: string
 ) => {
@@ -36,26 +36,29 @@ const useIsSave = (text: string, values: TextDto[], isLoading: boolean) => {
   const isTextChange = text !== last(values)?.value ?? text;
   return isTextChange && !isLoading;
 };
-
 export const TextCard = TextCard$({
-  useTextField: <textField>(fieldId: number) => {
-    const addFieldValueAsync = useAction(asyncFieldActions.addFieldValueAsync);
+  useTextField: <TextFieldType>(fieldId: number) => {
+    const addFieldValueAsync = useAction(
+      asyncTextFieldActions.addTextFieldValueAsync
+    );
     const values: TextDto[] = useSelector<RootState, TextDto[]>((state) => {
       return (
-        state.fields.items.find((field) => field.id === fieldId)?.values ?? []
+        state.TextFields.items.find((field) => field.id === fieldId)?.values ??
+        []
       );
     });
     const [text, setText] = useState<string>(last(values)?.value ?? '');
     const [lastValue, setLastValue] = useState(last(values));
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const setValueStatus: string = useSelector<RootState, string>(
+    const setValueStatus: boolean = useSelector<RootState, boolean>(
       (state) =>
-        state.fields.items.find((field) => field.id === fieldId)?.status ?? ''
+        state.TextFields.items.find((field) => field.id === fieldId)
+          ?.isLoading ?? false
     );
 
     useEffect(() => {
-      setIsLoading(setValueStatus === 'loading');
+      setIsLoading(setValueStatus);
       setLastValue(last(values));
     }, [setValueStatus]);
 

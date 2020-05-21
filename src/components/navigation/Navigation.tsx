@@ -6,6 +6,7 @@ import { Auth } from '../auth/Auth.fipc';
 import { createFipc } from 'react-fipc';
 import { Screen } from '../Screen/Screen.fipc';
 import { NotificationContainer } from 'react-notifications';
+import { Loader } from '../Loader/Loader';
 
 export type PathList = {
   path: string;
@@ -19,6 +20,7 @@ export type NavigationHooks = {
   useAdditionalRouts: Hook<PathList>;
   useScreenRouts: Hook<PathList>;
   useIsAuth: Hook<boolean>;
+  useIsLoadingApp: Hook<boolean>;
 };
 export interface NavigationProps extends NavigationHooks {}
 export const NavigationComponent: React.FC<NavigationProps> = ({
@@ -26,14 +28,17 @@ export const NavigationComponent: React.FC<NavigationProps> = ({
   useAdditionalRouts,
   useScreenRouts,
   useIsAuth,
+  useIsLoadingApp,
 }) => {
   const mainRouts = useMainRouts();
   const additionalRouts = useAdditionalRouts();
   const screensRouts = useScreenRouts();
   const isAuth = useIsAuth();
+  const isLoading = useIsLoadingApp();
   return (
     <BrowserRouter>
       <NotificationContainer />
+      <Loader isLoading={isLoading} />
       {isAuth ? (
         <>
           <Nav$ $render mainLinks={mainRouts} screenLinks={screensRouts} />
