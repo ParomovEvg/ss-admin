@@ -16,9 +16,6 @@ import { viewActions } from '../../redux/slices/viewSlice';
 import { AddTextFieldModal } from '../AddTextFieldModal/AddTextFieldModal.fipc';
 import { useParams } from 'react-router-dom';
 import { AddImgFieldModal } from '../AddImgFieldModal/AddImgFieldModal.fipc';
-export interface ScreenProps extends ScreenHooks {
-  className?: string;
-}
 
 export interface ScreenHooks {
   useFields: () => void;
@@ -29,6 +26,9 @@ export interface ScreenHooks {
   useImgFields: () => {
     imgFields: ImgFieldDto[];
   };
+}
+export interface ScreenProps extends ScreenHooks {
+  className?: string;
 }
 
 const Screen: React.FC<ScreenProps> = ({
@@ -46,9 +46,10 @@ const Screen: React.FC<ScreenProps> = ({
   const openAddTextFieldModal = useAction(viewActions.openAddTextFieldModal);
   const openAddImgFieldModal = useAction(viewActions.openAddImgFieldModal);
   useFields();
-  if (isLoading) return <Loader isLoading={isLoading} />;
+  // if (isLoading) return;
   return (
     <Layout title="Home">
+      <Loader isLoading={isLoading} />
       <Grid container spacing={3}>
         {textFields.map(({ id, name }) => {
           return <TextCard id={id} key={id} name={name} />;

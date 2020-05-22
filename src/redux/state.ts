@@ -5,6 +5,7 @@ import { counter } from './counter';
 import { viewSlice } from './slices/viewSlice';
 import { authSlice } from './slices/authSlice';
 import { screensSlice } from './slices/screensSlice';
+import { checkoutSlice } from './slices/checkoutSlice';
 export const stateActions = {
   counter: counter.actions,
 };
@@ -15,4 +16,5 @@ export const state = combineReducers({
   auth: authSlice.reducer,
   view: viewSlice.reducer,
   screens: screensSlice.reducer,
+  checkouts: checkoutSlice.reducer,
 });

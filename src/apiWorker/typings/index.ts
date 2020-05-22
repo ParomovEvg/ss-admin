@@ -481,10 +481,10 @@ export type ContentControllerGetContentResponse<
     : any
   : TCode extends 400
   ? TContentType extends 'application/json'
-    /**
-     * Empty response
-     */
-    ? null
+    ? /**
+       * Empty response
+       */
+      null
     : any
   : any;
 export interface FlatTextFieldDto {

@@ -3,7 +3,7 @@ import { getState, store } from '../redux/createStore';
 import { authActions } from '../redux/slices/authSlice';
 import { LoginResDto } from './typings';
 export const api = ky.extend({
-  prefixUrl: 'http://a0319139.xsph.ru:3000',
+  prefixUrl: 'http://a0319139.xsph.ru:3000/',
   hooks: {
     beforeRequest: [
       async (request) => {

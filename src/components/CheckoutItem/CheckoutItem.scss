@@ -1,0 +1,31 @@
+.checkout {
+  &__item {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+  }
+  &__row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+  &__name {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: bold;
+    padding-bottom: 5px;
+  }
+  &__value {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  &__delete {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+}

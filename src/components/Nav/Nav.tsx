@@ -41,6 +41,7 @@ export const Nav: React.FC<NavProps> = ({
           <NavItem path={path} name={name} key={path} />
         ))}
       </List>
+      <Divider />
     </Drawer>
   );
 };

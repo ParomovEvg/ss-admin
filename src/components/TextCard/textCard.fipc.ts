@@ -27,7 +27,7 @@ const useIsReset = (
   lastValue: TextDto | undefined,
   isLoading: boolean
 ) => {
-  const isLastValueChange = lastValue !== last(values);
+  const isLastValueChange = lastValue?.value !== last(values)?.value ?? '';
   const isTextChange = text !== last(values)?.value ?? text;
   return (isTextChange || isLastValueChange) && !isLoading;
 };
