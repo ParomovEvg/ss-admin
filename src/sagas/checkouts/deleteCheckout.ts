@@ -21,6 +21,7 @@ export function* deleteCheckout(
     > = yield call(CheckoutsServer.deleteCheckout, action.payload);
 
     const deleteId = deleteIdEither.extract();
+
     if (deleteId.right) {
       yield put(checkoutActions.deleteCheckout(deleteId.right.checkoutId));
     } else {

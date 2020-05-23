@@ -38,6 +38,7 @@ export function* addImgField(
             ...field.right,
             img: [],
             isLoading: false,
+            addImgValue: undefined,
           },
           id: action.payload,
         })

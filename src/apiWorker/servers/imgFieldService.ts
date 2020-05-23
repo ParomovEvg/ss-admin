@@ -6,10 +6,14 @@ import {
   ScreenNotFoundById,
   ImgFieldAlreadyExistsInScreen,
   FlatImgFieldDto,
+  ImgFieldNotFoundById,
+  ImgDto,
+  CreateImgResDto,
 } from './../typings/index';
 import { Either } from 'useful-monads';
 import { dtoToEither } from '../dtoToEither';
 import { api } from '../api';
+
 export const imgFieldsService = {
   deleteimgField: (
     id: number
@@ -28,5 +32,15 @@ export const imgFieldsService = {
         json: ImgField,
       })
       .json<CreateImgFieldResDto>()
+      .then(dtoToEither),
+  addImg: (
+    file: FormData,
+    id: number
+  ): Promise<Either<ImgFieldNotFoundById, ImgDto>> =>
+    api
+      .post(`img/field/${id}/value`, {
+        body: file,
+      })
+      .json<CreateImgResDto>()
       .then(dtoToEither),
 };

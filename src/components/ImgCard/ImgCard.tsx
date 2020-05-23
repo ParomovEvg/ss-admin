@@ -5,22 +5,26 @@ import {
   CardHeader,
   Button,
   Grid,
-  InputAdornment,
   IconButton,
-  TextField,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { LastPage } from '@material-ui/icons';
 import { createFipc } from 'react-fipc';
 import { viewActions } from '../../redux/slices/viewSlice';
 import { useAction } from '../../hooks/use-action';
 import { Loader } from '../Loader/Loader';
-
+import { DropZone } from '../DropZone/DropZone.fipc';
+import { ImgDto } from '../../apiWorker/typings';
 export interface ImgCardHooks {
   useImgField: (
     id: number
   ) => {
     isLoading: boolean;
+    onChangeDropZone: (acceptedFiles: File[]) => void;
+    onSave: () => void;
+    isSave: boolean;
+    onBack: () => void;
+    isBack: boolean;
+    url: string;
   };
 }
 
@@ -37,14 +41,21 @@ export const ImgCardComponent: React.FC<ImgCardProps> = ({
   name,
   id,
   useImgField,
-  multiline = false,
 }) => {
   const openDeleteImgFieldModal = useAction(
     viewActions.openDeleteImgFieldModal
   );
-  const { isLoading } = useImgField(id);
+  const {
+    isLoading,
+    onChangeDropZone,
+    onSave,
+    isSave,
+    isBack,
+    onBack,
+    url,
+  } = useImgField(id);
   return (
-    <Grid item sm={multiline ? 6 : 4}>
+    <Grid item sm={4}>
       <Card className="TextCard">
         <Loader isLoading={isLoading} />
         <CardHeader
@@ -61,28 +72,9 @@ export const ImgCardComponent: React.FC<ImgCardProps> = ({
         <CardContent>
           <Grid container spacing={4}>
             <Grid item sm={12}>
-              <form>
-                {/* <TextField
-                  fullWidth
-                  multiline={multiline}
-                  name="title"
-                  label="Текст заголовка"
-                  variant="outlined"
-                  value={value}
-                  onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position={'end'}>
-                        <IconButton onClick={onBack} size={'small'}>
-                          <LastPage />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                /> */}
-              </form>
+              <DropZone id={id} url={url} onChangeDropZone={onChangeDropZone} />
             </Grid>
-            {/* <Grid container item spacing={2} sm={12}>
+            <Grid item container sm={12} spacing={2}>
               <Grid item>
                 <Button
                   disabled={!isSave}
@@ -95,15 +87,15 @@ export const ImgCardComponent: React.FC<ImgCardProps> = ({
               </Grid>
               <Grid item>
                 <Button
-                  disabled={!isReset}
-                  onClick={onReset}
-                  variant={'outlined'}
+                  disabled={!isBack}
                   color={'primary'}
+                  variant="outlined"
+                  onClick={onBack}
                 >
-                  Сбросить
+                  Предидущее
                 </Button>
               </Grid>
-            </Grid> */}
+            </Grid>
           </Grid>
         </CardContent>
       </Card>

@@ -64,7 +64,7 @@ const Screen: React.FC<ScreenProps> = ({
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        {imgFields.map(({ id, name }) => {
+        {imgFields.map(({ id, name, img }) => {
           return <ImgCard id={id} key={id} name={name} />;
         })}
         <AddImgFieldModal id={parseInt(id)} />

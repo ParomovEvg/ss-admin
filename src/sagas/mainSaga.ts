@@ -11,6 +11,7 @@ import { addImgFieldWatcher } from './imgFields/addImgField';
 import { getAllCheckout } from './checkouts/getAllCheckout';
 import { deleteCheckoutWatcher } from './checkouts/deleteCheckout';
 import { addCheckout } from './checkouts/addCheckout';
+import { addImgWatcher } from './imgFields/addImg';
 export function* mainSaga() {
   yield all([
     counterListener(),
@@ -25,5 +26,6 @@ export function* mainSaga() {
     getAllCheckout(),
     deleteCheckoutWatcher(),
     addCheckout(),
+    addImgWatcher(),
   ]);
 }

@@ -34,6 +34,7 @@ export function* getScreen(
           screen.right.imgFields.map((imgField) => ({
             ...imgField,
             isLoading: false,
+            addImgValue: undefined,
           }))
         )
       );

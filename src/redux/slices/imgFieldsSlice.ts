@@ -1,8 +1,10 @@
+import { ImgDto } from './../../apiWorker/typings/index';
 import { ImgFieldDto } from '../../apiWorker/typings/index';
 import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
 
 interface imgField extends ImgFieldDto {
   isLoading: boolean;
+  addImgValue: string | undefined;
 }
 
 type InitialStateType = {
@@ -32,6 +34,9 @@ export const imgFieldsActionsAsync = {
   addImgFieldError: createAction<number>(
     'imgFields/addImgfiled_error' as const
   ),
+  addImg_async: createAction<number>('imgFields/addImg_async' as const),
+  addImg_request: createAction<number>('imgFields/addImg_request' as const),
+  addImg_error: createAction<number>('imgFields/addImg_error' as const),
 };
 
 export const imgFieldsSlice = createSlice({
@@ -56,6 +61,27 @@ export const imgFieldsSlice = createSlice({
       state.items.push(action.payload.item);
       state.addImgFieldName = '';
     },
+    addImg: (state, action: PayloadAction<{ img: ImgDto; id: number }>) => {
+      state.items.forEach((imgField) => {
+        if (imgField.id === action.payload.id) {
+          imgField.img.push(action.payload.img);
+          imgField.isLoading = false;
+          imgField.addImgValue = undefined;
+          if (imgField.img.length > 3) imgField.img.shift();
+        }
+      });
+    },
+    addImgValue: (
+      state,
+      action: PayloadAction<{ newUrl?: string; id: number }>
+    ) => {
+      state.items = state.items.map((imgField) => {
+        if (imgField.id === action.payload.id) {
+          imgField.addImgValue = action.payload.newUrl;
+        }
+        return imgField;
+      });
+    },
   },
   extraReducers: {
     [imgFieldsActionsAsync.deleteImgfieldRequest.type]: (
@@ -67,6 +93,22 @@ export const imgFieldsSlice = createSlice({
       });
     },
     [imgFieldsActionsAsync.deleteImgfieldError.type]: (
+      state,
+      action: PayloadAction<number>
+    ) => {
+      state.items.forEach((imgField) => {
+        if (imgField.id === action.payload) imgField.isLoading = false;
+      });
+    },
+    [imgFieldsActionsAsync.addImg_request.type]: (
+      state,
+      action: PayloadAction<number>
+    ) => {
+      state.items.forEach((imgField) => {
+        if (imgField.id === action.payload) imgField.isLoading = true;
+      });
+    },
+    [imgFieldsActionsAsync.addImg_error.type]: (
       state,
       action: PayloadAction<number>
     ) => {
