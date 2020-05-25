@@ -6,7 +6,12 @@ import { Selector } from '@reduxjs/toolkit';
 const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer: state,
-  middleware: [sagaMiddleware, ...getDefaultMiddleware()],
+  middleware: [
+    sagaMiddleware,
+    ...getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+  ],
 });
 sagaMiddleware.run(mainSaga);
 

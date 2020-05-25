@@ -10,6 +10,7 @@ import {
   screensActions,
 } from '../../redux/slices/screensSlice';
 import { NotificationManager } from 'react-notifications';
+import { markdownActions } from '../../redux/slices/markdownFieldSlice';
 export function* getScreen(
   action: ReturnType<typeof asyncScreenActions.getScreen>
 ) {
@@ -37,17 +38,27 @@ export function* getScreen(
           }))
         )
       );
-      yield put(screensActions.getActiveScreen(screen.right.id));
+      yield put(
+        markdownActions.getAllMarkdowm(
+          screen.right.mdFields.map((markdown) => ({
+            ...markdown,
+            isLoading: false,
+            addValueText: undefined,
+          }))
+        )
+      );
       yield put(
         TextFieldsActions.getTextFields(
-          screen.right.textFields.map((field) => ({
-            ...field,
+          screen.right.textFields.map((textfield) => ({
+            ...textfield,
             isLoading: false,
           }))
         )
       );
+      yield put(screensActions.getActiveScreen(screen.right.id));
     } else {
       NotificationManager.error(screen.left.message);
+      yield put(asyncScreenActions.getScreenError(action.payload));
     }
   } catch (error) {
     yield put(asyncScreenActions.getScreenError(action.payload));

@@ -6,7 +6,8 @@ import { Assignment } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/createStore';
 import { FlatScreenDto } from '../../apiWorker/typings';
-import { asyncScreenActions } from '../../redux/slices/screensSlice';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import { Checkout } from '../Checkouts/CheckoutsList.fipc';
 
 const useScreenRouts = () => {
   const screens = useSelector<RootState, FlatScreenDto[]>(
@@ -24,6 +25,12 @@ const mainRouts: PathList = [
     path: '/draws',
     component: Draws,
     icon: <Assignment />,
+  },
+  {
+    name: 'Кассы',
+    path: '/checkouts',
+    component: Checkout,
+    icon: <ShoppingBasketIcon />,
   },
 ];
 

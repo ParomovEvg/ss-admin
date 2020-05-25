@@ -40,7 +40,7 @@ export const AddTextFieldModalComponent: React.FC<AddTextFieldModalProps> = ({
         <Grid item sm={12}>
           <Card>
             <CardHeader
-              title="Добавить новое поле"
+              title="Добавить новое текстовое поле"
               action={
                 <IconButton
                   onClick={() => closeAddTextFieldModal()}

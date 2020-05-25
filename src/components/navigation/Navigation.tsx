@@ -7,7 +7,6 @@ import { createFipc } from 'react-fipc';
 import { Screen } from '../Screen/Screen.fipc';
 import { NotificationContainer } from 'react-notifications';
 import { Loader } from '../Loader/Loader';
-
 export type PathList = {
   path: string;
   name: string;
@@ -44,7 +43,6 @@ export const NavigationComponent: React.FC<NavigationProps> = ({
           <Nav$ $render mainLinks={mainRouts} screenLinks={screensRouts} />
           <Switch>
             <Route path={`/screen/:id`} component={Screen} />
-
             {mainRouts.map(({ path, component }) => (
               <Route path={path} key={path} component={component} />
             ))}

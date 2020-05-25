@@ -70,6 +70,7 @@
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",
+    "react-dropzone": "^11.0.1",
     "react-fipc": "^0.3.0",
     "react-multiple-image-input": "^1.0.0",
     "react-notifications": "^1.6.0",

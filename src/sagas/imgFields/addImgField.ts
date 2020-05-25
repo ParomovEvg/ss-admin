@@ -18,7 +18,7 @@ export function* addImgField(
 ) {
   yield put(imgFieldsActionsAsync.addImgFieldRequest(action.payload));
 
-  const name = yield select<RootSelector<string>>(
+  const name: string = yield select<RootSelector<string>>(
     (state) => state.imgFields.addImgFieldName
   );
   try {
@@ -38,6 +38,8 @@ export function* addImgField(
             ...field.right,
             img: [],
             isLoading: false,
+            addImgValue: undefined,
+            addTheSameImgId: undefined,
           },
           id: action.payload,
         })

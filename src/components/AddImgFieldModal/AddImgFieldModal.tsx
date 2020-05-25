@@ -39,7 +39,7 @@ export const AddImgFieldModalComponent: React.FC<AddImgFieldModalProps> = ({
         <Grid item sm={12}>
           <Card>
             <CardHeader
-              title="Добавить новое поле"
+              title="Добавить новое поле изображения"
               action={
                 <IconButton
                   onClick={() => closeAddImgFieldModal()}
