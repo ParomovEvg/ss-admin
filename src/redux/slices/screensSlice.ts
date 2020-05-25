@@ -2,6 +2,7 @@ import { imgFieldsActionsAsync, imgFieldsActions } from './imgFieldsSlice';
 import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
 import { FlatScreenDto } from '../../apiWorker/typings';
 import { asyncTextFieldActions, TextFieldsActions } from './textFieldsSlice';
+import { markdownActions, markdowmAsyncActions } from './markdownFieldSlice';
 
 export interface ScreenType extends FlatScreenDto {
   isLoading: boolean;
@@ -73,7 +74,7 @@ export const screensSlice = createSlice({
         if (screen.id === action.payload) screen.isLoading = false;
       });
     },
-    [asyncScreenActions.getScreensRequest.type]: (state, action) => {
+    [asyncScreenActions.getScreensRequest.type]: (state) => {
       state.isLoading = true;
     },
     [asyncScreenActions.getScreenError.type]: (state, action) => {
@@ -81,7 +82,7 @@ export const screensSlice = createSlice({
         if (screen.id === action.payload) screen.isLoading = false;
       });
     },
-    [asyncScreenActions.getScreensError.type]: (state, action) => {
+    [asyncScreenActions.getScreensError.type]: (state) => {
       state.isLoading = false;
     },
     [imgFieldsActionsAsync.addImgFieldRequest.type]: (state, action) => {
@@ -89,14 +90,24 @@ export const screensSlice = createSlice({
         if (screen.id === action.payload) screen.isLoading = true;
       });
     },
-    [imgFieldsActionsAsync.deleteImgfieldError.type]: (state, action) => {
+    [imgFieldsActions.addImgField.type]: (state, action) => {
+      state.screensList.forEach((screen) => {
+        if (screen.id === action.payload.id) screen.isLoading = false;
+      });
+    },
+    [markdowmAsyncActions.addMarkdownField_request.type]: (state, action) => {
+      state.screensList.forEach((screen) => {
+        if (screen.id === action.payload) screen.isLoading = true;
+      });
+    },
+    [markdowmAsyncActions.addMarkdownField_error.type]: (state, action) => {
       state.screensList.forEach((screen) => {
         if (screen.id === action.payload) screen.isLoading = false;
       });
     },
-    [imgFieldsActions.addImgField.type]: (state, action) => {
+    [markdownActions.addMarkdownField.type]: (state, action) => {
       state.screensList.forEach((screen) => {
-        if (screen.id === action.payload.id) screen.isLoading = false;
+        if (screen.id === action.payload.screenId) screen.isLoading = false;
       });
     },
   },

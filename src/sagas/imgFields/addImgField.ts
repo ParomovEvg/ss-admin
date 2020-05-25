@@ -39,6 +39,7 @@ export function* addImgField(
             img: [],
             isLoading: false,
             addImgValue: undefined,
+            addTheSameImgId: undefined,
           },
           id: action.payload,
         })

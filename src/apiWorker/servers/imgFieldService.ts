@@ -9,6 +9,10 @@ import {
   ImgFieldNotFoundById,
   ImgDto,
   CreateImgResDto,
+  ImgNotFoundById,
+  SaveImgLastResDto,
+  ImgFieldDto,
+  FindImgFieldByIdResDto,
 } from './../typings/index';
 import { Either } from 'useful-monads';
 import { dtoToEither } from '../dtoToEither';
@@ -43,4 +47,17 @@ export const imgFieldsService = {
       })
       .json<CreateImgResDto>()
       .then(dtoToEither),
+  addTheSameImg: (imgId: number): Promise<Either<ImgNotFoundById, ImgDto>> =>
+    api
+      .post(`img/value/before`, {
+        json: {
+          imgId,
+        },
+      })
+      .json<SaveImgLastResDto>()
+      .then(dtoToEither),
+  getImgField: (
+    id: number
+  ): Promise<Either<ImgFieldNotFoundById, ImgFieldDto>> =>
+    api.get(`img/field/${id}`).json<FindImgFieldByIdResDto>().then(dtoToEither),
 };

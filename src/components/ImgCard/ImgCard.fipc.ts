@@ -10,13 +10,22 @@ import { useCallback, useState, useEffect } from 'react';
 import { useAction } from '../../hooks/use-action';
 import { ImgDto } from '../../apiWorker/typings';
 
-const useSave = (url: string | undefined, id: number) => {
+const useSave = (
+  url: string | undefined,
+  id: number,
+  imgId: number | undefined
+) => {
   const [isSave, setIsSave] = useState<boolean>(true);
   const addImgAsync = useAction(imgFieldsActionsAsync.addImg_async);
+  const addTheSameImg = useAction(imgFieldsActionsAsync.addTheSameImg_async);
 
   const onSave = useCallback(() => {
-    addImgAsync(id);
-  }, [addImgAsync, id]);
+    if (imgId) {
+      addTheSameImg(id);
+    } else {
+      addImgAsync(id);
+    }
+  }, [addImgAsync, addTheSameImg, id, imgId]);
 
   useEffect(() => {
     setIsSave(url !== undefined);
@@ -28,12 +37,84 @@ const useSave = (url: string | undefined, id: number) => {
   };
 };
 
+const useReset = (
+  url: string | undefined,
+  id: number,
+  setLastValue: any,
+  images: ImgDto[]
+) => {
+  const [isReset, setIsReset] = useState<boolean>(true);
+  const clearAddImg = useAction(imgFieldsActions.clearAddImg);
+
+  useEffect(() => {
+    setIsReset(url !== undefined);
+  }, [url]);
+
+  const onReset = useCallback(() => {
+    if (isReset) {
+      clearAddImg(id);
+      setLastValue(last(images));
+    }
+  }, [clearAddImg, id, images, isReset, setLastValue]);
+  return {
+    isReset,
+    onReset,
+  };
+};
+
+const useBack = (
+  images: ImgDto[],
+  id: number,
+  lastValue: ImgDto | undefined,
+  setLastValue: any
+) => {
+  const addImgValue = useAction(imgFieldsActions.addImgValue);
+  const [isBack, setIsBack] = useState<boolean>(lastValue !== undefined);
+
+  useEffect(() => {
+    setLastValue(last(images));
+  }, [images, setLastValue]);
+
+  useEffect(() => {
+    if (lastValue !== undefined) {
+      const prevIndex = images.indexOf(lastValue) - 1;
+      setIsBack(images[prevIndex] !== undefined);
+    }
+  }, [images, lastValue]);
+
+  const onBack = useCallback(async () => {
+    if (lastValue !== undefined) {
+      const prevIndex = images.indexOf(lastValue) - 1;
+      const newLastValue = images[prevIndex];
+      setLastValue(newLastValue);
+      addImgValue({
+        newUrl: newLastValue.url,
+        addTheSameImgId: newLastValue.id,
+        id,
+      });
+    }
+  }, [lastValue, images, setLastValue, addImgValue, id]);
+  return {
+    onBack,
+    isBack,
+  };
+};
+
 export const ImgCard = ImgCard$({
   useImgField: (id) => {
     const url: string | undefined = useSelector<RootState, string | undefined>(
       (state) =>
         state.imgFields.items.find((imgField) => imgField.id === id)
           ?.addImgValue
+    );
+
+    const imgId: number | undefined = useSelector<
+      RootState,
+      number | undefined
+    >(
+      (state) =>
+        state.imgFields.items.find((imgField) => imgField.id === id)
+          ?.addTheSameImgId
     );
 
     const isLoading = useSelector<RootState, boolean>(
@@ -43,6 +124,7 @@ export const ImgCard = ImgCard$({
     );
 
     const addImgValue = useAction(imgFieldsActions.addImgValue);
+
     const onChangeDropZone = useCallback(
       async (acceptedFiles) => {
         const lastFile: File | undefined = last(acceptedFiles);
@@ -50,6 +132,7 @@ export const ImgCard = ImgCard$({
         if (lastFile !== undefined) {
           addImgValue({
             newUrl,
+            addImgValueType: lastFile.type,
             id,
           });
         }
@@ -66,40 +149,9 @@ export const ImgCard = ImgCard$({
       last(images)
     );
 
-    useEffect(() => {
-      setLastValue(last(images));
-    }, [images]);
-
-    // const isReset = useIsReset(text, values, lastValue, isLoading);
-    // const onReset = useCallback(() => {
-    //   if (isReset) {
-    //     setText(last(values)?.value ?? '');
-    //     setLastValue(last(values));
-    //   }
-    // }, [setText, isReset, setLastValue, values]);
-
-    const [isBack, setIsBack] = useState<boolean>(lastValue !== undefined);
-
-    useEffect(() => {
-      if (lastValue !== undefined) {
-        const prevIndex = images.indexOf(lastValue) - 1;
-        setIsBack(images[prevIndex] !== undefined);
-      }
-    }, [lastValue]);
-
-    const onBack = useCallback(async () => {
-      if (lastValue !== undefined) {
-        const prevIndex = images.indexOf(lastValue) - 1;
-        const newLastValue = images[prevIndex];
-        setLastValue(newLastValue);
-        addImgValue({
-          newUrl: newLastValue.url,
-          id,
-        });
-      }
-    }, [lastValue, images, addImgValue, id]);
-
-    const { onSave, isSave } = useSave(url, id);
+    const { isReset, onReset } = useReset(url, id, setLastValue, images);
+    const { isBack, onBack } = useBack(images, id, lastValue, setLastValue);
+    const { onSave, isSave } = useSave(url, id, imgId);
 
     return {
       isLoading,
@@ -108,6 +160,8 @@ export const ImgCard = ImgCard$({
       isSave,
       isBack,
       onBack,
+      isReset,
+      onReset,
       url: url ?? lastValue?.url ?? '',
     };
   },

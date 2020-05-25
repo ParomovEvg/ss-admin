@@ -1,3 +1,4 @@
+import { markdowmSlice } from './slices/markdownFieldSlice';
 import { imgFieldsSlice } from './slices/imgFieldsSlice';
 import { TextFieldsSlice } from './slices/textFieldsSlice';
 import { combineReducers } from 'redux';
@@ -10,11 +11,12 @@ export const stateActions = {
   counter: counter.actions,
 };
 export const state = combineReducers({
-  counter: counter.reducer,
+  auth: authSlice.reducer,
   TextFields: TextFieldsSlice.reducer,
   imgFields: imgFieldsSlice.reducer,
-  auth: authSlice.reducer,
-  view: viewSlice.reducer,
+  markdowmField: markdowmSlice.reducer,
   screens: screensSlice.reducer,
   checkouts: checkoutSlice.reducer,
+  view: viewSlice.reducer,
+  counter: counter.reducer,
 });

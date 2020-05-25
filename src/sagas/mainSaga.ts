@@ -12,6 +12,10 @@ import { getAllCheckout } from './checkouts/getAllCheckout';
 import { deleteCheckoutWatcher } from './checkouts/deleteCheckout';
 import { addCheckout } from './checkouts/addCheckout';
 import { addImgWatcher } from './imgFields/addImg';
+import { addTheSameImgWatcher } from './imgFields/addTheSameImg';
+import { deleteMarkdownWatcher } from './markdownField/deleteMarkdown';
+import { addMarkdownValueWatcher } from './markdownField/addMarkdownValue';
+import { addMarkdownFieldWatcher } from './markdownField/addMarkdownField';
 export function* mainSaga() {
   yield all([
     counterListener(),
@@ -27,5 +31,9 @@ export function* mainSaga() {
     deleteCheckoutWatcher(),
     addCheckout(),
     addImgWatcher(),
+    addTheSameImgWatcher(),
+    deleteMarkdownWatcher(),
+    addMarkdownValueWatcher(),
+    addMarkdownFieldWatcher(),
   ]);
 }

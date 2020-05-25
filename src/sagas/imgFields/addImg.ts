@@ -20,13 +20,18 @@ export function* addImg(
         state.imgFields.items.find((imgField) => imgField.id === action.payload)
           ?.addImgValue ?? ''
     );
+    const type: string = yield select<RootSelector<string | undefined>>(
+      (state) =>
+        state.imgFields.items.find((imgField) => imgField.id === action.payload)
+          ?.addImgValueType ?? ''
+    );
 
     const file = yield fetch(url)
       .then((r) => r.blob())
       .then(
         (b) =>
           new File([b], 'newFile', {
-            type: 'image/jpeg',
+            type,
           })
       );
 

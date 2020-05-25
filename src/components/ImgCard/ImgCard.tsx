@@ -24,6 +24,8 @@ export interface ImgCardHooks {
     isSave: boolean;
     onBack: () => void;
     isBack: boolean;
+    onReset: () => void;
+    isReset: boolean;
     url: string;
   };
 }
@@ -52,11 +54,13 @@ export const ImgCardComponent: React.FC<ImgCardProps> = ({
     isSave,
     isBack,
     onBack,
+    onReset,
+    isReset,
     url,
   } = useImgField(id);
   return (
     <Grid item sm={4}>
-      <Card className="TextCard">
+      <Card className="card">
         <Loader isLoading={isLoading} />
         <CardHeader
           title={name}
@@ -74,7 +78,7 @@ export const ImgCardComponent: React.FC<ImgCardProps> = ({
             <Grid item sm={12}>
               <DropZone id={id} url={url} onChangeDropZone={onChangeDropZone} />
             </Grid>
-            <Grid item container sm={12} spacing={2}>
+            <Grid item container sm={12} spacing={1}>
               <Grid item>
                 <Button
                   disabled={!isSave}
@@ -92,7 +96,17 @@ export const ImgCardComponent: React.FC<ImgCardProps> = ({
                   variant="outlined"
                   onClick={onBack}
                 >
-                  Предидущее
+                  Предыдущее
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  disabled={!isReset}
+                  color={'primary'}
+                  variant="outlined"
+                  onClick={onReset}
+                >
+                  Сбросить
                 </Button>
               </Grid>
             </Grid>

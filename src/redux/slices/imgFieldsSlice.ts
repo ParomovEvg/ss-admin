@@ -4,7 +4,9 @@ import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
 
 interface imgField extends ImgFieldDto {
   isLoading: boolean;
-  addImgValue: string | undefined;
+  addImgValue?: string | undefined;
+  addImgValueType?: string | undefined;
+  addTheSameImgId?: number | undefined;
 }
 
 type InitialStateType = {
@@ -37,6 +39,15 @@ export const imgFieldsActionsAsync = {
   addImg_async: createAction<number>('imgFields/addImg_async' as const),
   addImg_request: createAction<number>('imgFields/addImg_request' as const),
   addImg_error: createAction<number>('imgFields/addImg_error' as const),
+  addTheSameImg_async: createAction<number>(
+    'imgFields/addTheSameImg_async' as const
+  ),
+  addTheSameImg_request: createAction<number>(
+    'imgFields/addTheSameImg_request' as const
+  ),
+  addTheSameImg_error: createAction<number>(
+    'imgFields/addTheSameImg_error' as const
+  ),
 };
 
 export const imgFieldsSlice = createSlice({
@@ -50,6 +61,26 @@ export const imgFieldsSlice = createSlice({
       state.items = state.items.filter(
         (imgField) => imgField.id !== action.payload
       );
+    },
+    changeImgField: (
+      state,
+      action: PayloadAction<{ id: number; imgField: imgField }>
+    ) => {
+      state.items = state.items.map((imgField) => {
+        if (imgField.id === action.payload.id) {
+          imgField = action.payload.imgField;
+        }
+        return imgField;
+      });
+    },
+    clearAddImg: (state, action: PayloadAction<number>) => {
+      state.items.forEach((imgField) => {
+        if (imgField.id === action.payload) {
+          imgField.addImgValue = undefined;
+          imgField.addImgValueType = undefined;
+          imgField.addTheSameImgId = undefined;
+        }
+      });
     },
     setAddImgFieldName: (state, action: PayloadAction<string>) => {
       state.addImgFieldName = action.payload;
@@ -67,17 +98,26 @@ export const imgFieldsSlice = createSlice({
           imgField.img.push(action.payload.img);
           imgField.isLoading = false;
           imgField.addImgValue = undefined;
+          imgField.addImgValueType = undefined;
+          imgField.addTheSameImgId = undefined;
           if (imgField.img.length > 3) imgField.img.shift();
         }
       });
     },
     addImgValue: (
       state,
-      action: PayloadAction<{ newUrl?: string; id: number }>
+      action: PayloadAction<{
+        newUrl?: string;
+        id: number;
+        addImgValueType?: string;
+        addTheSameImgId?: number;
+      }>
     ) => {
       state.items = state.items.map((imgField) => {
         if (imgField.id === action.payload.id) {
           imgField.addImgValue = action.payload.newUrl;
+          imgField.addImgValueType = action.payload.addImgValueType;
+          imgField.addTheSameImgId = action.payload.addTheSameImgId;
         }
         return imgField;
       });
@@ -109,6 +149,22 @@ export const imgFieldsSlice = createSlice({
       });
     },
     [imgFieldsActionsAsync.addImg_error.type]: (
+      state,
+      action: PayloadAction<number>
+    ) => {
+      state.items.forEach((imgField) => {
+        if (imgField.id === action.payload) imgField.isLoading = false;
+      });
+    },
+    [imgFieldsActionsAsync.addTheSameImg_request.type]: (
+      state,
+      action: PayloadAction<number>
+    ) => {
+      state.items.forEach((imgField) => {
+        if (imgField.id === action.payload) imgField.isLoading = true;
+      });
+    },
+    [imgFieldsActionsAsync.addTheSameImg_error.type]: (
       state,
       action: PayloadAction<number>
     ) => {

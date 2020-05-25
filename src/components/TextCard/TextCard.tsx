@@ -58,7 +58,7 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
 
   return (
     <Grid item sm={4}>
-      <Card className="TextCard">
+      <Card className="card">
         <Loader isLoading={isLoading} />
         <CardHeader
           title={name}

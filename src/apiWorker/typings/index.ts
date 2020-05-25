@@ -463,11 +463,22 @@ export interface ImgFieldContentDto {
   name: string;
   img?: ImgDto;
 }
+export interface MdDto {
+  id: number;
+  value: string;
+}
+export interface MdFieldContentDto {
+  id: number;
+  name: string;
+  label: string;
+  values: MdDto[];
+}
 export interface ScreenContentDto {
   id: number;
   name: string;
   textFields: Array<TextFieldContentDto>;
   imgFields: Array<ImgFieldContentDto>;
+  mdFields: Array<MdFieldContentDto>;
 }
 export interface GetContentResDto {
   payload: Array<ScreenContentDto>;
@@ -656,6 +667,7 @@ export interface ScreenDto {
   name: string;
   textFields: Array<TextFieldDto>;
   imgFields: Array<ImgFieldDto>;
+  mdFields: Array<MdFieldContentDto>;
 }
 export interface FindScreenByIdResDto {
   payload?: ScreenDto;
@@ -802,3 +814,124 @@ export type ImgControllerGetImgBeforeResponse<
     ? GetImgBeforeResDto
     : any
   : any;
+export interface ImgNotFoundById {
+  name: 'ImgNotFoundById';
+  message: string;
+  param: {
+    id?: number;
+  };
+}
+export interface SaveImgLastResDto {
+  payload?: ImgDto;
+  ImgNotFoundById?: ImgNotFoundById;
+}
+export type ImgControllerSaveImgBeforeResponse<
+  TCode extends 201 = 201,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 201
+  ? TContentType extends 'application/json'
+    ? SaveImgLastResDto
+    : any
+  : any;
+export interface SaveImgLastDto {
+  imgId: number;
+}
+export type ImgControllerSaveImgBeforeRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? SaveImgLastDto : any;
+/**
+ * Model of parameters for API `/md/field/{fieldId}`
+ */
+export interface MdControllerDeleteMdFieldParameters {
+  fieldId: number;
+}
+export interface MdFieldNotFoundById {
+  name: 'MdFieldNotFoundById';
+  message: string;
+  param: {
+    fieldId?: number;
+  };
+}
+export interface DeleteMdFieldResDto {
+  payload: {
+    id?: number;
+  };
+  MdFieldNotFoundById?: MdFieldNotFoundById;
+}
+export type MdControllerDeleteMdFieldResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? DeleteMdFieldResDto
+    : any
+  : any;
+/**
+ * Model of parameters for API `/md/field/{fieldId}`
+ */
+export interface MdControllerFindMdFieldParameters {
+  fieldId: number;
+}
+export type MdControllerFindMdFieldResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? {
+        [key: string]: any;
+      }
+    : any
+  : any;
+export interface FlatMdFieldDto {
+  id: number;
+  name: string;
+  label: string;
+}
+export interface MdFieldAlreadyExistInScreen {
+  name: 'MdFieldAlreadyExistInScreen';
+  message: string;
+  param: {
+    screenId?: number;
+    name?: string;
+  };
+}
+export interface CreateMdFieldResDto {
+  payload?: FlatMdFieldDto;
+  ScreenNotFoundById?: ScreenNotFoundById;
+  MdFieldAlreadyExistInScreen?: MdFieldAlreadyExistInScreen;
+}
+export type MdControllerCreateMdFieldResponse<
+  TCode extends 201 = 201,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 201
+  ? TContentType extends 'application/json'
+    ? CreateMdFieldResDto
+    : any
+  : any;
+export interface CreateMdFieldDto {
+  name: string;
+  label: string;
+  screenId: number;
+}
+export type MdControllerCreateMdFieldRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? CreateMdFieldDto : any;
+export interface CreateMdResDto {
+  payload?: MdDto;
+  MdFieldNotFoundById?: MdFieldNotFoundById;
+}
+export type MdControllerCreateMdResponse<
+  TCode extends 201 = 201,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 201
+  ? TContentType extends 'application/json'
+    ? CreateMdResDto
+    : any
+  : any;
+export interface CreateMdDto {
+  fieldId: number;
+  value: string;
+}
+export type MdControllerCreateMdRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? CreateMdDto : any;

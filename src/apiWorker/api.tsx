@@ -4,6 +4,7 @@ import { authActions } from '../redux/slices/authSlice';
 import { LoginResDto } from './typings';
 export const api = ky.extend({
   prefixUrl: 'http://a0319139.xsph.ru:3000/',
+  timeout: 60000,
   hooks: {
     beforeRequest: [
       async (request) => {

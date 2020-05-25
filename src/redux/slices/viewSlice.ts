@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { TextFieldsActions } from './textFieldsSlice';
 import { imgFieldsActions } from './imgFieldsSlice';
 import { checkoutActions } from './checkoutSlice';
+import { markdownActions } from './markdownFieldSlice';
 
 export interface View {
   isMenuOpen: boolean;
   AddTextFieldModal: boolean;
   AddImgFieldModal: boolean;
+  AddMarkdownFieldModal: boolean;
   AddCheckoutModal: boolean;
   textFieldDeteleModal: {
     isTextFieldDeteleModal: boolean;
@@ -15,6 +17,10 @@ export interface View {
   imgFieldDeteleModal: {
     isImgFieldDeteleModal: boolean;
     idImgField: number;
+  };
+  markdownFieldDeteleModal: {
+    isMarkdownFieldDeteleModal: boolean;
+    idMarkdownField: number;
   };
   checkoutDeteleModal: {
     isCheckoutDeteleModal: boolean;
@@ -26,9 +32,14 @@ const initialState: View = {
   isMenuOpen: false,
   AddTextFieldModal: false,
   AddImgFieldModal: false,
+  AddMarkdownFieldModal: false,
   AddCheckoutModal: false,
   textFieldDeteleModal: { isTextFieldDeteleModal: false, idTextField: 0 },
   imgFieldDeteleModal: { isImgFieldDeteleModal: false, idImgField: 0 },
+  markdownFieldDeteleModal: {
+    isMarkdownFieldDeteleModal: false,
+    idMarkdownField: 0,
+  },
   checkoutDeteleModal: { isCheckoutDeteleModal: false, idCheckout: 0 },
 };
 
@@ -66,11 +77,37 @@ export const viewSlice = createSlice({
         isImgFieldDeteleModal: true,
       };
     },
+    closeDeleteMarkdownFieldModal: (state) => {
+      state.markdownFieldDeteleModal = {
+        idMarkdownField: 0,
+        isMarkdownFieldDeteleModal: false,
+      };
+    },
+    openDeleteMarkdownFieldModal: (state, action) => {
+      state.markdownFieldDeteleModal = {
+        idMarkdownField: action.payload,
+        isMarkdownFieldDeteleModal: true,
+      };
+    },
+    openCheckoutDeleteModal: (state, action) => {
+      state.checkoutDeteleModal.isCheckoutDeteleModal = true;
+      state.checkoutDeteleModal.idCheckout = action.payload;
+    },
+    closeCheckoutDeleteModal: (state) => {
+      state.checkoutDeteleModal.isCheckoutDeteleModal = false;
+      state.checkoutDeteleModal.idCheckout = 0;
+    },
     openAddTextFieldModal: (state) => {
       state.AddTextFieldModal = true;
     },
     closeAddTextFieldModal: (state) => {
       state.AddTextFieldModal = false;
+    },
+    openAddMarkdownFieldModal: (state) => {
+      state.AddMarkdownFieldModal = true;
+    },
+    closeAddMarkdownFieldModal: (state) => {
+      state.AddMarkdownFieldModal = false;
     },
     openAddImgFieldModal: (state) => {
       state.AddImgFieldModal = true;
@@ -84,14 +121,6 @@ export const viewSlice = createSlice({
     closeAddCheckoutModal: (state) => {
       state.AddCheckoutModal = false;
     },
-    openCheckoutDeleteModal: (state, action) => {
-      state.checkoutDeteleModal.isCheckoutDeteleModal = true;
-      state.checkoutDeteleModal.idCheckout = action.payload;
-    },
-    closeCheckoutDeleteModal: (state) => {
-      state.checkoutDeteleModal.isCheckoutDeteleModal = false;
-      state.checkoutDeteleModal.idCheckout = 0;
-    },
   },
   extraReducers: {
     [TextFieldsActions.addTextField.type]: (state) => {
@@ -102,6 +131,9 @@ export const viewSlice = createSlice({
     },
     [checkoutActions.addCheckout.type]: (state) => {
       state.AddCheckoutModal = false;
+    },
+    [markdownActions.addMarkdownField.type]: (state) => {
+      state.AddMarkdownFieldModal = false;
     },
   },
 });

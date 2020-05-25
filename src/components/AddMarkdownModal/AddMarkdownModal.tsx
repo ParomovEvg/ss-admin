@@ -10,28 +10,30 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
-import { useAddImgFieldModalProps } from './AddImgFieldModal.fipc';
+import { useAddMarkdownFieldModalProps } from './AddMarkdownModal.fipc';
 import { createFipc } from 'react-fipc';
-type AddImgFieldModalProps = {
+
+type AddTextFieldModalProps = {
   id: number;
-  useAddImgFieldModalProps: useAddImgFieldModalProps;
+  useAddMarkdownFieldModalProps: useAddMarkdownFieldModalProps;
 };
 
-export const AddImgFieldModalComponent: React.FC<AddImgFieldModalProps> = ({
+export const AddMarkdownModalComponent: React.FC<AddTextFieldModalProps> = ({
   id,
-  useAddImgFieldModalProps,
+  useAddMarkdownFieldModalProps,
 }) => {
   const {
-    addImgFieldFormHandler,
-    addImgFieldFormInputHandler,
-    addImgFieldModalState,
-    addImgFieldName,
-    closeAddImgFieldModal,
-  } = useAddImgFieldModalProps(id);
+    closeAddMarkdownFieldModal,
+    addMarkdownFieldLabel,
+    addMarkdownFieldName,
+    AddMarkdownFieldModalState,
+    addMarkdownFieldFormInputHandler,
+    addMarkdownFieldFormHandler,
+  } = useAddMarkdownFieldModalProps(id);
   return (
     <Modal
-      open={addImgFieldModalState}
-      onClose={() => closeAddImgFieldModal()}
+      open={AddMarkdownFieldModalState}
+      onClose={() => closeAddMarkdownFieldModal()}
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
@@ -39,10 +41,10 @@ export const AddImgFieldModalComponent: React.FC<AddImgFieldModalProps> = ({
         <Grid item sm={12}>
           <Card>
             <CardHeader
-              title="Добавить новое поле изображения"
+              title="Добавить новое поле markdown"
               action={
                 <IconButton
-                  onClick={() => closeAddImgFieldModal()}
+                  onClick={() => closeAddMarkdownFieldModal()}
                   aria-label="settings"
                 >
                   <CloseIcon />
@@ -50,7 +52,7 @@ export const AddImgFieldModalComponent: React.FC<AddImgFieldModalProps> = ({
               }
             />
             <CardContent>
-              <form onSubmit={addImgFieldFormHandler}>
+              <form onSubmit={addMarkdownFieldFormHandler}>
                 <Grid container spacing={2} direction={'column'}>
                   <Grid item>
                     <TextField
@@ -58,8 +60,19 @@ export const AddImgFieldModalComponent: React.FC<AddImgFieldModalProps> = ({
                       name="name"
                       label="Имя поля"
                       variant="outlined"
-                      value={addImgFieldName}
-                      onChange={addImgFieldFormInputHandler}
+                      value={addMarkdownFieldName}
+                      onChange={addMarkdownFieldFormInputHandler}
+                      required
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      fullWidth
+                      name="label"
+                      label="Лейбел поля"
+                      variant="outlined"
+                      value={addMarkdownFieldLabel}
+                      onChange={addMarkdownFieldFormInputHandler}
                       required
                     />
                   </Grid>
@@ -83,4 +96,4 @@ export const AddImgFieldModalComponent: React.FC<AddImgFieldModalProps> = ({
   );
 };
 
-export const AddImgFieldModal$ = createFipc(AddImgFieldModalComponent);
+export const AddMarkdownModal$ = createFipc(AddMarkdownModalComponent);
