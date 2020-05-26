@@ -47,11 +47,11 @@ const useTranslate = (text: string) => {
       }
       if (isH3.test(row)) {
         row = row.replace('### ', ``);
-        return `<h3 class="markdown__h1">${row}</h3>`;
+        return `<h3 class="markdown__h3">${row}</h3>`;
       }
       if (isH2.test(row)) {
         row = row.replace('## ', ``);
-        return `<h2 class="markdown__h1">${row}</h2>`;
+        return `<h2 class="markdown__h2">${row}</h2>`;
       }
       if (isH1.test(row)) {
         row = row.replace('# ', ``);
@@ -65,7 +65,7 @@ const useTranslate = (text: string) => {
       }
       return row;
     })
-    .join('\n');
+    .join('');
 };
 
 const useSave = (
@@ -75,14 +75,15 @@ const useSave = (
   lastValue: MdDto | undefined
 ) => {
   const isNotLastValue = last(values) !== lastValue;
+  const isNotTextValue = (last(values)?.value ?? null) !== text;
   const isNotEmpty = text !== '';
   const [isSave, setIsSave] = useState(false);
   const addMarkdownValue_async = useAction(
     markdowmAsyncActions.addMarkdownValue_async
   );
   useEffect(() => {
-    setIsSave(isNotEmpty && isNotLastValue);
-  }, [isNotEmpty, isNotLastValue, text]);
+    setIsSave(isNotEmpty && (isNotLastValue || isNotTextValue));
+  }, [isNotEmpty, isNotLastValue, isNotTextValue, text]);
 
   const onSave = useCallback(() => {
     addMarkdownValue_async(id);
@@ -102,13 +103,13 @@ const useReset = (
   lastValue: MdDto | undefined
 ) => {
   const [isReset, setIsReset] = useState(false);
-  const isNotLastValue = last(values) !== lastValue;
   const clearMarkdownValue = useAction(markdownActions.clearMarkdownValue);
+  const isNotLastValue = last(values) !== lastValue;
+  const isNotTextValue = (last(values)?.value ?? null) !== text;
   const isNotEmpty = text !== '';
-
   useEffect(() => {
-    setIsReset(isNotEmpty && isNotLastValue);
-  }, [isNotEmpty, isNotLastValue]);
+    setIsReset(isNotEmpty && (isNotLastValue || isNotTextValue));
+  }, [isNotEmpty, isNotLastValue, isNotTextValue]);
 
   const onReset = useCallback(() => {
     if (isReset) {

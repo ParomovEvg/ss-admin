@@ -1,8 +1,10 @@
 import React, { ReactNode } from 'react';
 import './Nav.scss';
-import { Divider, Drawer, List } from '@material-ui/core';
+import { Divider, Drawer, List, Button } from '@material-ui/core';
 import { CallBackHook, Hook } from '../../hooks/types';
 import { NavItem } from './NavItem';
+import { viewActions } from '../../redux/slices/viewSlice';
+import { useAction } from '../../hooks/use-action';
 
 export interface NavHooks {
   useCloseHandler: CallBackHook;
@@ -28,6 +30,7 @@ export const Nav: React.FC<NavProps> = ({
 }) => {
   const isOpen = useIsOpenMenu();
   const closeHandler = useCloseHandler();
+  const openAddScreenModal = useAction(viewActions.openAddScreenModal);
   return (
     <Drawer anchor={'left'} open={isOpen} onClose={closeHandler}>
       <List>
@@ -41,6 +44,9 @@ export const Nav: React.FC<NavProps> = ({
           <NavItem path={path} name={name} key={path} />
         ))}
       </List>
+      <Button onClick={() => openAddScreenModal()} color="primary">
+        Создать экран
+      </Button>
       <Divider />
     </Drawer>
   );

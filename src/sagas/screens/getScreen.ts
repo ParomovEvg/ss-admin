@@ -20,7 +20,6 @@ export function* getScreen(
     yield put(asyncScreenActions.getScreensRequest());
     yield take(screensActions.getAllScreens);
   }
-
   try {
     yield put(asyncScreenActions.getScreenRequest(action.payload));
     const screenEither: Either<ScreenNotFoundById, ScreenDto> = yield call(
@@ -62,7 +61,9 @@ export function* getScreen(
     }
   } catch (error) {
     yield put(asyncScreenActions.getScreenError(action.payload));
-    NotificationManager.error(error);
+    NotificationManager.error(
+      'Что-то пошло не так, но мы обящательно разберемся'
+    );
   }
 }
 

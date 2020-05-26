@@ -1,7 +1,7 @@
 import { all } from 'redux-saga/effects';
 import { counterListener } from './counter/counter-listener';
 import { authFlow } from './auth/authFlow';
-import { addScreen } from './screens/addScreen';
+import { addScreenWatcher } from './screens/addScreen';
 import { getScreenWatcher } from './screens/getScreen';
 import { addValueWatcher } from './textFields/addTextValue';
 import { deleteTextFieldWatcher } from './textFields/deleteTextField';
@@ -16,11 +16,12 @@ import { addTheSameImgWatcher } from './imgFields/addTheSameImg';
 import { deleteMarkdownWatcher } from './markdownField/deleteMarkdown';
 import { addMarkdownValueWatcher } from './markdownField/addMarkdownValue';
 import { addMarkdownFieldWatcher } from './markdownField/addMarkdownField';
+import { renameScreenWatcher } from './screens/renameScreen';
+import { deleteScreenWatcher } from './screens/deleteScreen';
 export function* mainSaga() {
   yield all([
     counterListener(),
     authFlow(),
-    addScreen(),
     getScreenWatcher(),
     addValueWatcher(),
     deleteTextFieldWatcher(),
@@ -35,5 +36,8 @@ export function* mainSaga() {
     deleteMarkdownWatcher(),
     addMarkdownValueWatcher(),
     addMarkdownFieldWatcher(),
+    renameScreenWatcher(),
+    addScreenWatcher(),
+    deleteScreenWatcher(),
   ]);
 }

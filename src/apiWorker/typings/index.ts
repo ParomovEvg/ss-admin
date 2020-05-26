@@ -492,123 +492,10 @@ export type ContentControllerGetContentResponse<
     : any
   : TCode extends 400
   ? TContentType extends 'application/json'
-    ? /**
-       * Empty response
-       */
-      null
-    : any
-  : any;
-export interface FlatTextFieldDto {
-  id: number;
-  name: string;
-}
-export interface ScreenNotFoundById {
-  name: 'ScreenNotFoundById';
-  message: string;
-  param: {
-    id?: number;
-  };
-}
-export interface TextFieldAlreadyExists {
-  name: 'TextFieldAlreadyExists';
-  message: string;
-  param: {
-    name?: string;
-    screenId?: number;
-  };
-}
-export interface CreateTextFieldResDto {
-  payload?: FlatTextFieldDto;
-  ScreenNotFoundById?: ScreenNotFoundById;
-  TextFieldAlreadyExists?: TextFieldAlreadyExists;
-}
-export type TextControllerCreateFieldResponse<
-  TCode extends 201 = 201,
-  TContentType extends 'application/json' = 'application/json'
-> = TCode extends 201
-  ? TContentType extends 'application/json'
-    ? CreateTextFieldResDto
-    : any
-  : any;
-export interface CreateTextFieldDto {
-  name: string;
-  screenId: number;
-}
-export type TextControllerCreateFieldRequest<
-  TCode extends 'application/json' = 'application/json'
-> = TCode extends 'application/json' ? CreateTextFieldDto : any;
-export interface TextDto {
-  id: number;
-  createDate: string;
-  value: string;
-}
-export interface TextFieldNotFoundById {
-  name: 'TextFieldNotFoundById';
-  message: string;
-  param: {
-    id?: number;
-  };
-}
-export interface CreateTextResDto {
-  payload?: TextDto;
-  TextFiledNotFoundById?: TextFieldNotFoundById;
-}
-export type TextControllerCreateTextResponse<
-  TCode extends 201 = 201,
-  TContentType extends 'application/json' = 'application/json'
-> = TCode extends 201
-  ? TContentType extends 'application/json'
-    ? CreateTextResDto
-    : any
-  : any;
-export interface CreateTextDto {
-  value: string;
-  fieldId: number;
-}
-export type TextControllerCreateTextRequest<
-  TCode extends 'application/json' = 'application/json'
-> = TCode extends 'application/json' ? CreateTextDto : any;
-/**
- * Model of parameters for API `/text/field/{fieldId}`
- */
-export interface TextControllerDeleteTextFieldParameters {
-  fieldId: number;
-}
-export interface DeleteTextFieldResDto {
-  payload: {
-    id?: number;
-  };
-  TextFieldNotFoundById?: TextFieldNotFoundById;
-}
-export type TextControllerDeleteTextFieldResponse<
-  TCode extends 200 = 200,
-  TContentType extends 'application/json' = 'application/json'
-> = TCode extends 200
-  ? TContentType extends 'application/json'
-    ? DeleteTextFieldResDto
-    : any
-  : any;
-/**
- * Model of parameters for API `/text/field/{fieldId}`
- */
-export interface TextControllerFindTextOfFiledParameters {
-  fieldId: number;
-}
-export interface TextFieldDto {
-  id: number;
-  name: string;
-  values: Array<TextDto>;
-}
-export interface FindTextOfFieldResDto {
-  payload?: TextFieldDto;
-  TextFiledNotFoundById?: TextFieldNotFoundById;
-}
-export type TextControllerFindTextOfFiledResponse<
-  TCode extends 200 = 200,
-  TContentType extends 'application/json' = 'application/json'
-> = TCode extends 200
-  ? TContentType extends 'application/json'
-    ? FindTextOfFieldResDto
+    /**
+     * Empty response
+     */
+    ? null
     : any
   : any;
 export interface FlatScreenDto {
@@ -654,8 +541,45 @@ export type ScreenControllerCreateScreenRequest<
 /**
  * Model of parameters for API `/screen/{screenId}`
  */
+export interface ScreenControllerDeleteScreenByIdParameters {
+  screenId: number;
+}
+export interface ScreenNotFoundById {
+  name: 'ScreenNotFoundById';
+  message: string;
+  param: {
+    id?: number;
+  };
+}
+export interface DeleteScreenResDto {
+  payload: {
+    id?: number;
+  };
+  ScreenNotFoundById?: ScreenNotFoundById;
+}
+export type ScreenControllerDeleteScreenByIdResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? DeleteScreenResDto
+    : any
+  : any;
+/**
+ * Model of parameters for API `/screen/{screenId}`
+ */
 export interface ScreenControllerFindScreenByIdParameters {
   screenId: number;
+}
+export interface TextDto {
+  id: number;
+  createDate: string;
+  value: string;
+}
+export interface TextFieldDto {
+  id: number;
+  name: string;
+  values: Array<TextDto>;
 }
 export interface ImgFieldDto {
   id: number;
@@ -681,6 +605,30 @@ export type ScreenControllerFindScreenByIdResponse<
     ? FindScreenByIdResDto
     : any
   : any;
+/**
+ * Model of parameters for API `/screen/{screenId}`
+ */
+export interface ScreenControllerChangeScreenNameParameters {
+  screenId: number;
+}
+export interface ChangeScreenNameResDto {
+  payload?: FlatScreenDto;
+  ScreenNotFoundById?: ScreenNotFoundById;
+}
+export type ScreenControllerChangeScreenNameResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? ChangeScreenNameResDto
+    : any
+  : any;
+export interface ChangeScreenNameDto {
+  name: string;
+}
+export type ScreenControllerChangeScreenNameRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? ChangeScreenNameDto : any;
 export interface FlatImgFieldDto {
   id: number;
   name: string;
@@ -935,3 +883,99 @@ export interface CreateMdDto {
 export type MdControllerCreateMdRequest<
   TCode extends 'application/json' = 'application/json'
 > = TCode extends 'application/json' ? CreateMdDto : any;
+export interface FlatTextFieldDto {
+  id: number;
+  name: string;
+}
+export interface TextFieldAlreadyExists {
+  name: 'TextFieldAlreadyExists';
+  message: string;
+  param: {
+    name?: string;
+    screenId?: number;
+  };
+}
+export interface CreateTextFieldResDto {
+  payload?: FlatTextFieldDto;
+  ScreenNotFoundById?: ScreenNotFoundById;
+  TextFieldAlreadyExists?: TextFieldAlreadyExists;
+}
+export type TextControllerCreateFieldResponse<
+  TCode extends 201 = 201,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 201
+  ? TContentType extends 'application/json'
+    ? CreateTextFieldResDto
+    : any
+  : any;
+export interface CreateTextFieldDto {
+  name: string;
+  screenId: number;
+}
+export type TextControllerCreateFieldRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? CreateTextFieldDto : any;
+export interface TextFieldNotFoundById {
+  name: 'TextFieldNotFoundById';
+  message: string;
+  param: {
+    id?: number;
+  };
+}
+export interface CreateTextResDto {
+  payload?: TextDto;
+  TextFiledNotFoundById?: TextFieldNotFoundById;
+}
+export type TextControllerCreateTextResponse<
+  TCode extends 201 = 201,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 201
+  ? TContentType extends 'application/json'
+    ? CreateTextResDto
+    : any
+  : any;
+export interface CreateTextDto {
+  value: string;
+  fieldId: number;
+}
+export type TextControllerCreateTextRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? CreateTextDto : any;
+/**
+ * Model of parameters for API `/text/field/{fieldId}`
+ */
+export interface TextControllerDeleteTextFieldParameters {
+  fieldId: number;
+}
+export interface DeleteTextFieldResDto {
+  payload: {
+    id?: number;
+  };
+  TextFieldNotFoundById?: TextFieldNotFoundById;
+}
+export type TextControllerDeleteTextFieldResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? DeleteTextFieldResDto
+    : any
+  : any;
+/**
+ * Model of parameters for API `/text/field/{fieldId}`
+ */
+export interface TextControllerFindTextOfFiledParameters {
+  fieldId: number;
+}
+export interface FindTextOfFieldResDto {
+  payload?: TextFieldDto;
+  TextFiledNotFoundById?: TextFieldNotFoundById;
+}
+export type TextControllerFindTextOfFiledResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? FindTextOfFieldResDto
+    : any
+  : any;

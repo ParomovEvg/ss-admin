@@ -43,6 +43,7 @@ export const NavigationComponent: React.FC<NavigationProps> = ({
           <Nav$ $render mainLinks={mainRouts} screenLinks={screensRouts} />
           <Switch>
             <Route path={`/screen/:id`} component={Screen} />
+
             {mainRouts.map(({ path, component }) => (
               <Route path={path} key={path} component={component} />
             ))}

@@ -1,29 +1,18 @@
 import { screensActions } from '../../redux/slices/screensSlice';
-import { RootSelector } from '../../redux/createStore';
 import { Either } from 'useful-monads';
-import {
-  ScreenNotFoundById,
-  FlatScreenDto,
-  ScreenAlreadyExists,
-} from '../../apiWorker/typings/index';
 import { screenServer } from '../../apiWorker/servers/screenService';
-import { call, put, takeEvery, select } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { asyncScreenActions } from '../../redux/slices/screensSlice';
 import { NotificationManager } from 'react-notifications';
-export function* addScreen(
-  action: ReturnType<typeof asyncScreenActions.addScreen_async>
+import { FlatScreenDto } from '../../apiWorker/typings';
+export function* deleteScreen(
+  action: ReturnType<typeof asyncScreenActions.deleteScreen_async>
 ) {
-  yield put(asyncScreenActions.addScreen_request());
-
-  const name = yield select<RootSelector<string>>(
-    (state) => state.screens.addScreenName
-  );
+  yield put(asyncScreenActions.deleteScreen_request(action.payload));
 
   try {
-    const screenEither: Either<ScreenAlreadyExists, FlatScreenDto> = yield call(
-      screenServer.addScreen,
-      name
-    );
+    const screenEither = yield call(screenServer.deleteScreen, action.payload);
+
     const screen = screenEither.extract();
     if (screen.right) {
       const screens: FlatScreenDto[] = yield call(screenServer.getScreens);
@@ -37,16 +26,16 @@ export function* addScreen(
       );
     } else {
       NotificationManager.error(screen.left.message);
-      yield put(asyncScreenActions.addScreen_error());
+      yield put(asyncScreenActions.deleteScreen_error(action.payload));
     }
   } catch (error) {
-    yield put(asyncScreenActions.addScreen_error());
+    yield put(asyncScreenActions.deleteScreen_error(action.payload));
     NotificationManager.error(
       'Что-то пошло не так, но мы обящательно разберемся'
     );
   }
 }
 
-export function* addScreenWatcher() {
-  yield takeEvery(asyncScreenActions.addScreen_async, addScreen);
+export function* deleteScreenWatcher() {
+  yield takeEvery(asyncScreenActions.deleteScreen_async, deleteScreen);
 }

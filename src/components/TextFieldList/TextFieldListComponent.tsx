@@ -14,7 +14,7 @@ export interface TextFieldListComponentHooks {
 
 export interface TextFieldListComponentProps
   extends TextFieldListComponentHooks {
-  id: string;
+  id: number;
 }
 
 export const TextFieldListComponent: React.FC<TextFieldListComponentProps> = ({
@@ -29,7 +29,7 @@ export const TextFieldListComponent: React.FC<TextFieldListComponentProps> = ({
         {textFields.map(({ id, name }) => {
           return <TextCard id={id} key={id} name={name} />;
         })}
-        <AddTextFieldModal id={parseInt(id)} />
+        <AddTextFieldModal id={id} />
         <Grid item sm={4}>
           <Card className="AddCard">
             <Button onClick={() => openAddTextFieldModal()} color="primary">

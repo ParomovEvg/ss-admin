@@ -3,6 +3,7 @@ import { TextFieldsActions } from './textFieldsSlice';
 import { imgFieldsActions } from './imgFieldsSlice';
 import { checkoutActions } from './checkoutSlice';
 import { markdownActions } from './markdownFieldSlice';
+import { screensActions } from './screensSlice';
 
 export interface View {
   isMenuOpen: boolean;
@@ -10,6 +11,8 @@ export interface View {
   AddImgFieldModal: boolean;
   AddMarkdownFieldModal: boolean;
   AddCheckoutModal: boolean;
+  RenameScreenModal: boolean;
+  AddScreenModal: boolean;
   textFieldDeteleModal: {
     isTextFieldDeteleModal: boolean;
     idTextField: number;
@@ -26,6 +29,10 @@ export interface View {
     isCheckoutDeteleModal: boolean;
     idCheckout: number;
   };
+  ScreenDeteleModal: {
+    isScreenDeteleModal: boolean;
+    idScreen: number;
+  };
 }
 
 const initialState: View = {
@@ -34,6 +41,8 @@ const initialState: View = {
   AddImgFieldModal: false,
   AddMarkdownFieldModal: false,
   AddCheckoutModal: false,
+  RenameScreenModal: false,
+  AddScreenModal: false,
   textFieldDeteleModal: { isTextFieldDeteleModal: false, idTextField: 0 },
   imgFieldDeteleModal: { isImgFieldDeteleModal: false, idImgField: 0 },
   markdownFieldDeteleModal: {
@@ -41,6 +50,10 @@ const initialState: View = {
     idMarkdownField: 0,
   },
   checkoutDeteleModal: { isCheckoutDeteleModal: false, idCheckout: 0 },
+  ScreenDeteleModal: {
+    isScreenDeteleModal: false,
+    idScreen: 0,
+  },
 };
 
 export const viewSlice = createSlice({
@@ -97,6 +110,14 @@ export const viewSlice = createSlice({
       state.checkoutDeteleModal.isCheckoutDeteleModal = false;
       state.checkoutDeteleModal.idCheckout = 0;
     },
+    openScreenDeleteModal: (state, action) => {
+      state.ScreenDeteleModal.isScreenDeteleModal = true;
+      state.ScreenDeteleModal.idScreen = action.payload;
+    },
+    closeScreenDeleteModal: (state) => {
+      state.ScreenDeteleModal.isScreenDeteleModal = false;
+      state.ScreenDeteleModal.idScreen = 0;
+    },
     openAddTextFieldModal: (state) => {
       state.AddTextFieldModal = true;
     },
@@ -121,6 +142,18 @@ export const viewSlice = createSlice({
     closeAddCheckoutModal: (state) => {
       state.AddCheckoutModal = false;
     },
+    openRenameScreenModal: (state) => {
+      state.RenameScreenModal = true;
+    },
+    closeRenameScreenModal: (state) => {
+      state.RenameScreenModal = false;
+    },
+    openAddScreenModal: (state) => {
+      state.AddScreenModal = true;
+    },
+    closeAddScreenModal: (state) => {
+      state.AddScreenModal = false;
+    },
   },
   extraReducers: {
     [TextFieldsActions.addTextField.type]: (state) => {
@@ -134,6 +167,12 @@ export const viewSlice = createSlice({
     },
     [markdownActions.addMarkdownField.type]: (state) => {
       state.AddMarkdownFieldModal = false;
+    },
+    [screensActions.renameScreen.type]: (state) => {
+      state.RenameScreenModal = false;
+    },
+    [screensActions.getAllScreens.type]: (state) => {
+      state.AddScreenModal = false;
     },
   },
 });

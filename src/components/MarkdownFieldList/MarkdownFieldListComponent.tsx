@@ -15,7 +15,7 @@ export interface MarkdownFieldListComponentHooks {
 
 export interface MarkdownFieldListComponentProps
   extends MarkdownFieldListComponentHooks {
-  id: string;
+  id: number;
 }
 
 export const MarkdownFieldListComponent: React.FC<MarkdownFieldListComponentProps> = ({
@@ -32,7 +32,7 @@ export const MarkdownFieldListComponent: React.FC<MarkdownFieldListComponentProp
         {markdownFields.map(({ id }) => {
           return <MarkdownCard id={id} key={id} />;
         })}
-        <AddMarkdownModal id={parseInt(id)} />
+        <AddMarkdownModal id={id} />
         <Grid item sm={4}>
           <Card className="AddCard">
             <Button onClick={() => openAddMarkdownFieldModal()} color="primary">

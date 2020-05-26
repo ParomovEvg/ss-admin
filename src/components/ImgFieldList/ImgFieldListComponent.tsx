@@ -15,7 +15,7 @@ export interface ImgFieldListComponentHooks {
 }
 
 export interface ImgFieldListComponentProps extends ImgFieldListComponentHooks {
-  id: string;
+  id: number;
 }
 
 export const ImgFieldListComponent: React.FC<ImgFieldListComponentProps> = ({
@@ -30,7 +30,7 @@ export const ImgFieldListComponent: React.FC<ImgFieldListComponentProps> = ({
         {imgFields.map(({ id, name, img }) => {
           return <ImgCard id={id} key={id} name={name} />;
         })}
-        <AddImgFieldModal id={parseInt(id)} />
+        <AddImgFieldModal id={id} />
         <Grid item sm={4}>
           <Card className="AddCard">
             <Button onClick={() => openAddImgFieldModal()} color="primary">
