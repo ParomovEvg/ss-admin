@@ -22,4 +22,5 @@ export const DeleteMarkdownModal = DeleteModal$({
       (state) => state.view.markdownFieldDeteleModal.idMarkdownField
     );
   },
+  useTitle: () => 'Вы точно хотите удалить это поле?',
 });

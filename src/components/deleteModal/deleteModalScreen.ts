@@ -22,4 +22,5 @@ export const DeleteModalScreen = DeleteModal$({
       (state) => state.view.ScreenDeteleModal.idScreen
     );
   },
+  useTitle: () => 'Вы точно хотите удалить этот экран?',
 });

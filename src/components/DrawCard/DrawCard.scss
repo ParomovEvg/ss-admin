@@ -1,0 +1,35 @@
+.draw {
+  &-card {
+    width: 100%;
+    &__title {
+      font-size: 20px;
+      line-height: 24px;
+      margin: 0;
+    }
+    &__header {
+      display: flex;
+      align-items: center;
+    }
+    &__date {
+      margin-left: 15px;
+      display: flex;
+      > * {
+        &:not(:last-child) {
+          margin-right: 5px;
+        }
+      }
+    }
+    &__delete {
+      margin-left: 5px;
+    }
+    &__name {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    &__row {
+      display: flex;
+      align-items: center;
+      padding-bottom: 5px;
+    }
+  }
+}

@@ -8,6 +8,8 @@ import { grey } from '@material-ui/core/colors';
 import { viewActions } from '../../redux/slices/viewSlice';
 import { useAction } from '../../hooks/use-action';
 import './Layout.scss';
+import { AddScreenModal } from '../AddScreenModal/AddScreenModal.fipc';
+import { DeleteModalScreen } from '../deleteModal/deleteModalScreen';
 export interface LayoutProps {
   className?: string;
   title: string;
@@ -47,6 +49,8 @@ export const Layout: React.FC<LayoutProps> = ({
         )}
       </Header>
       <Container className="Layout__container">{children}</Container>
+      <AddScreenModal />
+      <DeleteModalScreen />
     </div>
   );
 };

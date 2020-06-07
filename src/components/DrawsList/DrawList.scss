@@ -1,0 +1,12 @@
+.draw {
+  display: flex;
+  flex-direction: column;
+  &__title {
+    font-size: 28px;
+    line-height: 40px;
+    margin: 0;
+  }
+  &__list {
+    padding: 15px 0;
+  }
+}

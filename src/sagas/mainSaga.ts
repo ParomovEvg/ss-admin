@@ -18,6 +18,12 @@ import { addMarkdownValueWatcher } from './markdownField/addMarkdownValue';
 import { addMarkdownFieldWatcher } from './markdownField/addMarkdownField';
 import { renameScreenWatcher } from './screens/renameScreen';
 import { deleteScreenWatcher } from './screens/deleteScreen';
+import { addDrawWather } from './draw/addDraw';
+import { getAllDrawWatcher } from './draw/getAllDraw';
+import { getNowDrawWatcher } from './draw/getNowDraw';
+import { deleteDrawWather } from './draw/deleteDraw';
+import { updateDrawWather } from './draw/updateDraw';
+import { nextDrawWather } from './draw/nextDraw';
 export function* mainSaga() {
   yield all([
     counterListener(),
@@ -39,5 +45,11 @@ export function* mainSaga() {
     renameScreenWatcher(),
     addScreenWatcher(),
     deleteScreenWatcher(),
+    addDrawWather(),
+    getAllDrawWatcher(),
+    getNowDrawWatcher(),
+    deleteDrawWather(),
+    updateDrawWather(),
+    nextDrawWather(),
   ]);
 }

@@ -22,4 +22,5 @@ export const DeleteModalImgField = DeleteModal$({
       (state) => state.view.textFieldDeteleModal.idTextField
     );
   },
+  useTitle: () => 'Вы точно хотите удалить это поле?',
 });

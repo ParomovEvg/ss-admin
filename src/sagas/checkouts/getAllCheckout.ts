@@ -14,7 +14,6 @@ export function* getAllCheckout() {
     const checkouts: FlatCheckoutDto[] = yield call(
       CheckoutsServer.getAllCheckout
     );
-    console.log(checkouts);
     yield put(
       checkoutActions.getAllCheckout(
         checkouts.map((checkout) => ({

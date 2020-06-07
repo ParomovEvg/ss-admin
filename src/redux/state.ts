@@ -1,3 +1,7 @@
+import { drawViewSlice } from './slices/draw/drawView';
+import { nextDrawSlice } from './slices/draw/nextDrawSlice';
+import { drawNowSlise } from './slices/draw/drawNow';
+import { drawIsLoadingSlice } from './slices/draw/drawIsLoadingSlice';
 import { markdowmSlice } from './slices/markdownFieldSlice';
 import { imgFieldsSlice } from './slices/imgFieldsSlice';
 import { TextFieldsSlice } from './slices/textFieldsSlice';
@@ -7,10 +11,23 @@ import { viewSlice } from './slices/viewSlice';
 import { authSlice } from './slices/authSlice';
 import { screensSlice } from './slices/screensSlice';
 import { checkoutSlice } from './slices/checkoutSlice';
+import { drawListSlise } from './slices/draw/drawListSlice';
+import { drawUpdateSlice } from './slices/draw/drawUpdateSlice';
 export const stateActions = {
   counter: counter.actions,
 };
+
+const drawsReducer = combineReducers({
+  items: drawListSlise.reducer,
+  isLoading: drawIsLoadingSlice.reducer,
+  now: drawNowSlise.reducer,
+  updateId: drawUpdateSlice.reducer,
+  next: nextDrawSlice.reducer,
+  view: drawViewSlice.reducer,
+});
+
 export const state = combineReducers({
+  counter: counter.reducer,
   auth: authSlice.reducer,
   TextFields: TextFieldsSlice.reducer,
   imgFields: imgFieldsSlice.reducer,
@@ -18,5 +35,5 @@ export const state = combineReducers({
   screens: screensSlice.reducer,
   checkouts: checkoutSlice.reducer,
   view: viewSlice.reducer,
-  counter: counter.reducer,
+  draws: drawsReducer,
 });

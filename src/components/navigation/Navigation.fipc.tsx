@@ -1,5 +1,5 @@
 import { Navigation$, PathList } from './Navigation';
-import { Draws } from '../Draws/Draws';
+import { DrawsList } from '../DrawsList/DrawsList.fipc';
 import { Redirect } from 'react-router-dom';
 import React from 'react';
 import { Assignment } from '@material-ui/icons';
@@ -23,7 +23,7 @@ const mainRouts: PathList = [
   {
     name: 'Розыгрыши',
     path: '/draws',
-    component: Draws,
+    component: DrawsList,
     icon: <Assignment />,
   },
   {

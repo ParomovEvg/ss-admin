@@ -9,7 +9,8 @@ import { Navigation } from './components/navigation/Navigation.fipc';
 import 'react-notifications/dist/react-notifications.css';
 export const colors = {
   dark: '#001941',
-  secondary: '#f6b90a',
+  secondary: '#dc004e',
+  red: '#dc004e',
   black: '#000',
   bg: '#f5f5f5',
   white: '#fff',

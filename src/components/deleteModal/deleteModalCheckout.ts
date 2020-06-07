@@ -22,4 +22,5 @@ export const DeleteModalCheckout = DeleteModal$({
       (state) => state.view.checkoutDeteleModal.idCheckout
     );
   },
+  useTitle: () => 'Вы точно хотите удалить эту кассу?',
 });

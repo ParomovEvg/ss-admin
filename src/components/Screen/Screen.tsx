@@ -34,8 +34,6 @@ const Screen: React.FC<ScreenProps> = ({ children, className, useScreen }) => {
       <ImgFieldList id={id} />
       <MarkdownFieldList id={id} />
       <RenameScreenModal id={id} />
-      <AddScreenModal />
-      <DeleteModalScreen />
     </Layout>
   );
 };
