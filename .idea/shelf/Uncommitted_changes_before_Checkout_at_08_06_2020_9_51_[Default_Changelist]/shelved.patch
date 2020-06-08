@@ -1,0 +1,118 @@
+Index: package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"name\": \"admin\",\r\n  \"version\": \"0.1.0\",\r\n  \"private\": true,\r\n  \"dependencies\": {\r\n    \"@babel/core\": \"7.9.0\",\r\n    \"@codegena/ng-api-service\": \"^2.1.13-alpha.2\",\r\n    \"@codegena/oapi3ts\": \"^2.1.9-alpha.3\",\r\n    \"@codegena/oapi3ts-cli\": \"^2.1.10-alpha.4\",\r\n    \"@material-ui/core\": \"^4.9.12\",\r\n    \"@material-ui/icons\": \"^4.9.1\",\r\n    \"@reduxjs/toolkit\": \"~1.3.0\",\r\n    \"@svgr/webpack\": \"4.3.3\",\r\n    \"@sweet-monads/either\": \"^2.0.0\",\r\n    \"@sweet-monads/maybe\": \"^2.0.0\",\r\n    \"@testing-library/jest-dom\": \"^4.2.4\",\r\n    \"@testing-library/react\": \"^9.5.0\",\r\n    \"@testing-library/user-event\": \"^7.2.1\",\r\n    \"@types/classnames\": \"^2.2.10\",\r\n    \"@types/jest\": \"^24.9.1\",\r\n    \"@types/lodash\": \"^4.14.150\",\r\n    \"@types/node\": \"^12.12.31\",\r\n    \"@types/react\": \"^16.9.25\",\r\n    \"@types/react-dom\": \"^16.9.5\",\r\n    \"@types/react-redux\": \"~7.1.7\",\r\n    \"@types/react-router-dom\": \"^5.1.5\",\r\n    \"@typescript-eslint/eslint-plugin\": \"^2.10.0\",\r\n    \"@typescript-eslint/parser\": \"^2.10.0\",\r\n    \"autorest\": \"^3.0.6187\",\r\n    \"babel-eslint\": \"10.1.0\",\r\n    \"babel-jest\": \"^24.9.0\",\r\n    \"babel-loader\": \"8.1.0\",\r\n    \"babel-plugin-named-asset-import\": \"^0.3.6\",\r\n    \"babel-preset-react-app\": \"^9.1.2\",\r\n    \"camelcase\": \"^5.3.1\",\r\n    \"case-sensitive-paths-webpack-plugin\": \"2.3.0\",\r\n    \"classnames\": \"^2.2.6\",\r\n    \"css-loader\": \"3.4.2\",\r\n    \"date-fns\": \"^2.14.0\",\r\n    \"dotenv\": \"8.2.0\",\r\n    \"dotenv-expand\": \"5.1.0\",\r\n    \"eslint\": \"^6.6.0\",\r\n    \"eslint-config-react-app\": \"^5.2.1\",\r\n    \"eslint-loader\": \"3.0.3\",\r\n    \"eslint-plugin-flowtype\": \"4.6.0\",\r\n    \"eslint-plugin-import\": \"2.20.1\",\r\n    \"eslint-plugin-jsx-a11y\": \"6.2.3\",\r\n    \"eslint-plugin-react\": \"7.19.0\",\r\n    \"eslint-plugin-react-hooks\": \"^1.6.1\",\r\n    \"file-loader\": \"4.3.0\",\r\n    \"formik\": \"^2.1.4\",\r\n    \"fs-extra\": \"^8.1.0\",\r\n    \"html-webpack-plugin\": \"4.0.0-beta.11\",\r\n    \"identity-obj-proxy\": \"3.0.0\",\r\n    \"jest\": \"24.9.0\",\r\n    \"jest-environment-jsdom-fourteen\": \"1.0.1\",\r\n    \"jest-resolve\": \"24.9.0\",\r\n    \"jest-watch-typeahead\": \"0.4.2\",\r\n    \"ky\": \"^0.19.1\",\r\n    \"lodash\": \"^4.17.15\",\r\n    \"mini-css-extract-plugin\": \"0.9.0\",\r\n    \"node-sass\": \"^4.14.0\",\r\n    \"optimize-css-assets-webpack-plugin\": \"5.0.3\",\r\n    \"pnp-webpack-plugin\": \"1.6.4\",\r\n    \"postcss-flexbugs-fixes\": \"4.1.0\",\r\n    \"postcss-loader\": \"3.0.0\",\r\n    \"postcss-normalize\": \"8.0.1\",\r\n    \"postcss-preset-env\": \"6.7.0\",\r\n    \"postcss-safe-parser\": \"4.0.1\",\r\n    \"prettier\": \"^2.0.2\",\r\n    \"react\": \"^16.13.1\",\r\n    \"react-app-polyfill\": \"^1.0.6\",\r\n    \"react-dev-utils\": \"^10.2.1\",\r\n    \"react-dom\": \"^16.13.1\",\r\n    \"react-dropzone\": \"^11.0.1\",\r\n    \"react-fipc\": \"^0.3.0\",\r\n    \"react-multiple-image-input\": \"^1.0.0\",\r\n    \"react-notifications\": \"^1.6.0\",\r\n    \"react-redux\": \"~7.2.0\",\r\n    \"react-router-dom\": \"^5.1.2\",\r\n    \"redux\": \"~4.0.5\",\r\n    \"redux-saga\": \"~1.1.3\",\r\n    \"resolve\": \"1.15.0\",\r\n    \"resolve-url-loader\": \"3.1.1\",\r\n    \"sass-loader\": \"8.0.2\",\r\n    \"semver\": \"6.3.0\",\r\n    \"style-loader\": \"0.23.1\",\r\n    \"terser-webpack-plugin\": \"2.3.5\",\r\n    \"ts-pnp\": \"1.1.6\",\r\n    \"typescript\": \"^3.7.5\",\r\n    \"url-loader\": \"2.3.0\",\r\n    \"useful-monads\": \"^0.2.0\",\r\n    \"webpack\": \"4.42.0\",\r\n    \"webpack-dev-server\": \"3.10.3\",\r\n    \"webpack-manifest-plugin\": \"2.2.0\",\r\n    \"workbox-webpack-plugin\": \"4.3.1\",\r\n    \"yup\": \"^0.29.1\"\r\n  },\r\n  \"scripts\": {\r\n    \"start\": \"node scripts/start.js\",\r\n    \"build\": \"node scripts/build.js\",\r\n    \"test\": \"node scripts/test.js\",\r\n    \"generate-api-types\": \"curl -X GET http://a0319139.xsph.ru:3000/api-json > api.json && node ./update-typings.js --srcPath ./api.json --destPath ./src/apiWorker --separatedFiles false\"\r\n  },\r\n  \"eslintConfig\": {\r\n    \"extends\": \"react-app\"\r\n  },\r\n  \"prettier\": {\r\n    \"trailingComma\": \"es5\",\r\n    \"tabWidth\": 2,\r\n    \"semi\": true,\r\n    \"singleQuote\": true\r\n  },\r\n  \"browserslist\": {\r\n    \"production\": [\r\n      \">0.2%\",\r\n      \"not dead\",\r\n      \"not op_mini all\"\r\n    ],\r\n    \"development\": [\r\n      \"last 1 chrome version\",\r\n      \"last 1 firefox version\",\r\n      \"last 1 safari version\"\r\n    ]\r\n  },\r\n  \"jest\": {\r\n    \"roots\": [\r\n      \"<rootDir>/src\"\r\n    ],\r\n    \"collectCoverageFrom\": [\r\n      \"src/**/*.{js,jsx,ts,tsx}\",\r\n      \"!src/**/*.d.ts\"\r\n    ],\r\n    \"setupFiles\": [\r\n      \"react-app-polyfill/jsdom\"\r\n    ],\r\n    \"setupFilesAfterEnv\": [\r\n      \"<rootDir>/src/setupTests.ts\"\r\n    ],\r\n    \"testMatch\": [\r\n      \"<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}\",\r\n      \"<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}\"\r\n    ],\r\n    \"testEnvironment\": \"jest-environment-jsdom-fourteen\",\r\n    \"transform\": {\r\n      \"^.+\\\\.(js|jsx|ts|tsx)$\": \"<rootDir>/node_modules/babel-jest\",\r\n      \"^.+\\\\.css$\": \"<rootDir>/config/jest/cssTransform.js\",\r\n      \"^(?!.*\\\\.(js|jsx|ts|tsx|css|json)$)\": \"<rootDir>/config/jest/fileTransform.js\"\r\n    },\r\n    \"transformIgnorePatterns\": [\r\n      \"[/\\\\\\\\]node_modules[/\\\\\\\\].+\\\\.(js|jsx|ts|tsx)$\",\r\n      \"^.+\\\\.module\\\\.(css|sass|scss)$\"\r\n    ],\r\n    \"modulePaths\": [],\r\n    \"moduleNameMapper\": {\r\n      \"^react-native$\": \"react-native-web\",\r\n      \"^.+\\\\.module\\\\.(css|sass|scss)$\": \"identity-obj-proxy\"\r\n    },\r\n    \"moduleFileExtensions\": [\r\n      \"web.js\",\r\n      \"js\",\r\n      \"web.ts\",\r\n      \"ts\",\r\n      \"web.tsx\",\r\n      \"tsx\",\r\n      \"json\",\r\n      \"web.jsx\",\r\n      \"jsx\",\r\n      \"node\"\r\n    ],\r\n    \"watchPlugins\": [\r\n      \"jest-watch-typeahead/filename\",\r\n      \"jest-watch-typeahead/testname\"\r\n    ]\r\n  },\r\n  \"babel\": {\r\n    \"presets\": [\r\n      \"react-app\"\r\n    ]\r\n  },\r\n  \"devDependencies\": {\r\n    \"@types/yup\": \"^0.29.1\"\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- package.json	(revision cfe4bdf1a4315bb13370ac24730c73f3f5a9f6f0)
++++ package.json	(date 1591557390261)
+@@ -87,7 +87,7 @@
+     "style-loader": "0.23.1",
+     "terser-webpack-plugin": "2.3.5",
+     "ts-pnp": "1.1.6",
+-    "typescript": "^3.7.5",
++    "typescript": "^3.9.5",
+     "url-loader": "2.3.0",
+     "useful-monads": "^0.2.0",
+     "webpack": "4.42.0",
+Index: .idea/watcherTasks.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectTasksOptions\" suppressed-tasks=\"SCSS\">\r\n    <TaskOptions isEnabled=\"true\">\r\n      <option name=\"arguments\" value=\"--write $FilePathRelativeToProjectRoot$\" />\r\n      <option name=\"checkSyntaxErrors\" value=\"true\" />\r\n      <option name=\"description\" />\r\n      <option name=\"exitCodeBehavior\" value=\"ERROR\" />\r\n      <option name=\"fileExtension\" value=\"ts\" />\r\n      <option name=\"immediateSync\" value=\"false\" />\r\n      <option name=\"name\" value=\"Prettier\" />\r\n      <option name=\"output\" value=\"$FilePathRelativeToProjectRoot$\" />\r\n      <option name=\"outputFilters\">\r\n        <array />\r\n      </option>\r\n      <option name=\"outputFromStdout\" value=\"false\" />\r\n      <option name=\"program\" value=\"$ProjectFileDir$/node_modules/.bin/prettier\" />\r\n      <option name=\"runOnExternalChanges\" value=\"true\" />\r\n      <option name=\"scopeName\" value=\"Project Files\" />\r\n      <option name=\"trackOnlyRoot\" value=\"false\" />\r\n      <option name=\"workingDir\" value=\"$ProjectFileDir$\" />\r\n      <envs />\r\n    </TaskOptions>\r\n    <TaskOptions isEnabled=\"true\">\r\n      <option name=\"arguments\" value=\"--write $FilePathRelativeToProjectRoot$\" />\r\n      <option name=\"checkSyntaxErrors\" value=\"true\" />\r\n      <option name=\"description\" />\r\n      <option name=\"exitCodeBehavior\" value=\"ERROR\" />\r\n      <option name=\"fileExtension\" value=\"tsx\" />\r\n      <option name=\"immediateSync\" value=\"false\" />\r\n      <option name=\"name\" value=\"Prettier\" />\r\n      <option name=\"output\" value=\"$FilePathRelativeToProjectRoot$\" />\r\n      <option name=\"outputFilters\">\r\n        <array />\r\n      </option>\r\n      <option name=\"outputFromStdout\" value=\"false\" />\r\n      <option name=\"program\" value=\"$ProjectFileDir$/node_modules/.bin/prettier\" />\r\n      <option name=\"runOnExternalChanges\" value=\"true\" />\r\n      <option name=\"scopeName\" value=\"Project Files\" />\r\n      <option name=\"trackOnlyRoot\" value=\"false\" />\r\n      <option name=\"workingDir\" value=\"$ProjectFileDir$\" />\r\n      <envs />\r\n    </TaskOptions>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/watcherTasks.xml	(revision cfe4bdf1a4315bb13370ac24730c73f3f5a9f6f0)
++++ .idea/watcherTasks.xml	(date 1591556997137)
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ProjectTasksOptions" suppressed-tasks="SCSS">
+-    <TaskOptions isEnabled="true">
++    <TaskOptions isEnabled="false">
+       <option name="arguments" value="--write $FilePathRelativeToProjectRoot$" />
+       <option name="checkSyntaxErrors" value="true" />
+       <option name="description" />
+@@ -21,7 +21,7 @@
+       <option name="workingDir" value="$ProjectFileDir$" />
+       <envs />
+     </TaskOptions>
+-    <TaskOptions isEnabled="true">
++    <TaskOptions isEnabled="false">
+       <option name="arguments" value="--write $FilePathRelativeToProjectRoot$" />
+       <option name="checkSyntaxErrors" value="true" />
+       <option name="description" />
+Index: package-lock.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- package-lock.json	(revision cfe4bdf1a4315bb13370ac24730c73f3f5a9f6f0)
++++ package-lock.json	(date 1591557390883)
+@@ -3133,6 +3133,15 @@
+       "resolved": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.0.0.tgz",
+       "integrity": "sha512-Phlt0plgpIIBOGTT/ehfFnbNlfsDEiqmzE2KRXoX1bLIlir4X/MR+zSyBEkL05ffWgnRSf/DXv+WrUAVr93/ow=="
+     },
++    "bindings": {
++      "version": "1.5.0",
++      "resolved": "https://registry.npmjs.org/bindings/-/bindings-1.5.0.tgz",
++      "integrity": "sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==",
++      "optional": true,
++      "requires": {
++        "file-uri-to-path": "1.0.0"
++      }
++    },
+     "block-stream": {
+       "version": "0.0.9",
+       "resolved": "https://registry.npmjs.org/block-stream/-/block-stream-0.0.9.tgz",
+@@ -5929,6 +5938,12 @@
+         "tslib": "^1.9.0"
+       }
+     },
++    "file-uri-to-path": {
++      "version": "1.0.0",
++      "resolved": "https://registry.npmjs.org/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz",
++      "integrity": "sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==",
++      "optional": true
++    },
+     "filesize": {
+       "version": "6.0.1",
+       "resolved": "https://registry.npmjs.org/filesize/-/filesize-6.0.1.tgz",
+@@ -7690,6 +7705,7 @@
+           "integrity": "sha512-Ggd/Ktt7E7I8pxZRbGIs7vwqAPscSESMrCSkx2FtWeqmheJgCo2R74fTsZFCifr0VTPwqRpPv17+6b8Zp7th0Q==",
+           "optional": true,
+           "requires": {
++            "bindings": "^1.5.0",
+             "nan": "^2.12.1",
+             "node-pre-gyp": "*"
+           },
+@@ -14022,9 +14038,9 @@
+       "integrity": "sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c="
+     },
+     "typescript": {
+-      "version": "3.7.5",
+-      "resolved": "https://registry.npmjs.org/typescript/-/typescript-3.7.5.tgz",
+-      "integrity": "sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw=="
++      "version": "3.9.5",
++      "resolved": "https://registry.npmjs.org/typescript/-/typescript-3.9.5.tgz",
++      "integrity": "sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ=="
+     },
+     "typescript-compare": {
+       "version": "0.0.2",
+@@ -14391,6 +14407,7 @@
+           "integrity": "sha512-Ggd/Ktt7E7I8pxZRbGIs7vwqAPscSESMrCSkx2FtWeqmheJgCo2R74fTsZFCifr0VTPwqRpPv17+6b8Zp7th0Q==",
+           "optional": true,
+           "requires": {
++            "bindings": "^1.5.0",
+             "nan": "^2.12.1",
+             "node-pre-gyp": "*"
+           },
+@@ -15166,6 +15183,7 @@
+           "integrity": "sha512-Ggd/Ktt7E7I8pxZRbGIs7vwqAPscSESMrCSkx2FtWeqmheJgCo2R74fTsZFCifr0VTPwqRpPv17+6b8Zp7th0Q==",
+           "optional": true,
+           "requires": {
++            "bindings": "^1.5.0",
+             "nan": "^2.12.1",
+             "node-pre-gyp": "*"
+           },
