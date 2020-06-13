@@ -25,6 +25,7 @@ export const AddTextFieldModalComponent: React.FC<AddTextFieldModalProps> = ({
     closeAddTextFieldModal,
     addTextFieldValue,
     addTextFieldName,
+    addTextFieldDescription,
     addTextFieldModalState,
     addTextFieldFormInputHandler,
     addTextFieldFormHandler,
@@ -38,7 +39,7 @@ export const AddTextFieldModalComponent: React.FC<AddTextFieldModalProps> = ({
     >
       <div className="modal-wrapper modal-wrapper--big">
         <Grid item sm={12}>
-          <Card>
+          <Card className="modal-wrapper__card">
             <CardHeader
               title="Добавить новое текстовое поле"
               action={
@@ -62,6 +63,16 @@ export const AddTextFieldModalComponent: React.FC<AddTextFieldModalProps> = ({
                       value={addTextFieldName}
                       onChange={addTextFieldFormInputHandler}
                       required
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      fullWidth
+                      name="description"
+                      label="Описание поля"
+                      variant="outlined"
+                      value={addTextFieldDescription}
+                      onChange={addTextFieldFormInputHandler}
                     />
                   </Grid>
                   <Grid item>

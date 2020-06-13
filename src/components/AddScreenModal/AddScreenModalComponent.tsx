@@ -23,6 +23,7 @@ export const AddScreenModalComponent: React.FC<AddScreenModalComponentProps> = (
     closeAddScreenModal,
     AddScreenModalState,
     addScreenName,
+    addScreenDescription,
     addScreenFormInputHandler,
     addScreenFormHandler,
   } = useAddScreenModalProps();
@@ -35,7 +36,7 @@ export const AddScreenModalComponent: React.FC<AddScreenModalComponentProps> = (
     >
       <div className="modal-wrapper modal-wrapper--big">
         <Grid item sm={12}>
-          <Card>
+          <Card className="modal-wrapper__card">
             <CardHeader
               title="Добавить новый экран"
               action={
@@ -57,6 +58,17 @@ export const AddScreenModalComponent: React.FC<AddScreenModalComponentProps> = (
                       label="Имя скрина"
                       variant="outlined"
                       value={addScreenName}
+                      onChange={addScreenFormInputHandler}
+                      required
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      fullWidth
+                      name="description"
+                      label="Описание скрина"
+                      variant="outlined"
+                      value={addScreenDescription}
                       onChange={addScreenFormInputHandler}
                       required
                     />

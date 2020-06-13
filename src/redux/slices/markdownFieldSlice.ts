@@ -1,8 +1,7 @@
-import { MdDto } from './../../apiWorker/typings/index';
+import { MdDto, MdFieldDto } from './../../apiWorker/typings/index';
 import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
-import { MdFieldContentDto } from '../../apiWorker/typings';
 
-export interface MarkdowmType extends MdFieldContentDto {
+export interface MarkdowmType extends MdFieldDto {
   isLoading: boolean;
   addValueText?: string | undefined;
 }

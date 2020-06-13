@@ -101,7 +101,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "generate-api-types": "curl -X GET http://a0319139.xsph.ru:3000/api-json > api.json && node ./update-typings.js --srcPath ./api.json --destPath ./src/apiWorker --separatedFiles false"
+    "generate-api-types": "curl -X GET http://localhost:3000/api-json > api.json && node ./update-typings.js --srcPath ./api.json --destPath ./src/apiWorker --separatedFiles false"
   },
   "eslintConfig": {
     "extends": "react-app"

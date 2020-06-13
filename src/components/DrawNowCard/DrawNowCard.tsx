@@ -3,15 +3,7 @@ import { createFipc } from 'react-fipc';
 import { Loader } from '../Loader/Loader';
 import { DrawNowCardHooks } from './DrawNowCard.fipc';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
-import {
-  IconButton,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Button,
-} from '@material-ui/core';
+import { IconButton, Card, CardHeader, CardContent } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import './DrawNowCard.scss';
 
@@ -40,15 +32,13 @@ export const DrawNowCardComponent: React.FC<DrawNowCardProps> = ({
   useNowDraw,
   useOpenUpdateDrawModal,
   useOpenDeleteDrawModal,
-  useOpenNextDrawModal,
 }) => {
   const { isLoading } = useNowDraw(id);
   const openUpdateDrawModal = useOpenUpdateDrawModal(id);
   const openDeleteDrawModal = useOpenDeleteDrawModal(id);
-  const openNextDrawModal = useOpenNextDrawModal();
   return (
     <Card className="card">
-      <Loader isLoading={isLoading} />
+      {/* <Loader isLoading={isLoading} /> */}
       <CardHeader
         title={description}
         action={
@@ -59,14 +49,19 @@ export const DrawNowCardComponent: React.FC<DrawNowCardProps> = ({
             <IconButton onClick={openUpdateDrawModal} aria-label="settings">
               <CreateIcon />
             </IconButton>
-            <IconButton onClick={openNextDrawModal} aria-label="settings">
-              <AddIcon />
-            </IconButton>
           </>
         }
       />
       <CardContent>
         <div className="draw-card__content">
+          <div className="draw-card__row">
+            <span className="draw-card__name">Начало розыгрыша — </span>
+            <span>{new Date(start).toLocaleDateString('ru')}</span>
+          </div>
+          <div className="draw-card__row">
+            <span className="draw-card__name">Конец розыгрыша — </span>
+            <span>{new Date(end).toLocaleDateString('ru')}</span>
+          </div>
           <div className="draw-card__row">
             <span className="draw-card__name">Минимальная сумма чека — </span>
             <span>{sLimit == 0 ? 'нет' : `${sLimit} ₽`}</span>

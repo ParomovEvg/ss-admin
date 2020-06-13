@@ -7,6 +7,7 @@ import { MarkdownCard } from '../MarkdownCard/MarkdownCard.fipc';
 import { useAction } from '../../hooks/use-action';
 import { viewActions } from '../../redux/slices/viewSlice';
 import { AddMarkdownModal } from '../AddMarkdownModal/AddMarkdownModal.fipc';
+import { InfoMarkdownModal } from '../markdownInfoModal/markdownInfoModal.fipc';
 export interface MarkdownFieldListComponentHooks {
   useMarkdownFields: () => {
     markdownFields: MarkdowmType[];
@@ -42,6 +43,7 @@ export const MarkdownFieldListComponent: React.FC<MarkdownFieldListComponentProp
         </Grid>
       </Grid>
       <DeleteMarkdownModal />
+      <InfoMarkdownModal />
     </>
   );
 };

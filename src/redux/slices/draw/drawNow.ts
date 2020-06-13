@@ -11,6 +11,7 @@ export const drawNowSlise = createSlice({
     getSuccessful: (state, action: PayloadAction<drawType>) => {
       return action.payload;
     },
+    delete: () => null,
   },
 });
 

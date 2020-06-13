@@ -10,7 +10,6 @@ import { drawType } from '../../redux/slices/draw/drawListSlice';
 import { DeleteModalDraw } from '../deleteModal/deleteModalDraw';
 import { UpdateDrawModal } from '../UpdateDrawModal/UpdateDrawModal.fipc';
 import { DrawNowCard } from '../DrawNowCard/DrawNowCard.fipc';
-import { AddNextDrawModal } from '../AddNextDrawModal/AddNextDrawModal.fipc';
 
 export interface DrawsProps {
   className?: string;
@@ -57,6 +56,13 @@ export const DrawsListComponent: React.FC<DrawsProps> = ({
           )}
         </div>
         <h2 className="draw__title">Все розыгрыши</h2>
+        <Button
+          className="AddCard draw__AddCard"
+          onClick={() => openAddDrawModal()}
+          color="primary"
+        >
+          Добавить новый розыгрыш
+        </Button>
         <div className="draw__list">
           {allDraw.map((draw) => {
             return (
@@ -73,17 +79,9 @@ export const DrawsListComponent: React.FC<DrawsProps> = ({
             );
           })}
         </div>
-        <Button
-          className="AddCard draw__AddCard"
-          onClick={() => openAddDrawModal()}
-          color="primary"
-        >
-          Добавить новый розыгрыш
-        </Button>
       </div>
       <AddDrawModal />
       <UpdateDrawModal />
-      <AddNextDrawModal />
       <DeleteModalDraw />
     </Layout>
   );

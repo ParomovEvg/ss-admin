@@ -15,6 +15,7 @@ export type useAddImgFieldModalProps = (
   closeAddImgFieldModal: () => void;
   addImgFieldModalState: boolean;
   addImgFieldName: string;
+  addImgFieldDescription: string;
   addImgFieldFormInputHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
   addImgFieldFormHandler: (e: React.FormEvent<HTMLFormElement>) => void;
 };
@@ -28,8 +29,14 @@ export const AddImgFieldModal = AddImgFieldModal$({
     const addImgFieldName = useSelector<RootState, string>(
       (state) => state.imgFields.addImgFieldName
     );
+    const addImgFieldDescription = useSelector<RootState, string>(
+      (state) => state.imgFields?.addImgFieldDescription ?? ''
+    );
 
     const setAddImgFieldName = useAction(imgFieldsActions.setAddImgFieldName);
+    const setAddImgFieldDescription = useAction(
+      imgFieldsActions.setAddImgFieldDescription
+    );
     const addImgFieldFormInputHandler = useCallback(
       (e) => {
         const name = e.target.name;
@@ -38,9 +45,12 @@ export const AddImgFieldModal = AddImgFieldModal$({
           case 'name':
             setAddImgFieldName(value);
             break;
+          case 'description':
+            setAddImgFieldDescription(value);
+            break;
         }
       },
-      [setAddImgFieldName]
+      [setAddImgFieldName, setAddImgFieldDescription]
     );
     const addImgFieldAsync = useAction(imgFieldsActionsAsync.addImgFieldAsync);
     const addImgFieldFormHandler = useCallback(
@@ -55,6 +65,7 @@ export const AddImgFieldModal = AddImgFieldModal$({
       addImgFieldModalState,
       addImgFieldFormInputHandler,
       addImgFieldName,
+      addImgFieldDescription,
       closeAddImgFieldModal,
     };
   },

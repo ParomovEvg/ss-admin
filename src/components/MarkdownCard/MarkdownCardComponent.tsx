@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   Card,
   CardContent,
@@ -13,6 +13,7 @@ import { createFipc } from 'react-fipc';
 import { viewActions } from '../../redux/slices/viewSlice';
 import { useAction } from '../../hooks/use-action';
 import { Loader } from '../Loader/Loader';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import './MarkdownCard.scss';
 export interface MarkdownCardHooks {
   useMarkdown: (
@@ -48,6 +49,7 @@ export const MarkdownCardComponent: React.FC<MarkdownCardProps> = ({
   const openDeleteMarkdownFieldModal = useAction(
     viewActions.openDeleteMarkdownFieldModal
   );
+  const openInfoMarkdownModal = useAction(viewActions.openInfoMarkdownModal);
   const {
     isLoading,
     name,
@@ -63,24 +65,32 @@ export const MarkdownCardComponent: React.FC<MarkdownCardProps> = ({
     onBack,
   } = useMarkdown(id);
   return (
-    <Grid item sm={6}>
+    <Grid item sm={12}>
       <Card className="card">
         <Loader isLoading={isLoading} />
         <CardHeader
           title={name}
           action={
-            <IconButton
-              onClick={() => openDeleteMarkdownFieldModal(id)}
-              aria-label="settings"
-            >
-              <DeleteIcon />
-            </IconButton>
+            <>
+              <IconButton
+                onClick={() => openDeleteMarkdownFieldModal(id)}
+                aria-label="settings"
+              >
+                <DeleteIcon />
+              </IconButton>
+              <IconButton
+                onClick={() => openInfoMarkdownModal()}
+                aria-label="settings"
+              >
+                <HelpOutlineIcon />
+              </IconButton>
+            </>
           }
         />
         <CardHeader title={label} />
         <CardContent>
           <Grid container item sm={12} spacing={2}>
-            <Grid item sm={6}>
+            <Grid item sm={8}>
               <TextField
                 label="Ваш текст"
                 multiline
@@ -90,7 +100,7 @@ export const MarkdownCardComponent: React.FC<MarkdownCardProps> = ({
                 onChange={addValueTextHandler}
               />
             </Grid>
-            <Grid item sm={6}>
+            <Grid item sm={4}>
               <div
                 className="markdown__translate"
                 dangerouslySetInnerHTML={{

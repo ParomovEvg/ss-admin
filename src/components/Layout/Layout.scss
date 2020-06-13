@@ -1,6 +1,8 @@
 .Layout {
- 
+  &__name {
+    padding-right: 5px;
+  }
 }
-.Layout__container{
-  padding-top: 20px
+.Layout__container {
+  padding-top: 20px;
 }

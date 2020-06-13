@@ -1,7 +1,6 @@
 import { DrawCard$ } from './DrawCard';
 import { useAction } from '../../hooks/use-action';
 import { drawUpdateActions } from '../../redux/slices/draw/drawUpdateSlice';
-import { viewActions } from '../../redux/slices/viewSlice';
 import { useSelectorFactory } from '../../hooks/use-selector-factory';
 import { drawIsLoadingFactory } from '../../redux/slices/draw/drawSelectors';
 import { drawViewActions } from '../../redux/slices/draw/drawView';

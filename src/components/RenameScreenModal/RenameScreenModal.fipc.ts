@@ -41,19 +41,21 @@ export const RenameScreenModal = RenameScreenModal$({
 
     const setRenameScreenName = useAction(screensActions.setRenameScreenName);
 
-    const renameScreenFormInputHandler = useCallback((e) => {
-      const name = e.target.name;
-      const value = e.target.value;
-      switch (name) {
-        case 'name':
-          setRenameScreenName({
-            id,
-            name: value,
-          });
-          break;
-      }
-    }, []);
-
+    const renameScreenFormInputHandler = useCallback(
+      (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        switch (name) {
+          case 'name':
+            setRenameScreenName({
+              id,
+              name: value,
+            });
+            break;
+        }
+      },
+      [id, setRenameScreenName]
+    );
     const renameScreen_async = useAction(asyncScreenActions.renameScreen_async);
     const renameScreenFormHandler = useCallback(
       (e) => {

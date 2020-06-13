@@ -1,8 +1,8 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { state } from './state';
-import { mainSaga } from '../sagas/mainSaga';
 import createSagaMiddleware from 'redux-saga';
 import { Selector } from '@reduxjs/toolkit';
+import { mainSaga } from './sagas/mainSaga';
 const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer: state,

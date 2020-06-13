@@ -13,12 +13,14 @@ import { DeleteModalScreen } from '../deleteModal/deleteModalScreen';
 export interface LayoutProps {
   className?: string;
   title: string;
+  description?: string;
   isScreen?: boolean;
   id?: number;
 }
 
 export const Layout: React.FC<LayoutProps> = ({
   title,
+  description,
   children,
   className,
   isScreen,
@@ -32,20 +34,25 @@ export const Layout: React.FC<LayoutProps> = ({
       <Header>
         <span className="Layout__name">{title}</span>
         {isScreen && (
-          <div className="Layout__btns">
-            <IconButton
-              onClick={() => openRenameScreenModal()}
-              aria-label="settings"
-            >
-              <CreateIcon style={{ color: grey[50] }} />
-            </IconButton>
-            <IconButton
-              onClick={() => openScreenDeleteModal(id)}
-              aria-label="settings"
-            >
-              <DeleteIcon style={{ color: grey[50] }} />
-            </IconButton>
-          </div>
+          <>
+            {description && (
+              <span className="Layout__name">— {description}</span>
+            )}
+            <div className="Layout__btns">
+              <IconButton
+                onClick={() => openRenameScreenModal()}
+                aria-label="settings"
+              >
+                <CreateIcon style={{ color: grey[50] }} />
+              </IconButton>
+              <IconButton
+                onClick={() => openScreenDeleteModal(id)}
+                aria-label="settings"
+              >
+                <DeleteIcon style={{ color: grey[50] }} />
+              </IconButton>
+            </div>
+          </>
         )}
       </Header>
       <Container className="Layout__container">{children}</Container>

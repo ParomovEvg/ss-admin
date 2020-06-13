@@ -38,7 +38,7 @@ export const RenameScreenModalComponent: React.FC<RenameScreenComponentProps> = 
     >
       <div className="modal-wrapper modal-wrapper--big">
         <Grid item sm={12}>
-          <Card>
+          <Card className="modal-wrapper__card">
             <CardHeader
               title="Изменить имя скрина"
               action={

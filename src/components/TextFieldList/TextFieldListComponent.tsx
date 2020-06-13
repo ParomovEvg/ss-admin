@@ -26,8 +26,10 @@ export const TextFieldListComponent: React.FC<TextFieldListComponentProps> = ({
   return (
     <>
       <Grid container spacing={3}>
-        {textFields.map(({ id, name }) => {
-          return <TextCard id={id} key={id} name={name} />;
+        {textFields.map(({ id, name, description }) => {
+          return (
+            <TextCard id={id} key={id} name={name} description={description} />
+          );
         })}
         <AddTextFieldModal id={id} />
         <Grid item sm={4}>

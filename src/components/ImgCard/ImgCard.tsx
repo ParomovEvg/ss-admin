@@ -8,12 +8,12 @@ import {
   IconButton,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
 import { createFipc } from 'react-fipc';
 import { viewActions } from '../../redux/slices/viewSlice';
 import { useAction } from '../../hooks/use-action';
 import { Loader } from '../Loader/Loader';
 import { DropZone } from '../DropZone/DropZone.fipc';
-import { ImgDto } from '../../apiWorker/typings';
 export interface ImgCardHooks {
   useImgField: (
     id: number
@@ -35,6 +35,7 @@ export interface ImgCardProps extends ImgCardHooks {
   multiline?: boolean;
   id: number;
   name: string;
+  description: string;
 }
 
 export const ImgCardComponent: React.FC<ImgCardProps> = ({
@@ -42,6 +43,7 @@ export const ImgCardComponent: React.FC<ImgCardProps> = ({
   className,
   name,
   id,
+  description,
   useImgField,
 }) => {
   const openDeleteImgFieldModal = useAction(
@@ -59,24 +61,34 @@ export const ImgCardComponent: React.FC<ImgCardProps> = ({
     url,
   } = useImgField(id);
   return (
-    <Grid item sm={4}>
+    <Grid item sm={6}>
       <Card className="card">
         <Loader isLoading={isLoading} />
         <CardHeader
-          title={name}
+          title={description}
           action={
-            <IconButton
-              onClick={() => openDeleteImgFieldModal(id)}
-              aria-label="settings"
-            >
-              <DeleteIcon />
-            </IconButton>
+            <>
+              <IconButton
+                onClick={() => openDeleteImgFieldModal(id)}
+                aria-label="settings"
+              >
+                <DeleteIcon />
+              </IconButton>
+              <IconButton
+                onClick={() => openDeleteImgFieldModal(id)}
+                aria-label="settings"
+              >
+                <CreateIcon />
+              </IconButton>
+            </>
           }
         />
+        <CardHeader title={name} />
         <CardContent>
           <Grid container spacing={4}>
             <Grid item sm={12}>
               <DropZone id={id} url={url} onChangeDropZone={onChangeDropZone} />
+              <a href={url}>{url}</a>
             </Grid>
             <Grid item container sm={12} spacing={1}>
               <Grid item>

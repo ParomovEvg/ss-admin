@@ -19,11 +19,12 @@ export const screenServer = {
       .json<FindAllScreensResDto>()
       .then((r) => r.payload),
   addScreen: (
-    name: string
+    name: string,
+    description: string
   ): Promise<Either<ScreenAlreadyExists, FlatScreenDto>> =>
     api
       .post('screen', {
-        json: { name },
+        json: { name, description },
       })
       .json<CreateScreenResDto>()
       .then(dtoToEither),

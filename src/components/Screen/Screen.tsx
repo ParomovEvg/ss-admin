@@ -7,14 +7,13 @@ import { ImgFieldList } from '../ImgFieldList/ImgFieldList.fipc';
 import { MarkdownFieldList } from '../MarkdownFieldList/MarkdownFieldList.fipc';
 import './Screen.scss';
 import { RenameScreenModal } from '../RenameScreenModal/RenameScreenModal.fipc';
-import { AddScreenModal } from '../AddScreenModal/AddScreenModal.fipc';
-import { DeleteModalScreen } from '../deleteModal/deleteModalScreen';
 import { Redirect } from 'react-router-dom';
 export interface ScreenHooks {
   useScreen: () => {
     isLoading: boolean;
     id: number;
     name: string | undefined;
+    description: string | undefined;
   };
 }
 
@@ -23,12 +22,17 @@ export interface ScreenProps extends ScreenHooks {
 }
 
 const Screen: React.FC<ScreenProps> = ({ children, className, useScreen }) => {
-  const { isLoading, id, name } = useScreen();
+  const { isLoading, id, name, description } = useScreen();
   if (!name) {
     return <Redirect to="/draws" />;
   }
   return (
-    <Layout title={name ?? ''} isScreen={true} id={id}>
+    <Layout
+      title={name ?? ''}
+      description={description ?? ''}
+      isScreen={true}
+      id={id}
+    >
       <Loader isLoading={isLoading} />
       <TextFieldList id={id} />
       <ImgFieldList id={id} />
