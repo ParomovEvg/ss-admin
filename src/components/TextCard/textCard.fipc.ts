@@ -63,11 +63,13 @@ export const TextCard = TextCard$({
     }, [setValueStatus]);
 
     const isSave = useIsSave(text, values, isLoading);
+
     const onSave = useCallback(() => {
       addFieldValueAsync({ text, fieldId });
     }, [addFieldValueAsync, text, fieldId]);
 
     const isReset = useIsReset(text, values, lastValue, isLoading);
+
     const onReset = useCallback(() => {
       if (isReset) {
         setText(last(values)?.value ?? '');

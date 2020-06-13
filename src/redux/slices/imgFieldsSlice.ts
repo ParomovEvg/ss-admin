@@ -12,6 +12,7 @@ interface imgField extends ImgFieldDto {
 type InitialStateType = {
   items: imgField[];
   addImgFieldName: string;
+  addImgFieldDescription?: string;
 };
 
 const initialState: InitialStateType = {
@@ -85,12 +86,16 @@ export const imgFieldsSlice = createSlice({
     setAddImgFieldName: (state, action: PayloadAction<string>) => {
       state.addImgFieldName = action.payload;
     },
+    setAddImgFieldDescription: (state, action: PayloadAction<string>) => {
+      state.addImgFieldDescription = action.payload;
+    },
     addImgField: (
       state,
       action: PayloadAction<{ item: imgField; id: number }>
     ) => {
       state.items.push(action.payload.item);
       state.addImgFieldName = '';
+      state.addImgFieldDescription = '';
     },
     addImg: (state, action: PayloadAction<{ img: ImgDto; id: number }>) => {
       state.items.forEach((imgField) => {

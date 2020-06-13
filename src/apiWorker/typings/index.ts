@@ -32,16 +32,8 @@ export type AuthControllerGetProfileResponse<
     ? FlatPhoneDto
     : any
   : any;
-export interface PhoneAlreadyExists {
-  name: 'PhoneAlreadyExists';
-  message: string;
-  param: {
-    phone?: string;
-  };
-}
 export interface CreatePhoneResDto {
-  payload?: FlatPhoneDto;
-  PhoneAlreadyExists?: PhoneAlreadyExists;
+  payload: FlatPhoneDto;
 }
 export type AuthControllerCreateUserResponse<
   TCode extends 201 = 201,
@@ -53,7 +45,6 @@ export type AuthControllerCreateUserResponse<
   : any;
 export interface CreatePhoneDto {
   phone: string;
-  password: string;
 }
 export type AuthControllerCreateUserRequest<
   TCode extends 'application/json' = 'application/json'
@@ -77,12 +68,6 @@ export type AuthControllerAddPasswordResponse<
     ? CreatePasswordResDto
     : any
   : any;
-export interface CreatePasswordDto {
-  password: string;
-}
-export type AuthControllerAddPasswordRequest<
-  TCode extends 'application/json' = 'application/json'
-> = TCode extends 'application/json' ? CreatePasswordDto : any;
 export interface FlatCheckoutDto {
   id: number;
   fn: string;
@@ -162,6 +147,17 @@ export interface CreateQrDto {
 export type QrControllerAddQrRequest<
   TCode extends 'application/json' = 'application/json'
 > = TCode extends 'application/json' ? CreateQrDto : any;
+export interface GetQrNumResDto {
+  payload: string;
+}
+export type QrControllerCountQrResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? GetQrNumResDto
+    : any
+  : any;
 export interface FlatDrawDto {
   id: number;
   start: string;
@@ -232,6 +228,18 @@ export interface CreateDrawDto {
 export type DrawControllerCreateDrawRequest<
   TCode extends 'application/json' = 'application/json'
 > = TCode extends 'application/json' ? CreateDrawDto : any;
+export interface FindNowDrawResDto {
+  payload?: FlatDrawDto;
+  NotDrawNow?: NotDrawNow;
+}
+export type DrawControllerFindNowResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? FindNowDrawResDto
+    : any
+  : any;
 /**
  * Model of parameters for API `/draw/{id}`
  */
@@ -313,18 +321,6 @@ export interface ChangeDrawDto {
 export type DrawControllerChangeDrawSalaryRequest<
   TCode extends 'application/json' = 'application/json'
 > = TCode extends 'application/json' ? ChangeDrawDto : any;
-export interface FindNowDrawResDto {
-  payload?: FlatDrawDto;
-  NotDrawNow?: NotDrawNow;
-}
-export type DrawControllerFindNowResponse<
-  TCode extends 200 = 200,
-  TContentType extends 'application/json' = 'application/json'
-> = TCode extends 200
-  ? TContentType extends 'application/json'
-    ? FindNowDrawResDto
-    : any
-  : any;
 export type DrawControllerCreateDrawNextResponse<
   TCode extends 201 = 201,
   TContentType extends 'application/json' = 'application/json'
@@ -450,6 +446,7 @@ export interface TextContentDto {
 export interface TextFieldContentDto {
   id: number;
   name: string;
+  description: string;
   value?: TextContentDto;
 }
 export interface ImgDto {
@@ -461,6 +458,7 @@ export interface ImgDto {
 export interface ImgFieldContentDto {
   id: number;
   name: string;
+  description: string;
   img?: ImgDto;
 }
 export interface MdDto {
@@ -471,11 +469,12 @@ export interface MdFieldContentDto {
   id: number;
   name: string;
   label: string;
-  values: MdDto[];
+  values: Array<MdDto>;
 }
 export interface ScreenContentDto {
   id: number;
   name: string;
+  description: string;
   textFields: Array<TextFieldContentDto>;
   imgFields: Array<ImgFieldContentDto>;
   mdFields: Array<MdFieldContentDto>;
@@ -492,15 +491,16 @@ export type ContentControllerGetContentResponse<
     : any
   : TCode extends 400
   ? TContentType extends 'application/json'
-    /**
-     * Empty response
-     */
-    ? null
+    ? /**
+       * Empty response
+       */
+      null
     : any
   : any;
 export interface FlatScreenDto {
   id: number;
   name: string;
+  description: string;
 }
 export interface FindAllScreensResDto {
   payload: Array<FlatScreenDto>;
@@ -534,6 +534,7 @@ export type ScreenControllerCreateScreenResponse<
   : any;
 export interface CreateScreenDto {
   name: string;
+  description: string;
 }
 export type ScreenControllerCreateScreenRequest<
   TCode extends 'application/json' = 'application/json'
@@ -579,19 +580,28 @@ export interface TextDto {
 export interface TextFieldDto {
   id: number;
   name: string;
+  description: string;
   values: Array<TextDto>;
 }
 export interface ImgFieldDto {
   id: number;
   name: string;
+  description: string;
   img: Array<ImgDto>;
+}
+export interface MdFieldDto {
+  id: number;
+  name: string;
+  label: string;
+  values: Array<MdDto>;
 }
 export interface ScreenDto {
   id: number;
   name: string;
+  description: string;
   textFields: Array<TextFieldDto>;
   imgFields: Array<ImgFieldDto>;
-  mdFields: Array<MdFieldContentDto>;
+  mdFields: Array<MdFieldDto>;
 }
 export interface FindScreenByIdResDto {
   payload?: ScreenDto;
@@ -632,6 +642,7 @@ export type ScreenControllerChangeScreenNameRequest<
 export interface FlatImgFieldDto {
   id: number;
   name: string;
+  description: string;
 }
 export interface ImgFieldAlreadyExistsInScreen {
   name: 'ImgFieldAlreadyExistsInScreen';
@@ -657,6 +668,7 @@ export type ImgControllerCreateImgFieldResponse<
 export interface CreateImgFieldDto {
   screenId: number;
   name: string;
+  description: string;
 }
 export type ImgControllerCreateImgFieldRequest<
   TCode extends 'application/json' = 'application/json'
@@ -886,6 +898,7 @@ export type MdControllerCreateMdRequest<
 export interface FlatTextFieldDto {
   id: number;
   name: string;
+  description: string;
 }
 export interface TextFieldAlreadyExists {
   name: 'TextFieldAlreadyExists';
@@ -910,6 +923,7 @@ export type TextControllerCreateFieldResponse<
   : any;
 export interface CreateTextFieldDto {
   name: string;
+  description: string;
   screenId: number;
 }
 export type TextControllerCreateFieldRequest<

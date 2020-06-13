@@ -27,8 +27,10 @@ export const ImgFieldListComponent: React.FC<ImgFieldListComponentProps> = ({
   return (
     <>
       <Grid container spacing={3}>
-        {imgFields.map(({ id, name, img }) => {
-          return <ImgCard id={id} key={id} name={name} />;
+        {imgFields.map(({ id, name, img, description }) => {
+          return (
+            <ImgCard id={id} key={id} name={name} description={description} />
+          );
         })}
         <AddImgFieldModal id={id} />
         <Grid item sm={4}>

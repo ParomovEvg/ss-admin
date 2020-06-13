@@ -3,7 +3,7 @@ import { getState, store } from '../redux/createStore';
 import { authActions } from '../redux/slices/authSlice';
 import { LoginResDto } from './typings';
 export const api = ky.extend({
-  prefixUrl: 'https://paromov.ru/',
+  prefixUrl: 'http://localhost:3000/',
   timeout: 60000,
   hooks: {
     beforeRequest: [
@@ -18,7 +18,7 @@ export const api = ky.extend({
           try {
             const { phone, password } = getState().auth;
             const token = await ky
-              .post('https://paromov.ru/auth', {
+              .post('http://localhost:3000/auth', {
                 json: {
                   phone,
                   password,

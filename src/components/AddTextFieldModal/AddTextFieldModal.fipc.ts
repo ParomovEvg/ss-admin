@@ -16,6 +16,7 @@ export type useAddTextFieldModalProps = (
   addTextFieldModalState: boolean;
   addTextFieldName: string;
   addTextFieldValue: string;
+  addTextFieldDescription: string;
   addTextFieldFormInputHandler: (
     e: React.ChangeEvent<HTMLInputElement>
   ) => void;
@@ -36,9 +37,15 @@ export const AddTextFieldModal = AddTextFieldModal$({
     const addTextFieldValue = useSelector<RootState, string>(
       (state) => state.TextFields.addTextFieldValue
     );
+    const addTextFieldDescription = useSelector<RootState, string>(
+      (state) => state.TextFields.addTextFieldDescription
+    );
 
     const setAddFieldName = useAction(TextFieldsActions.setAddTextFieldName);
     const setAddFieldValue = useAction(TextFieldsActions.setAddTextFieldValue);
+    const setAddTextFieldDescription = useAction(
+      TextFieldsActions.setAddTextFieldDescription
+    );
 
     const addTextFieldFormInputHandler = useCallback(
       (e) => {
@@ -51,10 +58,13 @@ export const AddTextFieldModal = AddTextFieldModal$({
           case 'value':
             setAddFieldValue(value);
             break;
+          case 'description':
+            setAddTextFieldDescription(value);
+            break;
         }
       },
 
-      [setAddFieldName, setAddFieldValue]
+      [setAddFieldName, setAddFieldValue, setAddTextFieldDescription]
     );
     const addTextFieldAsync = useAction(
       asyncTextFieldActions.addTextFieldAsync
@@ -72,6 +82,7 @@ export const AddTextFieldModal = AddTextFieldModal$({
       addTextFieldFormInputHandler,
       addTextFieldName,
       addTextFieldValue,
+      addTextFieldDescription,
       closeAddTextFieldModal,
     };
   },

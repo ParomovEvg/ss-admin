@@ -1,6 +1,6 @@
+import { nextDrawActions } from './nextDrawSlice';
 import { createSlice } from '@reduxjs/toolkit';
 import { drawListActions } from './drawListSlice';
-import { drawNowActions } from './drawNow';
 
 export interface drawView {
   AddDrawdModal: boolean;
@@ -64,8 +64,8 @@ export const drawViewSlice = createSlice({
     [drawListActions.updateSuccessful.type]: (state) => {
       state.updateDrawModal = false;
     },
-    [drawNowActions.getSuccessful.type]: (state) => {
-      state.nextDrawModal = false;
+    [nextDrawActions.nextDraw_successful.type]: (state) => {
+      state.AddDrawdModal = false;
     },
   },
 });

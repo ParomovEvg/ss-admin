@@ -1,11 +1,11 @@
 import { createSlice, createAction } from '@reduxjs/toolkit';
-import { initialNextValuesType } from '../../../components/AddNextDrawModal/AddNextDrawModal';
 import { FormikHelpers } from 'formik';
+import { initialValuesType } from '../../../components/AddDrawModal/AddDrawModal';
 
 const nextDrawActionsI = {
   nextDraw: createAction<{
-    values: initialNextValuesType;
-    action: FormikHelpers<initialNextValuesType>;
+    values: initialValuesType;
+    action: FormikHelpers<initialValuesType>;
   }>('draw/next/add' as const),
   nextDraw_successful: createAction('draw/next/add_successful' as const),
 };

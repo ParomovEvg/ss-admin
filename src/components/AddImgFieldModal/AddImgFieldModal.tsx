@@ -26,6 +26,7 @@ export const AddImgFieldModalComponent: React.FC<AddImgFieldModalProps> = ({
     addImgFieldFormInputHandler,
     addImgFieldModalState,
     addImgFieldName,
+    addImgFieldDescription,
     closeAddImgFieldModal,
   } = useAddImgFieldModalProps(id);
   return (
@@ -37,7 +38,7 @@ export const AddImgFieldModalComponent: React.FC<AddImgFieldModalProps> = ({
     >
       <div className="modal-wrapper modal-wrapper--big">
         <Grid item sm={12}>
-          <Card>
+          <Card className="modal-wrapper__card">
             <CardHeader
               title="Добавить новое поле изображения"
               action={
@@ -61,6 +62,16 @@ export const AddImgFieldModalComponent: React.FC<AddImgFieldModalProps> = ({
                       value={addImgFieldName}
                       onChange={addImgFieldFormInputHandler}
                       required
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      fullWidth
+                      name="description"
+                      label="Описание поля"
+                      variant="outlined"
+                      value={addImgFieldDescription}
+                      onChange={addImgFieldFormInputHandler}
                     />
                   </Grid>
                   <Grid>

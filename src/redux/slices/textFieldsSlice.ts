@@ -4,6 +4,7 @@ import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
 export type TextFieldType = {
   id: number;
   name: string;
+  description: string;
   values: TextDto[];
   isLoading: boolean;
 };
@@ -21,6 +22,7 @@ export type DeleteFieldType = {
 };
 export interface AddTextFieldFormValuesType {
   name: string;
+  description: string;
   value: string;
 }
 
@@ -28,6 +30,7 @@ export type InitialStateType = {
   items: TextFieldType[];
   addTextfieldName: string;
   addTextFieldValue: string;
+  addTextFieldDescription: string;
 };
 
 export const asyncTextFieldActions = {
@@ -57,6 +60,7 @@ const initialState: InitialStateType = {
   items: [],
   addTextfieldName: '',
   addTextFieldValue: '',
+  addTextFieldDescription: '',
 };
 export const TextFieldsSlice = createSlice({
   name: 'TextFields',
@@ -85,12 +89,16 @@ export const TextFieldsSlice = createSlice({
       state.items.push(action.payload.item);
       state.addTextfieldName = '';
       state.addTextFieldValue = '';
+      state.addTextFieldDescription = '';
     },
     setAddTextFieldName: (state, action: PayloadAction<string>) => {
       state.addTextfieldName = action.payload;
     },
     setAddTextFieldValue: (state, action: PayloadAction<string>) => {
       state.addTextFieldValue = action.payload;
+    },
+    setAddTextFieldDescription: (state, action: PayloadAction<string>) => {
+      state.addTextFieldDescription = action.payload;
     },
   },
   extraReducers: {

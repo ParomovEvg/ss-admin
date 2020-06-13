@@ -49,7 +49,7 @@ export const ModalConf: React.FC<ModalConfProps> = ({
       aria-describedby="simple-modal-description"
     >
       <div className="modal-wrapper">
-        <Card>
+        <Card className="modal-wrapper__card">
           <CardHeader title={title} />
           <CardContent>
             <Button

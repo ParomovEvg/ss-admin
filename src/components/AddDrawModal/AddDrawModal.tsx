@@ -7,6 +7,8 @@ import {
   CardContent,
   TextField,
   Button,
+  Checkbox,
+  FormControlLabel,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
@@ -22,16 +24,22 @@ export interface initialValuesType {
   sLimit: string;
   qrLimit: string;
   qrLimitPeriodMS: string;
+  isNextDraw: boolean;
 }
 
 type AddDrawModalProps = {
   useAddDrawModalProps: useAddDrawModalProps;
   useInitialValues: () => initialValuesType;
+  useNextDrawTime: () => {
+    isLastDraw: boolean;
+    lastDrawTimeFormat: string;
+  };
 };
 
 export const AddDrawModalComponent: React.FC<AddDrawModalProps> = ({
   useAddDrawModalProps,
   useInitialValues,
+  useNextDrawTime,
 }) => {
   const {
     addDrawFormHandler,
@@ -39,6 +47,7 @@ export const AddDrawModalComponent: React.FC<AddDrawModalProps> = ({
     closeAddDrawModal,
   } = useAddDrawModalProps();
   const initialValues = useInitialValues();
+  const { isLastDraw, lastDrawTimeFormat } = useNextDrawTime();
   return (
     <Formik
       initialValues={initialValues}
@@ -59,7 +68,7 @@ export const AddDrawModalComponent: React.FC<AddDrawModalProps> = ({
           >
             <div className="modal-wrapper modal-wrapper--big">
               <Grid item sm={12}>
-                <Card>
+                <Card className="modal-wrapper__card">
                   <CardHeader
                     title="Добавить новый розыгрыш"
                     action={
@@ -83,10 +92,32 @@ export const AddDrawModalComponent: React.FC<AddDrawModalProps> = ({
                             type="date"
                             error={formik.errors.start ? true : false}
                             helperText={formik.errors.start}
-                            value={formik.values.start}
+                            value={
+                              formik.values.isNextDraw
+                                ? lastDrawTimeFormat
+                                : formik.values.start
+                            }
+                            disabled={formik.values.isNextDraw ? true : false}
                             onChange={formik.handleChange}
                           />
+                          <Grid item>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  inputProps={{
+                                    'aria-label': 'uncontrolled-checkbox',
+                                  }}
+                                  name="isNextDraw"
+                                  onChange={formik.handleChange}
+                                  value={formik.values.isNextDraw}
+                                  disabled={!isLastDraw}
+                                />
+                              }
+                              label="Начать с последнего розыгрыша"
+                            />
+                          </Grid>
                         </Grid>
+
                         <Grid item>
                           <TextField
                             fullWidth

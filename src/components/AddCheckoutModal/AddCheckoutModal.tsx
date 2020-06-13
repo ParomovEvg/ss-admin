@@ -12,7 +12,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
 import { useAddCheckoutModalProps } from './AddCheckoutModal.fipc';
 import { createFipc } from 'react-fipc';
-
 type AddCheckoutModalProps = {
   useAddCheckoutModalProps: useAddCheckoutModalProps;
 };
@@ -37,7 +36,7 @@ export const AddCheckoutModalComponent: React.FC<AddCheckoutModalProps> = ({
     >
       <div className="modal-wrapper modal-wrapper--big">
         <Grid item sm={12}>
-          <Card>
+          <Card className="modal-wrapper__card">
             <CardHeader
               title="Добавить новую кассу"
               action={
@@ -74,7 +73,7 @@ export const AddCheckoutModalComponent: React.FC<AddCheckoutModalProps> = ({
                       required
                     />
                   </Grid>
-                  <Grid>
+                  <Grid item>
                     <Button
                       type={'submit'}
                       fullWidth

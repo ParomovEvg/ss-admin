@@ -30,13 +30,15 @@ export const imgFieldsService = {
     ImgField: CreateImgFieldDto
   ): Promise<
     Either<ScreenNotFoundById | ImgFieldAlreadyExistsInScreen, FlatImgFieldDto>
-  > =>
-    api
+  > => {
+    console.log(ImgField);
+    return api
       .post(`img/field`, {
         json: ImgField,
       })
       .json<CreateImgFieldResDto>()
-      .then(dtoToEither),
+      .then(dtoToEither);
+  },
   addImg: (
     file: FormData,
     id: number

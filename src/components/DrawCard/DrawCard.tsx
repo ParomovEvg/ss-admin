@@ -43,12 +43,12 @@ export const DrawCardComponent: React.FC<DrawCardProps> = ({
   const openUpdateDrawModal = useOpenUpdateDrawModal(id);
   return (
     <>
+      <Loader isLoading={isLoading} />
       <ExpansionPanel className="draw-card">
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
         >
-          <Loader isLoading={isLoading} />
           <div className="draw-card__header">
             <h3 className="draw-card__title">{description}</h3>
             <div className="draw-card__date">

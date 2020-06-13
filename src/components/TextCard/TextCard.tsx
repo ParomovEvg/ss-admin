@@ -26,6 +26,7 @@ export interface TextCardProps extends TextCardHooks {
   multiline?: boolean;
   id: number;
   name: string;
+  description: string;
 }
 
 export const TextCardComponent: React.FC<TextCardProps> = ({
@@ -33,6 +34,7 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
   children,
   className,
   name,
+  description,
   id,
 }) => {
   const {
@@ -61,7 +63,7 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
       <Card className="card">
         <Loader isLoading={isLoading} />
         <CardHeader
-          title={name}
+          title={description}
           action={
             <IconButton
               onClick={() => openDeleteTextFieldModal(id)}
@@ -71,6 +73,7 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
             </IconButton>
           }
         />
+        <CardHeader title={name} />
         <CardContent>
           <Grid container spacing={4}>
             <Grid item sm={12}>

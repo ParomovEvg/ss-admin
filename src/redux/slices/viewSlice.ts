@@ -13,6 +13,8 @@ export interface View {
   AddCheckoutModal: boolean;
   RenameScreenModal: boolean;
   AddScreenModal: boolean;
+  infoMarkdownModal: boolean;
+
   textFieldDeteleModal: {
     isTextFieldDeteleModal: boolean;
     idTextField: number;
@@ -43,6 +45,8 @@ const initialState: View = {
   AddCheckoutModal: false,
   RenameScreenModal: false,
   AddScreenModal: false,
+  infoMarkdownModal: false,
+
   textFieldDeteleModal: { isTextFieldDeteleModal: false, idTextField: 0 },
   imgFieldDeteleModal: { isImgFieldDeteleModal: false, idImgField: 0 },
   markdownFieldDeteleModal: {
@@ -65,6 +69,12 @@ export const viewSlice = createSlice({
     },
     closeMenu: (state) => {
       state.isMenuOpen = false;
+    },
+    openInfoMarkdownModal: (state) => {
+      state.infoMarkdownModal = true;
+    },
+    closeInfoMarkdownModal: (state) => {
+      state.infoMarkdownModal = false;
     },
     closeDeleteTextFieldModal: (state) => {
       state.textFieldDeteleModal = {

@@ -29,17 +29,22 @@ export const Screen = Screen$({
     const { id: ParamId } = useParams<{ id: string }>();
     const id = parseInt(ParamId);
     const { isLoading } = useIsLoading(id);
-    // const screendsList;
 
     const name = useSelector<RootState, string | undefined>(
       (state) =>
         state.screens.screensList.find((screen) => screen.id === id)?.name
+    );
+    const description = useSelector<RootState, string | undefined>(
+      (state) =>
+        state.screens.screensList.find((screen) => screen.id === id)
+          ?.description
     );
     useFields(id);
     return {
       isLoading,
       id,
       name,
+      description,
     };
   },
 });

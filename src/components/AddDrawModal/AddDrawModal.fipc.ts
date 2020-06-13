@@ -1,13 +1,14 @@
+import { nextDrawActions } from './../../redux/slices/draw/nextDrawSlice';
 import { drawListActions } from './../../redux/slices/draw/drawListSlice';
 import { AddDrawModal$, initialValuesType } from './AddDrawModal';
 import { useAction } from '../../hooks/use-action';
-import { viewActions } from '../../redux/slices/viewSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/createStore';
 import { useCallback } from 'react';
 import { FormikHelpers } from 'formik';
 import { format } from 'date-fns';
 import { drawViewActions } from '../../redux/slices/draw/drawView';
+import { lastDrawSelector } from '../../redux/slices/draw/drawSelectors';
 
 export type useAddDrawModalProps = () => {
   closeAddDrawModal: () => void;
@@ -24,12 +25,17 @@ export const AddDrawModal = AddDrawModal$({
     const addDrawModalState = useSelector<RootState, boolean>(
       (state) => state.draws.view.AddDrawdModal
     );
+    const nextDraw = useAction(nextDrawActions.nextDraw);
     const addDrawAsync = useAction(drawListActions.add);
     const addDrawFormHandler = useCallback(
       (values: initialValuesType, action: FormikHelpers<initialValuesType>) => {
-        addDrawAsync({ values, action });
+        if (values.isNextDraw) {
+          nextDraw({ values, action });
+        } else {
+          addDrawAsync({ values, action });
+        }
       },
-      [addDrawAsync]
+      [addDrawAsync, nextDraw]
     );
 
     return {
@@ -49,7 +55,20 @@ export const AddDrawModal = AddDrawModal$({
       description: '',
       sLimit: '',
       qrLimit: '',
+      isNextDraw: false,
       qrLimitPeriodMS: '',
+    };
+  },
+  useNextDrawTime: () => {
+    const lastDraw = useSelector(lastDrawSelector);
+    const isLastDraw = lastDraw !== undefined;
+    const lastDrawTime =
+      lastDraw !== undefined ? new Date(lastDraw.end) : new Date();
+
+    const lastDrawTimeFormat = format(lastDrawTime, `yyyy-MM-dd`);
+    return {
+      isLastDraw,
+      lastDrawTimeFormat,
     };
   },
 });

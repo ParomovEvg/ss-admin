@@ -17,9 +17,6 @@ export interface DrawNowCardHooks {
   useOpenDeleteDrawModal: (
     id: number
   ) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  useOpenNextDrawModal: () => (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void;
 }
 
 export const DrawNowCard = DrawNowCard$({
@@ -43,13 +40,6 @@ export const DrawNowCard = DrawNowCard$({
     return (e) => {
       e.stopPropagation();
       openDeleteDrawModal(id);
-    };
-  },
-  useOpenNextDrawModal: () => {
-    const openNextDrawModal = useAction(drawViewActions.openNextDrawModal);
-    return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      e.stopPropagation();
-      openNextDrawModal();
     };
   },
 });

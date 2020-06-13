@@ -41,10 +41,7 @@ export const TextFieldServer = {
   > =>
     api
       .post('text/field', {
-        json: {
-          name: payload.name,
-          screenId: payload.screenId,
-        },
+        json: payload,
       })
       .json<CreateTextFieldResDto>()
       .then(dtoToEither),

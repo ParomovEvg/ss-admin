@@ -14,6 +14,7 @@ export type ScreensType = {
   activeScreen: number;
   isLoading: boolean;
   addScreenName: string;
+  addScreenDescription: string;
 };
 
 const initialState: ScreensType = {
@@ -21,6 +22,7 @@ const initialState: ScreensType = {
   activeScreen: 0,
   isLoading: false,
   addScreenName: '',
+  addScreenDescription: '',
 };
 
 export const asyncScreenActions = {
@@ -64,6 +66,7 @@ export const screensSlice = createSlice({
       state.screensList = action.payload.screens;
       state.isLoading = false;
       state.addScreenName = '';
+      state.addScreenDescription = '';
     },
     getActiveScreen: (state, action: PayloadAction<number>) => {
       state.screensList.forEach((screen) => {
@@ -84,10 +87,18 @@ export const screensSlice = createSlice({
     setAddScreenName: (state, action: PayloadAction<string>) => {
       state.addScreenName = action.payload;
     },
+    setAddScreenDescription: (state, action: PayloadAction<string>) => {
+      state.addScreenDescription = action.payload;
+    },
     renameScreen: (state, action: PayloadAction<ScreenType>) => {
       state.screensList = state.screensList.map((screen) => {
         if (screen.id === action.payload.id) return action.payload;
         return screen;
+      });
+    },
+    isLoadingScreen: (state, action: PayloadAction<number>) => {
+      state.screensList.forEach((screen) => {
+        if (screen.id === action.payload) screen.isLoading = true;
       });
     },
   },
@@ -129,6 +140,11 @@ export const screensSlice = createSlice({
     [imgFieldsActionsAsync.addImgFieldRequest.type]: (state, action) => {
       state.screensList.forEach((screen) => {
         if (screen.id === action.payload) screen.isLoading = true;
+      });
+    },
+    [imgFieldsActionsAsync.addImgFieldError.type]: (state, action) => {
+      state.screensList.forEach((screen) => {
+        if (screen.id === action.payload.id) screen.isLoading = false;
       });
     },
     [imgFieldsActions.addImgField.type]: (state, action) => {

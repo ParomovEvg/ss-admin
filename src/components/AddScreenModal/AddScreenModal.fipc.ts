@@ -11,6 +11,7 @@ export type useAddScreenModalProps = () => {
   closeAddScreenModal: () => void;
   AddScreenModalState: boolean;
   addScreenName: string;
+  addScreenDescription: string;
   addScreenFormInputHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
   addScreenFormHandler: (e: React.FormEvent<HTMLFormElement>) => void;
 };
@@ -25,17 +26,31 @@ export const AddScreenModal = AddScreenModal$({
     const addScreenName = useSelector<RootState, string>(
       (state) => state.screens.addScreenName
     );
+    const addScreenDescription = useSelector<RootState, string>(
+      (state) => state.screens.addScreenDescription
+    );
 
     const setAddScreenName = useAction(screensActions.setAddScreenName);
-    const addScreenFormInputHandler = useCallback((e) => {
-      const name = e.target.name;
-      const value = e.target.value;
-      switch (name) {
-        case 'name':
-          setAddScreenName(value);
-          break;
-      }
-    }, []);
+    const setAddScreenDescription = useAction(
+      screensActions.setAddScreenDescription
+    );
+
+    const addScreenFormInputHandler = useCallback(
+      (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        switch (name) {
+          case 'name':
+            setAddScreenName(value);
+            break;
+          case 'description':
+            setAddScreenDescription(value);
+            break;
+        }
+      },
+      [setAddScreenDescription, setAddScreenName]
+    );
+
     const addScreen_async = useAction(asyncScreenActions.addScreen_async);
     const addScreenFormHandler = useCallback(
       (e) => {
@@ -48,6 +63,7 @@ export const AddScreenModal = AddScreenModal$({
       closeAddScreenModal,
       AddScreenModalState,
       addScreenName,
+      addScreenDescription,
       addScreenFormInputHandler,
       addScreenFormHandler,
     };
