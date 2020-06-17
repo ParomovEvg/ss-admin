@@ -27,6 +27,10 @@ export const drawNowEndSelector = createSelector(
   drawNowSelector,
   (now) => now?.end ?? ''
 );
+export const drawNowIdSelector = createSelector(
+  drawNowSelector,
+  (now) => now?.id ?? 0
+);
 
 export const allDrawIsLoadingSelector = createSelector(
   drawsIsLoadingSelector,

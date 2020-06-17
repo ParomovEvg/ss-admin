@@ -1,6 +1,14 @@
-import { ImgDto } from './../../apiWorker/typings/index';
+import { initialUpdateValuesType } from './../../components/UpdateFieldModal/UpdateFieldModal';
+import { RootState } from './../createStore';
+import { ImgDto, ChangeImgField } from './../../apiWorker/typings/index';
 import { ImgFieldDto } from '../../apiWorker/typings/index';
-import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  PayloadAction,
+  createAction,
+  createSelector,
+} from '@reduxjs/toolkit';
+import { FormikHelpers } from 'formik';
 
 interface imgField extends ImgFieldDto {
   isLoading: boolean;
@@ -13,6 +21,7 @@ type InitialStateType = {
   items: imgField[];
   addImgFieldName: string;
   addImgFieldDescription?: string;
+  updateImgFieldId?: number;
 };
 
 const initialState: InitialStateType = {
@@ -49,12 +58,26 @@ export const imgFieldsActionsAsync = {
   addTheSameImg_error: createAction<number>(
     'imgFields/addTheSameImg_error' as const
   ),
+  updateImgField_async: createAction<{
+    values: ChangeImgField;
+    action: FormikHelpers<initialUpdateValuesType>;
+  }>('imgFields/update_async' as const),
 };
 
 export const imgFieldsSlice = createSlice({
   name: 'imgFields',
   initialState,
   reducers: {
+    isLoadingField: (state, action: PayloadAction<number>) => {
+      state.items.forEach((imgField) => {
+        if (imgField.id === action.payload) imgField.isLoading = true;
+      });
+    },
+    isNoLoadingField: (state, action: PayloadAction<number>) => {
+      state.items.forEach((imgField) => {
+        if (imgField.id === action.payload) imgField.isLoading = false;
+      });
+    },
     getImgFields: (state, action: PayloadAction<imgField[]>) => {
       state.items = action.payload;
     },
@@ -62,6 +85,17 @@ export const imgFieldsSlice = createSlice({
       state.items = state.items.filter(
         (imgField) => imgField.id !== action.payload
       );
+    },
+    updateImgField: (state, action: PayloadAction<imgField>) => {
+      state.items = state.items.map((imgField) => {
+        if (imgField.id === action.payload.id) {
+          return action.payload;
+        }
+        return imgField;
+      });
+    },
+    setUpdateFieldId: (state, action: PayloadAction<number>) => {
+      state.updateImgFieldId = action.payload;
     },
     changeImgField: (
       state,
@@ -179,6 +213,25 @@ export const imgFieldsSlice = createSlice({
     },
   },
 });
+
+export const updateImgFieldidSelector = (state: RootState) =>
+  state.imgFields?.updateImgFieldId ?? 0;
+
+export const imgFieldSelector = (state: RootState) => state.imgFields;
+
+export const updateImgFieldNameFactory = (id: number) =>
+  createSelector(
+    imgFieldSelector,
+    (imgFields) =>
+      imgFields.items.find((imgField) => imgField.id === id)?.name ?? ''
+  );
+
+export const updateImgFieldDescriptionFactory = (id: number) =>
+  createSelector(
+    imgFieldSelector,
+    (imgFields) =>
+      imgFields.items.find((imgField) => imgField.id === id)?.description ?? ''
+  );
 
 export const imgFieldsActions = {
   ...imgFieldsSlice.actions,

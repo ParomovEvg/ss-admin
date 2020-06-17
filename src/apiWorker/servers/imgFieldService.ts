@@ -13,6 +13,8 @@ import {
   SaveImgLastResDto,
   ImgFieldDto,
   FindImgFieldByIdResDto,
+  UpdateImgFieldResDto,
+  ChangeImgField,
 } from './../typings/index';
 import { Either } from 'useful-monads';
 import { dtoToEither } from '../dtoToEither';
@@ -62,4 +64,12 @@ export const imgFieldsService = {
     id: number
   ): Promise<Either<ImgFieldNotFoundById, ImgFieldDto>> =>
     api.get(`img/field/${id}`).json<FindImgFieldByIdResDto>().then(dtoToEither),
+  updateImgField: (
+    id: number,
+    changeImgField: ChangeImgField
+  ): Promise<Either<ImgFieldNotFoundById, ImgFieldDto>> =>
+    api
+      .put(`img/field/${id}`, { json: changeImgField })
+      .json<UpdateImgFieldResDto>()
+      .then(dtoToEither),
 };

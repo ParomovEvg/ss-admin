@@ -1,5 +1,14 @@
-import { TextDto } from '../../apiWorker/typings';
-import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
+import { TextDto, ChangeImgField } from '../../apiWorker/typings';
+import {
+  createSlice,
+  PayloadAction,
+  createAction,
+  createSelector,
+} from '@reduxjs/toolkit';
+import { FormikHelpers } from 'formik';
+import { initialUpdateValuesType } from '../../components/UpdateFieldModal/UpdateFieldModal';
+import { RootState } from '../createStore';
+import { imgFieldSelector } from './imgFieldsSlice';
 
 export type TextFieldType = {
   id: number;
@@ -31,6 +40,7 @@ export type InitialStateType = {
   addTextfieldName: string;
   addTextFieldValue: string;
   addTextFieldDescription: string;
+  updateFieldId?: number;
 };
 
 export const asyncTextFieldActions = {
@@ -54,6 +64,10 @@ export const asyncTextFieldActions = {
     'TextFields/addField_request' as const
   ),
   addTextFieldError: createAction<number>('TextFields/addField_error' as const),
+  updateTextField_async: createAction<{
+    values: ChangeImgField;
+    action: FormikHelpers<initialUpdateValuesType>;
+  }>('TextFields/update_async' as const),
 };
 
 const initialState: InitialStateType = {
@@ -66,6 +80,16 @@ export const TextFieldsSlice = createSlice({
   name: 'TextFields',
   initialState,
   reducers: {
+    isLoadingField: (state, action: PayloadAction<number>) => {
+      state.items.forEach((imgField) => {
+        if (imgField.id === action.payload) imgField.isLoading = true;
+      });
+    },
+    isNoLoadingField: (state, action: PayloadAction<number>) => {
+      state.items.forEach((imgField) => {
+        if (imgField.id === action.payload) imgField.isLoading = false;
+      });
+    },
     getTextFields: (state, action: PayloadAction<TextFieldType[]>) => {
       state.items = action.payload;
     },
@@ -100,6 +124,17 @@ export const TextFieldsSlice = createSlice({
     setAddTextFieldDescription: (state, action: PayloadAction<string>) => {
       state.addTextFieldDescription = action.payload;
     },
+    updateField: (state, action: PayloadAction<TextFieldType>) => {
+      state.items = state.items.map((imgField) => {
+        if (imgField.id === action.payload.id) {
+          return action.payload;
+        }
+        return imgField;
+      });
+    },
+    setUpdateFieldId: (state, action: PayloadAction<number>) => {
+      state.updateFieldId = action.payload;
+    },
   },
   extraReducers: {
     [asyncTextFieldActions.addTextFieldValueRequest.type]: (state, action) => {
@@ -119,6 +154,24 @@ export const TextFieldsSlice = createSlice({
     },
   },
 });
+
+export const textFieldSelector = (state: RootState) => state.TextFields;
+export const updateTextFieldIdModalSelector = (state: RootState) =>
+  state.TextFields?.updateFieldId ?? 0;
+
+export const updateTextFieldNameFactory = (id: number) =>
+  createSelector(
+    textFieldSelector,
+    (textField) =>
+      textField.items.find((imgField) => imgField.id === id)?.name ?? ''
+  );
+
+export const updateTextFieldDescriptionFactory = (id: number) =>
+  createSelector(
+    textFieldSelector,
+    (textField) =>
+      textField.items.find((imgField) => imgField.id === id)?.description ?? ''
+  );
 
 export const TextFieldsActions = {
   ...TextFieldsSlice.actions,

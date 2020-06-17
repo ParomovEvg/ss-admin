@@ -24,6 +24,8 @@ import { getNowDrawWatcher } from './draw/getNowDraw';
 import { deleteDrawWather } from './draw/deleteDraw';
 import { updateDrawWather } from './draw/updateDraw';
 import { nextDrawWather } from './draw/nextDraw';
+import { updateImgFieldWatcher } from './imgFields/updateImgField';
+import { updateTextFieldWatcher } from './textFields/updateTextField';
 export function* mainSaga() {
   yield all([
     counterListener(),
@@ -51,5 +53,7 @@ export function* mainSaga() {
     deleteDrawWather(),
     updateDrawWather(),
     nextDrawWather(),
+    updateImgFieldWatcher(),
+    updateTextFieldWatcher(),
   ]);
 }

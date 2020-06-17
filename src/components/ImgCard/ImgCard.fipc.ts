@@ -9,6 +9,7 @@ import { ImgCard$ } from './ImgCard';
 import { useCallback, useState, useEffect } from 'react';
 import { useAction } from '../../hooks/use-action';
 import { ImgDto } from '../../apiWorker/typings';
+import { viewActions } from '../../redux/slices/viewSlice';
 
 const useSave = (
   url: string | undefined,
@@ -153,6 +154,13 @@ export const ImgCard = ImgCard$({
     const { isBack, onBack } = useBack(images, id, lastValue, setLastValue);
     const { onSave, isSave } = useSave(url, id, imgId);
 
+    const setUpdateFieldId = useAction(imgFieldsActions.setUpdateFieldId);
+    const openUpdateFieldModal = useAction(viewActions.openUpdateFieldModal);
+    const onUpdate = useCallback(() => {
+      openUpdateFieldModal();
+      setUpdateFieldId(id);
+    }, [id, setUpdateFieldId]);
+
     return {
       isLoading,
       onChangeDropZone,
@@ -163,6 +171,7 @@ export const ImgCard = ImgCard$({
       isReset,
       onReset,
       url: url ?? lastValue?.url ?? '',
+      onUpdate,
     };
   },
 });

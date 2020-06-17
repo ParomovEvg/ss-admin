@@ -719,6 +719,31 @@ export type ImgControllerFindFieldByIdResponse<
     : any
   : any;
 /**
+ * Model of parameters for API `/img/field/{fieldId}`
+ */
+export interface ImgControllerUpdateTextFieldParameters {
+  fieldId: string;
+}
+export interface UpdateImgFieldResDto {
+  payload?: ImgFieldDto;
+  ImgFieldNotFoundById?: ImgFieldNotFoundById;
+}
+export type ImgControllerUpdateTextFieldResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? UpdateImgFieldResDto
+    : any
+  : any;
+export interface ChangeImgField {
+  name: string;
+  description: string;
+}
+export type ImgControllerUpdateTextFieldRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? ChangeImgField : any;
+/**
  * Model of parameters for API `/img/field/{fieldId}/value`
  */
 export interface ImgControllerUploadFileParameters {
@@ -993,3 +1018,28 @@ export type TextControllerFindTextOfFiledResponse<
     ? FindTextOfFieldResDto
     : any
   : any;
+/**
+ * Model of parameters for API `/text/field/{fieldId}`
+ */
+export interface TextControllerUpdateTextFieldParameters {
+  fieldId: string;
+}
+export interface ChangeTextFieldResDto {
+  payload?: FlatTextFieldDto;
+  TextFieldNotFoundById?: TextFieldNotFoundById;
+}
+export type TextControllerUpdateTextFieldResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? ChangeTextFieldResDto
+    : any
+  : any;
+export interface ChangeTextFieldDto {
+  name: string;
+  description: string;
+}
+export type TextControllerUpdateTextFieldRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? ChangeTextFieldDto : any;

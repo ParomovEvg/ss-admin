@@ -2,12 +2,17 @@ import { NotificationManager } from 'react-notifications';
 import { Either } from 'useful-monads';
 import { call, put, takeEvery, select } from 'redux-saga/effects';
 import { drawListActions } from '../../slices/draw/drawListSlice';
-import { updateDrawIdSelector } from '../../slices/draw/drawSelectors';
+import {
+  updateDrawIdSelector,
+  drawNowIdSelector,
+} from '../../slices/draw/drawSelectors';
 import { DrawNotFoundById, FlatDrawDto } from '../../../apiWorker/typings';
 import { drawServer } from '../../../apiWorker/servers/drawSevice';
+import { getNowDraw } from './getNowDraw';
 
 export function* updateDraw(action: ReturnType<typeof drawListActions.update>) {
   const id = yield select(updateDrawIdSelector);
+  const nowDrawId = yield select(drawNowIdSelector);
   const { qrLimit, sLimit, qrLimitPeriodMS } = action.payload.values;
   yield put(drawListActions.isLoadingDraw(id));
 
@@ -25,7 +30,7 @@ export function* updateDraw(action: ReturnType<typeof drawListActions.update>) {
     if (updateDraw.right) {
       yield put(drawListActions.updateSuccessful());
       action.payload.action.resetForm();
-      yield put(drawListActions.getAll());
+      if (nowDrawId === id) yield call(getNowDraw);
       yield put(drawListActions.isNoLoadingDraw(id));
     } else {
       yield put(drawListActions.isNoLoadingDraw(id));

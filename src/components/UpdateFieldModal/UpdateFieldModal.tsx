@@ -10,21 +10,20 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
-import { useUpdateModalProps } from './UpdateDrawModal.fipc';
+import { useUpdateModalProps } from './UpdateFieldModal.fipc';
 import { createFipc } from 'react-fipc';
 import { Formik } from 'formik';
-import { updateDrawModalValidSchema } from './UpdateDrawModalValidSchem';
+import { updateFieldModalValidSchema } from './UpdateFieldModalValidSchem';
 
 export interface initialUpdateValuesType {
-  sLimit: number;
-  qrLimit: number;
-  qrLimitPeriodMS: number;
+  name: string;
+  description: string;
 }
 
 type UpdateModalProps = {
   useUpdateModalProps: useUpdateModalProps;
   useInitialValues: () => initialUpdateValuesType;
-  useCloseUpdateModal: () => () => void;
+  useCloseUpdateModal: () => (resetForm: () => void) => void;
   useUpdateModalState: () => boolean;
 };
 
@@ -44,7 +43,7 @@ export const UpdateModalComponent: React.FC<UpdateModalProps> = ({
       validateOnChange={false}
       validateOnBlur={false}
       enableReinitialize={true}
-      validationSchema={updateDrawModalValidSchema}
+      validationSchema={updateFieldModalValidSchema}
       onSubmit={(values, action) => {
         updateFormHandler(values, action);
       }}
@@ -53,7 +52,7 @@ export const UpdateModalComponent: React.FC<UpdateModalProps> = ({
         return (
           <Modal
             open={updateModalState}
-            onClose={closeUpdateModal}
+            onClose={() => closeUpdateModal(formik.resetForm)}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
           >
@@ -61,10 +60,10 @@ export const UpdateModalComponent: React.FC<UpdateModalProps> = ({
               <Grid item sm={12}>
                 <Card className="modal-wrapper__card">
                   <CardHeader
-                    title="Изменить розыгрыш"
+                    title="Изменить поле"
                     action={
                       <IconButton
-                        onClick={() => closeUpdateModal()}
+                        onClick={() => closeUpdateModal(formik.resetForm)}
                         aria-label="settings"
                       >
                         <CloseIcon />
@@ -77,36 +76,24 @@ export const UpdateModalComponent: React.FC<UpdateModalProps> = ({
                         <Grid item>
                           <TextField
                             fullWidth
-                            name="sLimit"
-                            label="Минимальная сумма чека"
+                            name="name"
+                            label="Имя поля"
                             variant="outlined"
-                            error={formik.errors.sLimit ? true : false}
-                            helperText={formik.errors.sLimit}
-                            value={formik.values.sLimit}
+                            error={formik.errors.name ? true : false}
+                            helperText={formik.errors.name}
+                            value={formik.values.name}
                             onChange={formik.handleChange}
                           />
                         </Grid>
                         <Grid item>
                           <TextField
                             fullWidth
-                            name="qrLimit"
-                            label="Максимальное количество qr-кодов в день"
+                            name="description"
+                            label="Описание поля"
                             variant="outlined"
-                            error={formik.errors.qrLimit ? true : false}
-                            helperText={formik.errors.qrLimit}
-                            value={formik.values.qrLimit}
-                            onChange={formik.handleChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <TextField
-                            fullWidth
-                            name="qrLimitPeriodMS"
-                            label="Время сброса дневного лимита (в часах)"
-                            variant="outlined"
-                            error={formik.errors.qrLimitPeriodMS ? true : false}
-                            helperText={formik.errors.qrLimitPeriodMS}
-                            value={formik.values.qrLimitPeriodMS}
+                            error={formik.errors.description ? true : false}
+                            helperText={formik.errors.description}
+                            value={formik.values.description}
                             onChange={formik.handleChange}
                           />
                         </Grid>
@@ -133,4 +120,4 @@ export const UpdateModalComponent: React.FC<UpdateModalProps> = ({
   );
 };
 
-export const UpdateDrawModal$ = createFipc(UpdateModalComponent);
+export const UpdateFieldModalComponent$ = createFipc(UpdateModalComponent);

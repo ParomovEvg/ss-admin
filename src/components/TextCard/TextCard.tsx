@@ -9,6 +9,7 @@ import {
   IconButton,
   TextField,
 } from '@material-ui/core';
+import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { LastPage } from '@material-ui/icons';
 import { createFipc } from 'react-fipc';
@@ -46,6 +47,7 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
     isReset,
     onBack,
     isLoading,
+    onUpdate,
   } = useTextField(id, name);
 
   const handleChange = useCallback(
@@ -65,12 +67,17 @@ export const TextCardComponent: React.FC<TextCardProps> = ({
         <CardHeader
           title={description}
           action={
-            <IconButton
-              onClick={() => openDeleteTextFieldModal(id)}
-              aria-label="settings"
-            >
-              <DeleteIcon />
-            </IconButton>
+            <>
+              <IconButton
+                onClick={() => openDeleteTextFieldModal(id)}
+                aria-label="settings"
+              >
+                <DeleteIcon />
+              </IconButton>
+              <IconButton onClick={onUpdate} aria-label="settings">
+                <CreateIcon />
+              </IconButton>
+            </>
           }
         />
         <CardHeader title={name} />

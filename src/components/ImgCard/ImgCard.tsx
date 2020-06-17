@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   Card,
   CardContent,
@@ -27,6 +27,7 @@ export interface ImgCardHooks {
     onReset: () => void;
     isReset: boolean;
     url: string;
+    onUpdate: () => void;
   };
 }
 
@@ -49,6 +50,7 @@ export const ImgCardComponent: React.FC<ImgCardProps> = ({
   const openDeleteImgFieldModal = useAction(
     viewActions.openDeleteImgFieldModal
   );
+
   const {
     isLoading,
     onChangeDropZone,
@@ -59,73 +61,77 @@ export const ImgCardComponent: React.FC<ImgCardProps> = ({
     onReset,
     isReset,
     url,
+    onUpdate,
   } = useImgField(id);
   return (
-    <Grid item sm={6}>
-      <Card className="card">
-        <Loader isLoading={isLoading} />
-        <CardHeader
-          title={description}
-          action={
-            <>
-              <IconButton
-                onClick={() => openDeleteImgFieldModal(id)}
-                aria-label="settings"
-              >
-                <DeleteIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => openDeleteImgFieldModal(id)}
-                aria-label="settings"
-              >
-                <CreateIcon />
-              </IconButton>
-            </>
-          }
-        />
-        <CardHeader title={name} />
-        <CardContent>
-          <Grid container spacing={4}>
-            <Grid item sm={12}>
-              <DropZone id={id} url={url} onChangeDropZone={onChangeDropZone} />
-              <a href={url}>{url}</a>
+    <>
+      <Loader isLoading={isLoading} />
+      <Grid item sm={6}>
+        <Card className="card">
+          <CardHeader
+            title={description}
+            action={
+              <>
+                <IconButton
+                  onClick={() => openDeleteImgFieldModal(id)}
+                  aria-label="settings"
+                >
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton onClick={onUpdate} aria-label="settings">
+                  <CreateIcon />
+                </IconButton>
+              </>
+            }
+          />
+          <CardHeader title={name} />
+          <CardContent>
+            <Grid container spacing={4}>
+              <Grid item sm={12}>
+                <DropZone
+                  id={id}
+                  url={url}
+                  onChangeDropZone={onChangeDropZone}
+                />
+                <a href={url}>{url}</a>
+              </Grid>
+              <Grid item container sm={12} spacing={1}>
+                <Grid item>
+                  <Button
+                    disabled={!isSave}
+                    onClick={onSave}
+                    variant={'contained'}
+                    color={'primary'}
+                  >
+                    Сохранить
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    disabled={!isBack}
+                    color={'primary'}
+                    variant="outlined"
+                    onClick={onBack}
+                  >
+                    Предыдущее
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    disabled={!isReset}
+                    color={'primary'}
+                    variant="outlined"
+                    onClick={onReset}
+                  >
+                    Сбросить
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item container sm={12} spacing={1}>
-              <Grid item>
-                <Button
-                  disabled={!isSave}
-                  onClick={onSave}
-                  variant={'contained'}
-                  color={'primary'}
-                >
-                  Сохранить
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  disabled={!isBack}
-                  color={'primary'}
-                  variant="outlined"
-                  onClick={onBack}
-                >
-                  Предыдущее
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  disabled={!isReset}
-                  color={'primary'}
-                  variant="outlined"
-                  onClick={onReset}
-                >
-                  Сбросить
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-    </Grid>
+          </CardContent>
+        </Card>
+      </Grid>
+    </>
   );
 };
 

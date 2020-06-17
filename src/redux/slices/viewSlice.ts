@@ -1,3 +1,4 @@
+import { RootState } from './../createStore';
 import { createSlice } from '@reduxjs/toolkit';
 import { TextFieldsActions } from './textFieldsSlice';
 import { imgFieldsActions } from './imgFieldsSlice';
@@ -14,7 +15,7 @@ export interface View {
   RenameScreenModal: boolean;
   AddScreenModal: boolean;
   infoMarkdownModal: boolean;
-
+  updateFieldModal: boolean;
   textFieldDeteleModal: {
     isTextFieldDeteleModal: boolean;
     idTextField: number;
@@ -46,7 +47,7 @@ const initialState: View = {
   RenameScreenModal: false,
   AddScreenModal: false,
   infoMarkdownModal: false,
-
+  updateFieldModal: false,
   textFieldDeteleModal: { isTextFieldDeteleModal: false, idTextField: 0 },
   imgFieldDeteleModal: { isImgFieldDeteleModal: false, idImgField: 0 },
   markdownFieldDeteleModal: {
@@ -164,6 +165,12 @@ export const viewSlice = createSlice({
     closeAddScreenModal: (state) => {
       state.AddScreenModal = false;
     },
+    openUpdateFieldModal: (state) => {
+      state.updateFieldModal = true;
+    },
+    closeUpdateFieldModal: (state) => {
+      state.updateFieldModal = false;
+    },
   },
   extraReducers: {
     [TextFieldsActions.addTextField.type]: (state) => {
@@ -184,7 +191,16 @@ export const viewSlice = createSlice({
     [screensActions.getAllScreens.type]: (state) => {
       state.AddScreenModal = false;
     },
+    [TextFieldsActions.updateField.type]: (state) => {
+      state.updateFieldModal = false;
+    },
+    [imgFieldsActions.updateImgField.type]: (state) => {
+      state.updateFieldModal = false;
+    },
   },
 });
+
+export const updateFieldStateSelector = (state: RootState) =>
+  state.view.updateFieldModal;
 
 export const viewActions = { ...viewSlice.actions };

@@ -1,4 +1,7 @@
-import { asyncTextFieldActions } from '../../redux/slices/textFieldsSlice';
+import {
+  asyncTextFieldActions,
+  TextFieldsActions,
+} from '../../redux/slices/textFieldsSlice';
 import { RootState } from '../../redux/createStore';
 import { useSelector } from 'react-redux';
 import { useCallback, useState, useEffect } from 'react';
@@ -6,6 +9,7 @@ import { TextCard$ } from './TextCard';
 import { useAction } from '../../hooks/use-action';
 import { last } from 'lodash';
 import { TextDto } from '../../apiWorker/typings';
+import { viewActions } from '../../redux/slices/viewSlice';
 
 export type TextFieldType = (
   fieldId: number,
@@ -19,6 +23,7 @@ export type TextFieldType = (
   isReset: boolean;
   onBack: () => void;
   isLoading: boolean;
+  onUpdate: () => void;
 };
 
 const useIsReset = (
@@ -36,6 +41,7 @@ const useIsSave = (text: string, values: TextDto[], isLoading: boolean) => {
   const isTextChange = text !== last(values)?.value ?? text;
   return isTextChange && !isLoading;
 };
+
 export const TextCard = TextCard$({
   useTextField: <TextFieldType>(fieldId: number) => {
     const addFieldValueAsync = useAction(
@@ -86,6 +92,13 @@ export const TextCard = TextCard$({
       }
     }, [lastValue, values]);
 
+    const setUpdateFieldId = useAction(TextFieldsActions.setUpdateFieldId);
+    const openUpdateFieldModal = useAction(viewActions.openUpdateFieldModal);
+    const onUpdate = useCallback(() => {
+      setUpdateFieldId(fieldId);
+      openUpdateFieldModal();
+    }, [fieldId, setUpdateFieldId]);
+
     return {
       value: text,
       onChange: setText,
@@ -95,6 +108,7 @@ export const TextCard = TextCard$({
       isReset,
       onBack,
       isLoading,
+      onUpdate,
     };
   },
 });

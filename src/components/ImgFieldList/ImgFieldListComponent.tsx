@@ -7,6 +7,7 @@ import { ImgFieldDto } from '../../apiWorker/typings';
 import { ImgCard } from '../ImgCard/ImgCard.fipc';
 import { AddImgFieldModal } from '../AddImgFieldModal/AddImgFieldModal.fipc';
 import { DeleteModalImgField } from '../deleteModal/deleteModalTextField';
+import { UpdateImgFieldModal } from '../UpdateFieldModal/UpdateImgFieldModal.fipc';
 
 export interface ImgFieldListComponentHooks {
   useImgFields: () => {
@@ -41,7 +42,7 @@ export const ImgFieldListComponent: React.FC<ImgFieldListComponentProps> = ({
           </Card>
         </Grid>
       </Grid>
-
+      <UpdateImgFieldModal />
       <DeleteModalImgField />
     </>
   );
