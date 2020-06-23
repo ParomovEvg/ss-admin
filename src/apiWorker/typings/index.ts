@@ -32,6 +32,17 @@ export type AuthControllerGetProfileResponse<
     ? FlatPhoneDto
     : any
   : any;
+export interface GetAllPhoneResDto {
+  payload: Array<FlatPhoneDto>;
+}
+export type AuthControllerGetAllPhoneResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? GetAllPhoneResDto
+    : any
+  : any;
 export interface CreatePhoneResDto {
   payload: FlatPhoneDto;
 }
@@ -49,6 +60,20 @@ export interface CreatePhoneDto {
 export type AuthControllerCreateUserRequest<
   TCode extends 'application/json' = 'application/json'
 > = TCode extends 'application/json' ? CreatePhoneDto : any;
+export type AuthControllerGetSearchPhoneResponse<
+  TCode extends 201 = 201,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 201
+  ? TContentType extends 'application/json'
+    ? GetAllPhoneResDto
+    : any
+  : any;
+export interface GetPhoneDto {
+  phone: string;
+}
+export type AuthControllerGetSearchPhoneRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? GetPhoneDto : any;
 export interface PasswordsOfPhoneNotFound {
   name: 'PasswordsOfPhoneNotFound';
   message: string;
@@ -73,6 +98,36 @@ export interface FlatCheckoutDto {
   fn: string;
   address: string;
 }
+export interface FlatDrawDto {
+  id: number;
+  start: string;
+  end: string;
+  description: string;
+  sLimit: number;
+  qrLimit: number;
+  qrLimitPeriodMS: number;
+}
+export interface FlatAllQrDto {
+  id: string;
+  phone: FlatPhoneDto;
+  checkout: FlatCheckoutDto;
+  draw: FlatDrawDto;
+  fp: string;
+  fd: string;
+  s: number;
+  time: string;
+}
+export interface GetAllQrResDto {
+  payload: Array<FlatAllQrDto>;
+}
+export type QrControllerGetAllQrResponse<
+  TCode extends 200 = 200,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 200
+  ? TContentType extends 'application/json'
+    ? GetAllQrResDto
+    : any
+  : any;
 export interface FlatQrDto {
   id: string;
   phone: FlatPhoneDto;
@@ -158,15 +213,44 @@ export type QrControllerCountQrResponse<
     ? GetQrNumResDto
     : any
   : any;
-export interface FlatDrawDto {
-  id: number;
-  start: string;
-  end: string;
-  description: string;
-  sLimit: number;
-  qrLimit: number;
-  qrLimitPeriodMS: number;
+export interface DrawNotFoundById {
+  name: 'DrawNotFoundById';
+  message: string;
+  param: {
+    id?: number;
+  };
 }
+export interface CheckoutNotFoundById {
+  name: 'CheckoutNotFoundById';
+  message: string;
+  param: {
+    id?: number;
+  };
+}
+export interface FilterQrResDto {
+  payload?: Array<FlatAllQrDto>;
+  CheckoutNotFoundByFn?: CheckoutNotFoundByFn;
+  DrawNotFoundById?: DrawNotFoundById;
+  CheckoutNotFoundById?: CheckoutNotFoundById;
+}
+export type QrControllerFilterQrResponse<
+  TCode extends 201 = 201,
+  TContentType extends 'application/json' = 'application/json'
+> = TCode extends 201
+  ? TContentType extends 'application/json'
+    ? FilterQrResDto
+    : any
+  : any;
+export interface FilterQrDto {
+  drawId?: number;
+  checkoutId?: number;
+  phone?: string;
+  fd?: string;
+  fp?: string;
+}
+export type QrControllerFilterQrRequest<
+  TCode extends 'application/json' = 'application/json'
+> = TCode extends 'application/json' ? FilterQrDto : any;
 export interface FindAllDrawResDto {
   payload?: Array<FlatDrawDto>;
 }
@@ -245,13 +329,6 @@ export type DrawControllerFindNowResponse<
  */
 export interface DrawControllerDeleteDrawParameters {
   id: number;
-}
-export interface DrawNotFoundById {
-  name: 'DrawNotFoundById';
-  message: string;
-  param: {
-    id?: number;
-  };
 }
 export interface DeleteDrawResDto {
   payload: {
@@ -399,13 +476,6 @@ export type CheckoutControllerCreateCheckoutRequest<
  */
 export interface CheckoutControllerDeleteCheckoutParameters {
   checkoutId: number;
-}
-export interface CheckoutNotFoundById {
-  name: 'CheckoutNotFoundById';
-  message: string;
-  param: {
-    id?: number;
-  };
 }
 export interface DeleteCheckoutResDto {
   payload: {

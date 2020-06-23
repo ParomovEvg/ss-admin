@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
 import { FlatCheckoutDto } from '../../apiWorker/typings';
+import { RootState } from '../createStore';
 
 export interface CheckoutType extends FlatCheckoutDto {
   isLoading: boolean;
@@ -92,6 +93,10 @@ export const checkoutSlice = createSlice({
     },
   },
 });
+
+export const checkoutListSelector = (state: RootState) => state.checkouts.items;
+export const checkoutsisLoadingSelector = (state: RootState) =>
+  state.checkouts.isLoading;
 
 export const checkoutActions = {
   ...checkoutSlice.actions,

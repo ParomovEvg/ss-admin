@@ -35,13 +35,6 @@ export const CheckoutComponent: React.FC<CheckoutComponentProps> = ({
             return <CheckoutItem id={id} name={fn} address={address} />;
           })}
           <AddCheckoutModal />
-          <CheckoutItem
-            id={1}
-            name={'123456789098765'}
-            address={
-              'Проспект ленина 27 кв 23 Проспект ленина 27 кв 23 Проспект ленина 27 кв 23'
-            }
-          />
           <Grid item sm={4}>
             <Card className="AddCard">
               <Button onClick={() => openAddCheckoutModal()} color="primary">

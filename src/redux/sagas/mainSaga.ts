@@ -1,4 +1,5 @@
 import { all } from 'redux-saga/effects';
+
 import { counterListener } from './counter/counter-listener';
 import { authFlow } from './auth/authFlow';
 import { addScreenWatcher } from './screens/addScreen';
@@ -26,6 +27,8 @@ import { updateDrawWather } from './draw/updateDraw';
 import { nextDrawWather } from './draw/nextDraw';
 import { updateImgFieldWatcher } from './imgFields/updateImgField';
 import { updateTextFieldWatcher } from './textFields/updateTextField';
+import { changePhoneWatcher } from './qr/changePhone';
+import { filterQrWatcher } from './qr/filterQr';
 export function* mainSaga() {
   yield all([
     counterListener(),
@@ -55,5 +58,7 @@ export function* mainSaga() {
     nextDrawWather(),
     updateImgFieldWatcher(),
     updateTextFieldWatcher(),
+    changePhoneWatcher(),
+    filterQrWatcher(),
   ]);
 }

@@ -8,7 +8,8 @@ import { RootState } from '../../redux/createStore';
 import { FlatScreenDto } from '../../apiWorker/typings';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import { Checkout } from '../Checkouts/CheckoutsList.fipc';
-
+import CropFreeIcon from '@material-ui/icons/CropFree';
+import { QrList } from '../QrList/QrList.fipc';
 const useScreenRouts = () => {
   const screens = useSelector<RootState, FlatScreenDto[]>(
     (state) => state.screens.screensList
@@ -31,6 +32,12 @@ const mainRouts: PathList = [
     path: '/checkouts',
     component: Checkout,
     icon: <ShoppingBasketIcon />,
+  },
+  {
+    name: 'Qr-коды',
+    path: '/qr',
+    component: QrList,
+    icon: <CropFreeIcon />,
   },
 ];
 

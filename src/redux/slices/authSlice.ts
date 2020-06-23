@@ -1,4 +1,6 @@
+import { GetPhoneDto } from './../../apiWorker/typings/index';
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../createStore';
 
 export type Auth = {
   phone: string;
@@ -6,10 +8,12 @@ export type Auth = {
   token: string;
   isTokenValid: boolean;
   isLoading: boolean;
+  phones: GetPhoneDto[];
 };
 
 const asyncAuthActions = {
   loginRequest: createAction('auth/login_request'),
+  getPhones_async: createAction('auth/get_phones'),
 };
 
 const initialState: Auth = {
@@ -18,6 +22,7 @@ const initialState: Auth = {
   token: '',
   isTokenValid: false,
   isLoading: false,
+  phones: [],
 };
 
 export const authSlice = createSlice({
@@ -42,6 +47,9 @@ export const authSlice = createSlice({
     setPassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
     },
+    getPhones: (state, action: PayloadAction<GetPhoneDto[]>) => {
+      state.phones = action.payload;
+    },
   },
   extraReducers: {
     [asyncAuthActions.loginRequest.type]: (state, action) => {
@@ -49,6 +57,8 @@ export const authSlice = createSlice({
     },
   },
 });
+
+export const phonesSelector = (state: RootState) => state.auth.phones;
 
 export const authActions = {
   ...asyncAuthActions,

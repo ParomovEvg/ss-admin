@@ -1,0 +1,17 @@
+.filter-form {
+  position: relative;
+  &__control {
+    display: flex;
+    flex-direction: column;
+  }
+  &__control:not(:first-child) {
+    margin-top: 25px;
+  }
+  &__label {
+    margin-bottom: 5px;
+  }
+  &__title {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,15 @@
+.side-bar {
+  max-width: 320px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 15px 0 rgba(#000000, 0.05);
+  transition: all 0.3s ease;
+  flex-direction: column;
+  margin: 0 10px;
+  &:hover {
+    box-shadow: 0px 0px 15px 0 rgba(#000000, 0.08);
+  }
+}

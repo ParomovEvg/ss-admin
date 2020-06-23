@@ -13,6 +13,9 @@ import { screensSlice } from './slices/screensSlice';
 import { checkoutSlice } from './slices/checkoutSlice';
 import { drawListSlise } from './slices/draw/drawListSlice';
 import { drawUpdateSlice } from './slices/draw/drawUpdateSlice';
+import { qrFilterSlise } from './slices/qr/filterQrsSlice';
+import { qrLoadingReducer } from './slices/qr/qrIsLoadingSlice.constructor';
+import { qrListSlise } from './slices/qr/qrList.slice';
 export const stateActions = {
   counter: counter.actions,
 };
@@ -26,6 +29,12 @@ const drawsReducer = combineReducers({
   view: drawViewSlice.reducer,
 });
 
+const qrReducer = combineReducers({
+  filter: qrFilterSlise.reducer,
+  isLoading: qrLoadingReducer,
+  items: qrListSlise.reducer,
+});
+
 export const state = combineReducers({
   counter: counter.reducer,
   auth: authSlice.reducer,
@@ -36,4 +45,5 @@ export const state = combineReducers({
   checkouts: checkoutSlice.reducer,
   view: viewSlice.reducer,
   draws: drawsReducer,
+  qr: qrReducer,
 });
