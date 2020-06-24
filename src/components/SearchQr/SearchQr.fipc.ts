@@ -1,31 +1,28 @@
-import { FormikProps, useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 
 import { SearchQr$ } from './SearchQr.component';
+import {
+  IqrFilterState,
+  qrFilterActions,
+} from '../../redux/slices/qr/filterQrsSlice';
+import { qrFilterValuesSelector } from '../../redux/slices/qr/qrSelectors';
+import { useHandleChangeInput } from '../FilterForm/FIlterForm.fipc';
 import { useAction } from '../../hooks/use-action';
-import { qrFilterActions } from '../../redux/slices/qr/filterQrsSlice';
-
-export interface UseFormikInitState {
-  fpFind: string;
-  fdFind: string;
-}
 
 export interface SearchQrHooks {
-  useForm: () => FormikProps<UseFormikInitState>;
+  useValues: () => IqrFilterState;
+  useHandleChangeInput: () => (e: any) => void;
+  useFormHandler: () => (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export const SearchQr = SearchQr$({
-  useForm: () => {
-    const filterQr = useAction(qrFilterActions.filterQr);
-
-    const initialValues: UseFormikInitState = {
-      fpFind: '',
-      fdFind: '',
+  useValues: () => useSelector(qrFilterValuesSelector),
+  useHandleChangeInput,
+  useFormHandler: () => {
+    const formHandler = useAction(qrFilterActions.filterQr);
+    return (e) => {
+      e.preventDefault();
+      formHandler();
     };
-    return useFormik({
-      initialValues,
-      onSubmit: (values, formikActions) => {
-        filterQr({ values, formikActions });
-      },
-    });
   },
 });

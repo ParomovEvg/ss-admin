@@ -16,6 +16,12 @@ export const qrFilterCheckoutIdSelector = (state: RootState) =>
 export const qrFilterPhoneSelector = (state: RootState) =>
   state.qr.filter.filterByPhone;
 
+export const qrFilterFdSelector = (state: RootState) =>
+  state.qr.filter.filterByFd;
+
+export const qrFilterFpSelector = (state: RootState) =>
+  state.qr.filter.filterByFp;
+
 export const qrSelector = (state: RootState) => state.qr.items;
 
 export const qrListSelector = createSelector(qrSelector, ({ ids, entities }) =>

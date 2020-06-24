@@ -5,11 +5,11 @@ import {
   createAction,
 } from '@reduxjs/toolkit';
 
-import { FlatQrDto } from './../../../apiWorker/typings/index';
+import { FlatAllQrDto } from './../../../apiWorker/typings/index';
 
 const qrListActionsEdition = {};
 
-export interface qrType extends FlatQrDto {
+export interface qrType extends FlatAllQrDto {
   isLoading?: boolean;
 }
 

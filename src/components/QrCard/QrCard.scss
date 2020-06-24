@@ -1,0 +1,22 @@
+.qr-card {
+  box-shadow: 0px 0px 15px 0 rgba(#000000, 0.05);
+  padding: 15px;
+  &:not(:first-child) {
+    margin-top: 15px;
+  }
+  &__row {
+    display: flex;
+    &:not(:last-child) {
+      margin-bottom: 5px;
+    }
+  }
+  &__col {
+    display: flex;
+  }
+  &__name {
+    font-weight: bold;
+    padding-right: 10px;
+  }
+  &__value {
+  }
+}

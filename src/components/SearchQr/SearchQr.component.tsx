@@ -7,24 +7,30 @@ import { SearchQrHooks } from './SearchQr.fipc';
 
 export interface SearchQrProps extends SearchQrHooks {}
 
-export const SearchQrComponent: React.FC<SearchQrProps> = ({ useForm }) => {
-  const formik = useForm();
+export const SearchQrComponent: React.FC<SearchQrProps> = ({
+  useValues,
+  useHandleChangeInput,
+  useFormHandler,
+}) => {
+  const values = useValues();
+  const formChange = useFormHandler();
+  const inputChange = useHandleChangeInput();
   return (
     <div className="search-qr">
-      <form onSubmit={formik.handleSubmit} className="search-qr__form">
+      <form onSubmit={formChange} className="search-qr__form">
         <TextField
-          name="fdFind"
+          name="filterByFd"
           label="fd qr-кода"
           variant="outlined"
-          value={formik.values.fdFind}
-          onChange={formik.handleChange}
+          value={values.filterByFd}
+          onChange={inputChange}
         />
         <TextField
-          name="fpFind"
+          name="filterByFp"
           label="fp qr-кода"
           variant="outlined"
-          value={formik.values.fpFind}
-          onChange={formik.handleChange}
+          value={values.filterByFp}
+          onChange={inputChange}
         />
         <Button variant={'contained'} color={'primary'} type="submit">
           Искать

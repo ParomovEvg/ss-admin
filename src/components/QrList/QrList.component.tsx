@@ -8,6 +8,8 @@ import { FIlterForm } from '../FilterForm/FIlterForm.fipc';
 import { SearchQr } from '../SearchQr/SearchQr.fipc';
 import { Loader } from '../Loader/Loader';
 import './QrList.scss';
+import { Grid } from '@material-ui/core';
+import { QrCard } from '../QrCard/QrCard.fipc';
 
 export interface QrListProps extends QrListHooks {
   className?: string;
@@ -24,15 +26,19 @@ const QrListComponent: React.FC<QrListProps> = ({
   return (
     <Layout title={'Qr-коды'}>
       <Loader isLoading={isLoading} />
-      <div className="qr">
-        <SideBar>
-          <FIlterForm />
-        </SideBar>
-        <SearchQr />
-        {qrs.map((qr) => (
-          <span>{qr.phone.phone}</span>
-        ))}
-      </div>
+      <Grid container spacing={4} className="qr">
+        <Grid item sm={3}>
+          <SideBar>
+            <FIlterForm />
+          </SideBar>
+        </Grid>
+        <Grid item sm={9}>
+          <SearchQr />
+          {qrs.map((qr) => (
+            <QrCard qr={qr} />
+          ))}
+        </Grid>
+      </Grid>
     </Layout>
   );
 };

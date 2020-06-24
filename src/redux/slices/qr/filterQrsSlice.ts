@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
-import { FormikHelpers } from 'formik';
-
-import { UseFormikInitState } from '../../../components/SearchQr/SearchQr.fipc';
 
 export interface IqrFilterState {
   filterByDrawId: string;
   filterByCheckoutId: string;
   filterByPhone: string;
+  filterByFd: string;
+  filterByFp: string;
 }
 
 export interface IInputType {
@@ -18,14 +17,13 @@ const qrFilterState = {
   filterByDrawId: '',
   filterByCheckoutId: '',
   filterByPhone: '',
+  filterByFd: '',
+  filterByFp: '',
 };
 
 const qrFilterActionsEdition = {
   phoneHandler: createAction<string>('qr/filter/phone_handler'),
-  filterQr: createAction<{
-    values: UseFormikInitState;
-    formikActions: FormikHelpers<UseFormikInitState>;
-  }>('qr/filter'),
+  filterQr: createAction('qr/filter'),
 };
 
 export const qrFilterSlise = createSlice({

@@ -35,14 +35,16 @@ export interface FilterFormHooks {
   usePhoneHandler: () => (phone: string) => any;
 }
 
+export const useHandleChangeInput = () => {
+  const handleChange = useAction(qrFilterActions.changeInput);
+  return (e: any) => {
+    const { name, value } = e.target;
+    handleChange({ name, value });
+  };
+};
+
 export const FIlterForm = FIlterForm$({
-  useHandleChangeInput: () => {
-    const handleChange = useAction(qrFilterActions.changeInput);
-    return (e) => {
-      const { name, value } = e.target;
-      handleChange({ name, value });
-    };
-  },
+  useHandleChangeInput,
   useHandlerChangeAutocomplite: () => {
     const handleChange = useAction(qrFilterActions.changeInput);
     return (name, value) => {
