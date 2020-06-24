@@ -2,14 +2,13 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import { qrType } from './../../redux/slices/qr/qrList.slice';
-import { checkoutAsymcActions } from './../../redux/slices/checkoutSlice';
-import { drawListActions } from './../../redux/slices/draw/drawListSlice';
 import { QrList$ } from './QrList.component';
 import { useAction } from '../../hooks/use-action';
 import {
   qrLoadingSelector,
   qrListSelector,
 } from '../../redux/slices/qr/qrSelectors';
+import { qrFilterActions } from '../../redux/slices/qr/filterQrsSlice';
 
 export interface QrListHooks {
   useEffectQr: () => void;
@@ -19,14 +18,9 @@ export interface QrListHooks {
 
 export const QrList = QrList$({
   useEffectQr: () => {
-    const getDraws_async = useAction(drawListActions.getAll);
-    const getCheckouts_async = useAction(
-      checkoutAsymcActions.getAllCheckoutAsync
-    );
-
+    const filterQr = useAction(qrFilterActions.filterQr);
     useEffect(() => {
-      getDraws_async();
-      getCheckouts_async();
+      filterQr();
     }, []);
   },
   useLoading: () => useSelector(qrLoadingSelector),

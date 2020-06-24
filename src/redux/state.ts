@@ -16,6 +16,7 @@ import { drawUpdateSlice } from './slices/draw/drawUpdateSlice';
 import { qrFilterSlise } from './slices/qr/filterQrsSlice';
 import { qrLoadingReducer } from './slices/qr/qrIsLoadingSlice.constructor';
 import { qrListSlise } from './slices/qr/qrList.slice';
+import { qrPaginationSlise } from './slices/qr/qrPagination.slice';
 export const stateActions = {
   counter: counter.actions,
 };
@@ -33,6 +34,7 @@ const qrReducer = combineReducers({
   filter: qrFilterSlise.reducer,
   isLoading: qrLoadingReducer,
   items: qrListSlise.reducer,
+  pagination: qrPaginationSlise.reducer,
 });
 
 export const state = combineReducers({

@@ -24,6 +24,12 @@ export const qrFilterFpSelector = (state: RootState) =>
 
 export const qrSelector = (state: RootState) => state.qr.items;
 
+export const qrPaginationPageSelector = (state: RootState) =>
+  state.qr.pagination.page;
+
+export const qrPaginationCountSelector = (state: RootState) =>
+  state.qr.pagination.count;
+
 export const qrListSelector = createSelector(qrSelector, ({ ids, entities }) =>
   ids.reduce((acc: qrType[], id) => {
     const qr = entities[id];

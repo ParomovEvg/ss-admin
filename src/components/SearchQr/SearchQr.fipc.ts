@@ -19,10 +19,10 @@ export const SearchQr = SearchQr$({
   useValues: () => useSelector(qrFilterValuesSelector),
   useHandleChangeInput,
   useFormHandler: () => {
-    const formHandler = useAction(qrFilterActions.filterQr);
+    const filterQr = useAction(qrFilterActions.filterQr);
     return (e) => {
       e.preventDefault();
-      formHandler();
+      filterQr();
     };
   },
 });

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { GetPhoneDto } from './../../apiWorker/typings/index';
 import { useSelector } from 'react-redux';
 import { debounce } from 'lodash';
@@ -6,6 +7,7 @@ import {
   checkoutListSelector,
   CheckoutType,
   checkoutsisLoadingSelector,
+  checkoutAsymcActions,
 } from './../../redux/slices/checkoutSlice';
 import {
   drawsListSelector,
@@ -18,10 +20,14 @@ import {
   IqrFilterState,
 } from '../../redux/slices/qr/filterQrsSlice';
 import { qrFilterValuesSelector } from '../../redux/slices/qr/qrSelectors';
-import { drawType } from '../../redux/slices/draw/drawListSlice';
+import {
+  drawType,
+  drawListActions,
+} from '../../redux/slices/draw/drawListSlice';
 import { phonesSelector } from '../../redux/slices/authSlice';
 
 export interface FilterFormHooks {
+  useEffectFilter: () => void;
   useHandleChangeInput: () => (e: any) => void;
   useHandlerChangeAutocomplite: () => <N extends keyof IqrFilterState>(
     name: N,
@@ -44,6 +50,17 @@ export const useHandleChangeInput = () => {
 };
 
 export const FIlterForm = FIlterForm$({
+  useEffectFilter: () => {
+    const getDraws_async = useAction(drawListActions.getAll);
+    const getCheckouts_async = useAction(
+      checkoutAsymcActions.getAllCheckoutAsync
+    );
+
+    useEffect(() => {
+      getDraws_async();
+      getCheckouts_async();
+    }, []);
+  },
   useHandleChangeInput,
   useHandlerChangeAutocomplite: () => {
     const handleChange = useAction(qrFilterActions.changeInput);

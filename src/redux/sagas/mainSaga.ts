@@ -29,6 +29,7 @@ import { updateImgFieldWatcher } from './imgFields/updateImgField';
 import { updateTextFieldWatcher } from './textFields/updateTextField';
 import { changePhoneWatcher } from './qr/changePhone';
 import { filterQrWatcher } from './qr/filterQr';
+import { qrCountWatcher } from './qr/qrCount';
 export function* mainSaga() {
   yield all([
     counterListener(),
@@ -60,5 +61,6 @@ export function* mainSaga() {
     updateTextFieldWatcher(),
     changePhoneWatcher(),
     filterQrWatcher(),
+    qrCountWatcher(),
   ]);
 }

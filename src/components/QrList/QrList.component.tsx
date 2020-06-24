@@ -10,6 +10,7 @@ import { Loader } from '../Loader/Loader';
 import './QrList.scss';
 import { Grid } from '@material-ui/core';
 import { QrCard } from '../QrCard/QrCard.fipc';
+import { QrPagination } from '../Pagination/QrPagination.fipc';
 
 export interface QrListProps extends QrListHooks {
   className?: string;
@@ -24,22 +25,31 @@ const QrListComponent: React.FC<QrListProps> = ({
   const isLoading = useLoading();
   const qrs = useQrs();
   return (
-    <Layout title={'Qr-коды'}>
+    <>
       <Loader isLoading={isLoading} />
-      <Grid container spacing={4} className="qr">
-        <Grid item sm={3}>
-          <SideBar>
-            <FIlterForm />
-          </SideBar>
+      <Layout title={'Qr-коды'}>
+        <Grid container spacing={4} className="qr">
+          <Grid item sm={3}>
+            <SideBar>
+              <FIlterForm />
+            </SideBar>
+          </Grid>
+          <Grid item container spacing={2} sm={9}>
+            <Grid item sm={12}>
+              <SearchQr />
+            </Grid>
+            {qrs.map((qr) => (
+              <Grid key={qr.id} item sm={12}>
+                <QrCard qr={qr} />
+              </Grid>
+            ))}
+            <Grid item sm={12}>
+              <QrPagination />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item sm={9}>
-          <SearchQr />
-          {qrs.map((qr) => (
-            <QrCard qr={qr} />
-          ))}
-        </Grid>
-      </Grid>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

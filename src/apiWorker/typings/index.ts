@@ -213,25 +213,12 @@ export type QrControllerCountQrResponse<
     ? GetQrNumResDto
     : any
   : any;
-export interface DrawNotFoundById {
-  name: 'DrawNotFoundById';
-  message: string;
-  param: {
-    id?: number;
-  };
-}
-export interface CheckoutNotFoundById {
-  name: 'CheckoutNotFoundById';
-  message: string;
-  param: {
-    id?: number;
-  };
+export interface FlatGetQrFilterDto {
+  qrs: Array<FlatAllQrDto>;
+  count: number;
 }
 export interface FilterQrResDto {
-  payload?: Array<FlatAllQrDto>;
-  CheckoutNotFoundByFn?: CheckoutNotFoundByFn;
-  DrawNotFoundById?: DrawNotFoundById;
-  CheckoutNotFoundById?: CheckoutNotFoundById;
+  payload: FlatGetQrFilterDto;
 }
 export type QrControllerFilterQrResponse<
   TCode extends 201 = 201,
@@ -247,6 +234,7 @@ export interface FilterQrDto {
   phone?: string;
   fd?: string;
   fp?: string;
+  page?: number;
 }
 export type QrControllerFilterQrRequest<
   TCode extends 'application/json' = 'application/json'
@@ -329,6 +317,13 @@ export type DrawControllerFindNowResponse<
  */
 export interface DrawControllerDeleteDrawParameters {
   id: number;
+}
+export interface DrawNotFoundById {
+  name: 'DrawNotFoundById';
+  message: string;
+  param: {
+    id?: number;
+  };
 }
 export interface DeleteDrawResDto {
   payload: {
@@ -476,6 +471,13 @@ export type CheckoutControllerCreateCheckoutRequest<
  */
 export interface CheckoutControllerDeleteCheckoutParameters {
   checkoutId: number;
+}
+export interface CheckoutNotFoundById {
+  name: 'CheckoutNotFoundById';
+  message: string;
+  param: {
+    id?: number;
+  };
 }
 export interface DeleteCheckoutResDto {
   payload: {

@@ -16,3 +16,6 @@ code {
 * {
   box-sizing: border-box;
 }
+#root {
+  position: relative;
+}

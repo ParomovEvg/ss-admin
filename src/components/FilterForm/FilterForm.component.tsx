@@ -26,7 +26,9 @@ export const FilterFormComponent: React.FC<FilterFormProps> = ({
   useLoading,
   usePhones,
   usePhoneHandler,
+  useEffectFilter,
 }) => {
+  useEffectFilter();
   const inputChange = useHandleChangeInput();
   const autocompliteChange = useHandlerChangeAutocomplite();
   const values = useValues();
